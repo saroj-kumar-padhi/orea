@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:orea/screens/splash_screen/splash_screen.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -14,16 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomePage(),
+      home: const SplashScreen(),
     );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold();
   }
 }
