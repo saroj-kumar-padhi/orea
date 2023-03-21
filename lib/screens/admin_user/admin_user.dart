@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:orea/common_utils/common_utils.dart';
+import 'package:orea/common_utils/image_paths.dart';
+import 'package:orea/screens/admin_signIn/admin_signIn.dart';
+import 'package:orea/screens/forgot_password/forgot_password.dart';
 
 class AdminUserScreen extends StatelessWidget {
   const AdminUserScreen({super.key});
@@ -7,6 +10,7 @@ class AdminUserScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: whiteColor,
       body: SafeArea(
         top: true,
         child: Center(
@@ -14,28 +18,47 @@ class AdminUserScreen extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(24, 20, 24, 0),
             child: Column(
               children: [
-                Image.asset("assets/images/oreimage.png"),
+                const Spacer(),
+                Image.asset(ImagePath.orea, height: 170),
                 const SizedBox(
                   height: 113.31,
                 ),
                 BoldText("Kindly choose your role to continue", deepBlue, 15),
+                const SizedBox(height: 20),
+                //ADMIN OPTION ---------->>>
                 MaterialButton(
+                  elevation: 0.0,
+                  minWidth: MediaQuery.of(context).size.width,
+                  height: 40,
                   color: deepBlue,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(28),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const AdminSignIn(),
+                    ));
+                  },
                   child: BoldText("ADMIN", whiteColor, 18),
                 ),
-                const SizedBox(height: 21),
+                const SizedBox(height: 10),
+                //USER OPTION --------->>>
                 MaterialButton(
+                  elevation: 0.0,
+                  minWidth: MediaQuery.of(context).size.width,
+                  height: 40,
                   color: whiteColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(28),
                     side: const BorderSide(color: deepBlue, width: 1.0),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const UserSignIn()));
+                  },
+                  child: BoldText("USER", deepBlue, 18),
                 ),
+                const SizedBox(height: 180),
               ],
             ),
           ),
