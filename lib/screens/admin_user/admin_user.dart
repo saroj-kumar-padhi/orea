@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:orea/common_utils/common_utils.dart';
 import 'package:orea/common_utils/image_paths.dart';
 import 'package:orea/screens/admin_signIn/admin_signIn.dart';
-import 'package:orea/screens/forgot_password/forgot_password.dart';
+import '../user_register/user_register.dart';
 
 class AdminUserScreen extends StatelessWidget {
   const AdminUserScreen({super.key});
@@ -24,11 +24,11 @@ class AdminUserScreen extends StatelessWidget {
                   height: 113.31,
                 ),
                 BoldText("Kindly choose your role to continue", deepBlue, 15),
-                const SizedBox(height: 20),
+                const SizedBox(height: 25),
                 //ADMIN OPTION ---------->>>
                 MaterialButton(
                   elevation: 0.0,
-                  minWidth: MediaQuery.of(context).size.width,
+                  minWidth: MediaQuery.of(context).size.width / 1.2,
                   height: 40,
                   color: deepBlue,
                   shape: RoundedRectangleBorder(
@@ -41,11 +41,11 @@ class AdminUserScreen extends StatelessWidget {
                   },
                   child: BoldText("ADMIN", whiteColor, 18),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 15),
                 //USER OPTION --------->>>
                 MaterialButton(
                   elevation: 0.0,
-                  minWidth: MediaQuery.of(context).size.width,
+                  minWidth: MediaQuery.of(context).size.width / 1.2,
                   height: 40,
                   color: whiteColor,
                   shape: RoundedRectangleBorder(
@@ -58,7 +58,7 @@ class AdminUserScreen extends StatelessWidget {
                   },
                   child: BoldText("USER", deepBlue, 18),
                 ),
-                const SizedBox(height: 180),
+                const SizedBox(height: 150),
               ],
             ),
           ),

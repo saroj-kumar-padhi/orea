@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:orea/common_utils/common_utils.dart';
+import 'package:orea/common_utils/image_paths.dart';
 
 class UserSignIn extends StatelessWidget {
   const UserSignIn({super.key});
@@ -22,7 +23,7 @@ class UserSignIn extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(24, 20, 24, 0),
             child: Column(
               children: [
-                Image.asset("assets/images/oreimage.png"),
+                Image.asset(ImagePath.orea, height: 150),
                 const SizedBox(
                   height: 44.87,
                 ),

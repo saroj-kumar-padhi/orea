@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:orea/common_utils/common_utils.dart';
+import 'package:orea/common_utils/image_paths.dart';
+import 'package:orea/screens/admin_user/admin_user.dart';
 
 class AdminSignIn extends StatelessWidget {
   const AdminSignIn({super.key});
@@ -7,6 +9,7 @@ class AdminSignIn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: whiteColor,
       body: SafeArea(
         top: true,
         child: Center(
@@ -14,14 +17,16 @@ class AdminSignIn extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(24, 20, 24, 0),
             child: Column(
               children: [
-                Image.asset("assets/images/oreimage.png"),
+                const Spacer(),
+                Image.asset(ImagePath.orea, height: 150),
                 const SizedBox(
                   height: 81.31,
                 ),
                 BoldText("ADMIN SIGN IN", deepGreer, 20),
                 const SizedBox(height: 5),
-                LightText("Fill your credentials", deepBlue, 15),
+                BoldText("Fill your credentials", deepBlue, 15),
                 const SizedBox(height: 43),
+                //ADMIN EMAIL FIELD ---------->>>
                 TextFormField(
                   autofocus: false,
                   keyboardType: TextInputType.name,
@@ -29,7 +34,7 @@ class AdminSignIn extends StatelessWidget {
                     fillColor: whiteColor,
                     filled: true,
                     contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-                    hintText: "enter your mail",
+                    hintText: "Enter your Mail",
                     hintStyle: const TextStyle(
                         fontFamily: "Poppins", color: hint, fontSize: 15),
                     border: OutlineInputBorder(
@@ -38,6 +43,7 @@ class AdminSignIn extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 25),
+                //ADMIN PASSWORD FIELD ---------->>>
                 TextFormField(
                   autofocus: false,
                   keyboardType: TextInputType.name,
@@ -45,7 +51,7 @@ class AdminSignIn extends StatelessWidget {
                     fillColor: whiteColor,
                     filled: true,
                     contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-                    hintText: "enter password",
+                    hintText: "Enter Password",
                     hintStyle: const TextStyle(
                         fontFamily: "Poppins", color: hint, fontSize: 15),
                     border: OutlineInputBorder(
@@ -53,8 +59,9 @@ class AdminSignIn extends StatelessWidget {
                         borderSide: const BorderSide(color: deepBlue)),
                   ),
                 ),
-                const SizedBox(height: 95),
+                const Spacer(),
                 MaterialButton(
+                  minWidth: MediaQuery.of(context).size.width / 1.2,
                   color: deepBlue,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(28),
@@ -63,18 +70,14 @@ class AdminSignIn extends StatelessWidget {
                   child: BoldText("Sign In", whiteColor, 18),
                 ),
                 const SizedBox(height: 9),
-                Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () {},
-                      child: BoldText("Not an Admin?", deepGreer, 15),
-                    ),
-                    GestureDetector(
-                      onTap: () {},
-                      child: BoldText("Go Back", deepGreer, 15),
-                    ),
-                  ],
-                )
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const AdminUserScreen()));
+                  },
+                  child: BoldText("Not an Admin ? Go Back", deepGreer, 15),
+                ),
+                const SizedBox(height: 40),
               ],
             ),
           ),

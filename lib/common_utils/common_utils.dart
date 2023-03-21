@@ -6,11 +6,12 @@ const deepBlue = Color(0xFF0066FF);
 const whiteColor = Color(0xFFFFFFFF);
 const hint = Color(0xFFA5A4A4);
 
+// ignore: must_be_immutable
 class BoldText extends StatelessWidget {
   String text;
   Color color;
   double size;
-  BoldText(this.text, this.color, this.size);
+  BoldText(this.text, this.color, this.size, {super.key});
 
   @override
   Widget build(BuildContext context) {
