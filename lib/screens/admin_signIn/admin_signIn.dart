@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:orea/common_utils/common_utils.dart';
 import 'package:orea/common_utils/image_paths.dart';
 import 'package:orea/screens/admin_user/admin_user.dart';
+import 'package:orea/screens/orea_admin_pannel/orea_admin_pannel.dart';
 
 class AdminSignIn extends StatelessWidget {
   const AdminSignIn({super.key});
@@ -66,7 +67,10 @@ class AdminSignIn extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(28),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const WelcomeScreen()));
+                  },
                   child: BoldText("Sign In", whiteColor, 18),
                 ),
                 const SizedBox(height: 9),
