@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:orea/common_utils/common_utils.dart';
 import 'package:orea/screens/home_page/home_page.dart';
 
+import '../../common_utils/image_paths.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -28,12 +30,12 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Center(
         child: Column(
           children: [
-            Image.asset("assets/images/Logo.png"),
+            Image.asset(ImagePath.logo),
             const SizedBox(
               height: 56,
             ),
             BoldText("ONLINE REAL\n ESTATE\n APPLICATION", whiteColor, 20),
-           const  SizedBox(height: 8),
+            const SizedBox(height: 8),
             LightText("Buy | Sell | Rent | Bid", whiteColor, 15)
           ],
         ),
