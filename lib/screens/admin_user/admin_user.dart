@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:orea/common_utils/common_utils.dart';
 import 'package:orea/common_utils/image_paths.dart';
 import 'package:orea/screens/admin_signIn/admin_signIn.dart';
-import '../user_register/user_register.dart';
+import '../user_singIn/user_signIn.dart';
 
 class AdminUserScreen extends StatelessWidget {
   const AdminUserScreen({super.key});
