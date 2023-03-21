@@ -2,9 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:orea/common_utils/common_utils.dart';
-import 'package:orea/screens/home_page/home_page.dart';
-
 import '../../common_utils/image_paths.dart';
+import '../admin_user/admin_user.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -19,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(
         const Duration(seconds: 3),
         () => Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const HomePageScreen())));
+            MaterialPageRoute(builder: (context) => const AdminUserScreen())));
     super.initState();
   }
 
@@ -29,14 +28,17 @@ class _SplashScreenState extends State<SplashScreen> {
       backgroundColor: deepGreer,
       body: Center(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.asset(ImagePath.logo),
+            const Spacer(),
+            Image.asset(ImagePath.logo, height: 200),
             const SizedBox(
               height: 56,
             ),
-            BoldText("ONLINE REAL\n ESTATE\n APPLICATION", whiteColor, 20),
+            BoldText("ONLINE REAL\n      ESTATE\n APPLICATION", whiteColor, 20),
             const SizedBox(height: 8),
-            LightText("Buy | Sell | Rent | Bid", whiteColor, 15)
+            LightText("Buy | Sell | Rent | Bid", whiteColor, 15),
+            const Spacer(),
           ],
         ),
       ),
