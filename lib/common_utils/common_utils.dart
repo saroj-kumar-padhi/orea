@@ -44,3 +44,33 @@ class LightText extends StatelessWidget {
     );
   }
 }
+
+
+
+class ParagraphText extends StatelessWidget {
+  String text;
+  Color color;
+  double size;
+  final TextAlign textAlign;
+
+  ParagraphText(this.text, this.color, this.size, this.textAlign);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        RichText(
+          textAlign: textAlign,
+          text: TextSpan(
+            text: text,
+            style: TextStyle(
+              color: color,
+              fontSize: size,
+              fontFamily: 'Poppins-Bold',
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}

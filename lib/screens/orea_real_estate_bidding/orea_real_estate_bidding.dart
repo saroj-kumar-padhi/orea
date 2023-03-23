@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:orea/common_utils/common_utils.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:orea/common_utils/image_paths.dart';
+import 'package:orea/screens/privecy_policy/privecy_policy.dart';
+import 'package:orea/screens/view_lists/view_lists.dart';
 
 import '../admin_user/admin_user.dart';
+import '../contact_us_screen/contact_us_screen.dart';
 
 class RealEstateBidding extends StatefulWidget {
-  RealEstateBidding({super.key});
+  const RealEstateBidding({super.key});
 
   @override
   State<RealEstateBidding> createState() => _RealEstateBiddingState();
@@ -31,6 +34,10 @@ class _RealEstateBiddingState extends State<RealEstateBidding> {
           children: [
             BoldText("OREA ", deepGreer, 18),
             BoldText("Real Estate Bidding", deepGreer, 15),
+            const SizedBox(
+              width: 140,
+            ),
+            const Icon(Icons.notifications, color: hint),
           ],
         ),
         elevation: 0.5,
@@ -71,15 +78,20 @@ class _RealEstateBiddingState extends State<RealEstateBidding> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  userTabs("REQUESTS", () {}),
-                  userTabs("LISTINGS", () {}),
+                  userTabs("VIEW LISTINGS", () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const ViewListings()));
+                  }),
+                  userTabs("ADD PROPERTY", () {}),
                 ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  userTabs("HISTORY", () {}),
-                  userTabs("LOGOUT", () {
+                  userTabs("ADDED BY YOU", () {}),
+                  userTabs("VIEW BIDS", () {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const AdminUserScreen()));
                   }),
@@ -88,17 +100,24 @@ class _RealEstateBiddingState extends State<RealEstateBidding> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  userTabs("REQUESTS", () {}),
-                  userTabs("LISTINGS", () {}),
+                  userTabs("PROFILE", () {}),
+                  userTabs("BALANCE", () {}),
                 ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  userTabs("HISTORY", () {}),
-                  userTabs("LOGOUT", () {
+                  userTabs("OUR POLICY", () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const PrivecyScreen(),
+                      ),
+                    );
+                  }),
+                  userTabs("CONTACT US", () {
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const AdminUserScreen()));
+                        builder: (context) => const ContactUsScreen()));
                   }),
                 ],
               ),
