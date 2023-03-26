@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:orea/common_utils/common_utils.dart';
-import 'package:orea/common_utils/image_paths.dart';
+import 'package:Orea/common_utils/common_utils.dart';
+import 'package:Orea/common_utils/image_paths.dart';
 import '../user_singIn/user_signIn.dart';
 
 class UserRegister extends StatelessWidget {

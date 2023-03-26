@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:orea/common_utils/common_utils.dart';
-import 'package:orea/common_utils/image_paths.dart';
+import 'package:Orea/common_utils/common_utils.dart';
+import 'package:Orea/common_utils/image_paths.dart';
 import '../forgot_password/forgot_password.dart';
 import '../orea_real_estate_bidding/orea_real_estate_bidding.dart';
 import '../user_register/user_register.dart';

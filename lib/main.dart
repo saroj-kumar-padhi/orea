@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'package:orea/screens/splash_screen/splash_screen.dart';
+import 'package:Orea/screens/splash_screen/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:orea/common_utils/common_utils.dart';
-import 'package:orea/common_utils/image_paths.dart';
-import 'package:orea/screens/admin_user/admin_user.dart';
-import 'package:orea/screens/orea_admin_pannel/orea_admin_pannel.dart';
+import 'package:Orea/common_utils/common_utils.dart';
+import 'package:Orea/common_utils/image_paths.dart';
+import 'package:Orea/screens/admin_user/admin_user.dart';
+
+import '../welcome_admin/welcome_admin.dart';
 
 class AdminSignIn extends StatelessWidget {
   const AdminSignIn({super.key});
@@ -19,7 +20,6 @@ class AdminSignIn extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  
                   Image.asset(ImagePath.orea, height: 150),
                   const SizedBox(
                     height: 81.31,
@@ -61,7 +61,7 @@ class AdminSignIn extends StatelessWidget {
                           borderSide: const BorderSide(color: deepBlue)),
                     ),
                   ),
-                 const  SizedBox(
+                  const SizedBox(
                     height: 95,
                   ),
                   MaterialButton(

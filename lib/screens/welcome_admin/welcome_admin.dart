@@ -1,8 +1,7 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:orea/common_utils/common_utils.dart';
-import 'package:orea/screens/home_page/home_page.dart';
+import 'package:Orea/common_utils/common_utils.dart';
+import '../orea_admin_pannel/orea_admin_pannel.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
@@ -17,19 +16,20 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     Timer(
         const Duration(seconds: 3),
         () => Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const HomePageScreen())));
+            MaterialPageRoute(builder: (context) => const OreaAdmin())));
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: deepGreer,
+      backgroundColor: whiteColor,
       body: Center(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(34, 0, 34, 10),
           child: Column(
             children: [
+              const Spacer(),
               Image.asset("assets/images/Logo.png"),
               const SizedBox(
                 height: 107.31,
@@ -41,6 +41,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               const SizedBox(height: 33),
               const CircularProgressIndicator(
                   color: deepBlue, backgroundColor: hint),
+              const Spacer(),
             ],
           ),
         ),

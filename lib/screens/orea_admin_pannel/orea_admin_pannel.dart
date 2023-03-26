@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:orea/common_utils/common_utils.dart';
-import 'package:orea/common_utils/image_paths.dart';
-import 'package:orea/screens/admin_user/admin_user.dart';
+import 'package:Orea/common_utils/common_utils.dart';
+import 'package:Orea/common_utils/image_paths.dart';
+import 'package:Orea/screens/admin_user/admin_user.dart';
+import 'package:Orea/screens/all_listings_delete/all_listings_delete.dart';
+import 'package:Orea/screens/history_screen/history_screen.dart';
 
-class WelcomeScreen extends StatefulWidget {
-  const WelcomeScreen({super.key});
+import '../pending_request/pending_request.dart';
+
+class OreaAdmin extends StatefulWidget {
+  const OreaAdmin({super.key});
 
   @override
-  State<WelcomeScreen> createState() => _WelcomeScreenState();
+  State<OreaAdmin> createState() => _OreaAdmin();
 }
 
-class _WelcomeScreenState extends State<WelcomeScreen> {
+class _OreaAdmin extends State<OreaAdmin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,14 +42,30 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  adminTabs("REQUESTS", () {}),
-                  adminTabs("LISTINGS", () {}),
+                  adminTabs("REQUESTS", () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const PendingRequest()));
+                  }),
+                  adminTabs(
+                    "LISTINGS",
+                    () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const AllListingsDelete()));
+                    },
+                  ),
                 ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  adminTabs("HISTORY", () {}),
+                  adminTabs("HISTORY", () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const HistoryScreen()));
+                  }),
                   adminTabs("LOGOUT", () {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const AdminUserScreen()));
