@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:orea/common_utils/common_utils.dart';
-import 'package:orea/common_utils/image_paths.dart';
-import 'package:orea/screens/admin_signIn/admin_signIn.dart';
+import 'package:Orea/common_utils/common_utils.dart';
+import 'package:Orea/common_utils/image_paths.dart';
+import 'package:Orea/screens/admin_signIn/admin_signIn.dart';
 import '../user_singIn/user_signIn.dart';
 
 class AdminUserScreen extends StatelessWidget {

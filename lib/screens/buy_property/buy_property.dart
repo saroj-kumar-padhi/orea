@@ -1,10 +1,8 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:orea/common_utils/common_utils.dart';
-import 'package:dots_indicator/dots_indicator.dart';
-import 'package:orea/common_utils/image_paths.dart';
+import 'package:Orea/common_utils/common_utils.dart';
 
-import '../admin_user/admin_user.dart';
+import 'package:Orea/common_utils/image_paths.dart';
+
 import '../payment_screen/payment_screen.dart';
 
 class BuyProperty extends StatelessWidget {
@@ -62,7 +60,10 @@ class BuyProperty extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20)),
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const PaymentScreen()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const PaymentScreen()));
                 },
                 child: BoldText("Proceed to Pay", whiteColor, 18),
               ),

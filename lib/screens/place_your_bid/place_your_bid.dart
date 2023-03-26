@@ -1,11 +1,8 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:orea/common_utils/common_utils.dart';
-import 'package:dots_indicator/dots_indicator.dart';
-import 'package:orea/common_utils/image_paths.dart';
-import 'package:orea/screens/buy_property/buy_property.dart';
+import 'package:Orea/common_utils/common_utils.dart';
 
-import '../admin_user/admin_user.dart';
+import 'package:Orea/common_utils/image_paths.dart';
+import 'package:Orea/screens/buy_property/buy_property.dart';
 
 class PlaceYourBid extends StatelessWidget {
   const PlaceYourBid({super.key});
@@ -91,7 +88,8 @@ class PlaceYourBid extends StatelessWidget {
                 color: deepBlue,
                 height: 40,
                 minWidth: MediaQuery.of(context).size.width,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(28)),
                 onPressed: () {
                   Navigator.push(
                       context,

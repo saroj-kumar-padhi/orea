@@ -1,7 +1,6 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:orea/common_utils/common_utils.dart';
+import 'package:Orea/common_utils/common_utils.dart';
 import '../../common_utils/image_paths.dart';
 import '../admin_user/admin_user.dart';
 

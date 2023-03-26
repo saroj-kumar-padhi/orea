@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:orea/common_utils/image_paths.dart';
+
+import 'package:Orea/common_utils/image_paths.dart';
 
 import '../../common_utils/common_utils.dart';
 
@@ -11,6 +10,7 @@ class ContactUsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: whiteColor,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: BoldText("CONTACT US", deepGreer, 18),
@@ -34,7 +34,7 @@ class ContactUsScreen extends StatelessWidget {
               width: 200,
             ),
             const SizedBox(height: 30),
-            BoldText("Mr. Aziz Ul,lah", deepGreer, 15),
+            BoldText("Mr. Aziz Ullah", deepGreer, 15),
             const SizedBox(height: 14),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -46,7 +46,9 @@ class ContactUsScreen extends StatelessWidget {
             const SizedBox(height: 43),
             const Divider(color: hint),
             const Spacer(),
-            const SizedBox(height: 300,)
+            const SizedBox(
+              height: 300,
+            )
           ],
         ),
       ),

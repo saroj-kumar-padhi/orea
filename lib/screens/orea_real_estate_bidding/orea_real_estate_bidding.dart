@@ -1,12 +1,16 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:orea/common_utils/common_utils.dart';
+import 'package:Orea/common_utils/common_utils.dart';
 import 'package:dots_indicator/dots_indicator.dart';
-import 'package:orea/common_utils/image_paths.dart';
-import 'package:orea/screens/privecy_policy/privecy_policy.dart';
-import 'package:orea/screens/view_lists/view_lists.dart';
+import 'package:Orea/common_utils/image_paths.dart';
+import 'package:Orea/screens/add_property/add_property.dart';
+import 'package:Orea/screens/bid_history/bid_history.dart';
+import 'package:Orea/screens/privecy_policy/privecy_policy.dart';
+import 'package:Orea/screens/property_added_by_you/property_added_by_you.dart';
+import 'package:Orea/screens/user_profile/user_profile.dart';
+import 'package:Orea/screens/view_lists/view_lists.dart';
+import 'package:Orea/screens/your_balance/your_balance.dart';
 
-import '../admin_user/admin_user.dart';
 import '../contact_us_screen/contact_us_screen.dart';
 
 class RealEstateBidding extends StatefulWidget {
@@ -84,24 +88,42 @@ class _RealEstateBiddingState extends State<RealEstateBidding> {
                         MaterialPageRoute(
                             builder: (context) => const ViewListings()));
                   }),
-                  userTabs("ADD PROPERTY", () {}),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  userTabs("ADDED BY YOU", () {}),
-                  userTabs("VIEW BIDS", () {
+                  userTabs("ADD PROPERTY", () {
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const AdminUserScreen()));
+                        builder: (context) => const AddProperty()));
                   }),
                 ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  userTabs("PROFILE", () {}),
-                  userTabs("BALANCE", () {}),
+                  userTabs("ADDED BY YOU", () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const AddedByYou()));
+                  }),
+                  userTabs("VIEW BIDS", () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const BidHistory()));
+                  }),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  userTabs("PROFILE", () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const UserProfile(),
+                      ),
+                    );
+                  }),
+                  userTabs("BALANCE", () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const YourBalance()));
+                  }),
                 ],
               ),
               Row(

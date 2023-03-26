@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../common_utils/common_utils.dart';
-import '../orea_real_estate_bidding/orea_real_estate_bidding.dart';
+import '../add_property/add_property.dart';
 
 class PaymentScreen extends StatefulWidget {
   const PaymentScreen({super.key});
@@ -109,9 +109,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => RealEstateBidding(),
-                    ),
+                    MaterialPageRoute(builder: (context) => AddProperty()),
                   );
                 },
                 shape: RoundedRectangleBorder(

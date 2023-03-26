@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../common_utils/common_utils.dart';
-import '../orea_real_estate_bidding/orea_real_estate_bidding.dart';
 
 class PrivecyScreen extends StatelessWidget {
   const PrivecyScreen({super.key});

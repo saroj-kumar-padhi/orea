@@ -4,20 +4,15 @@ import 'package:Orea/common_utils/common_utils.dart';
 import 'package:Orea/common_utils/image_paths.dart';
 import 'package:Orea/screens/place_your_bid/place_your_bid.dart';
 
-class ViewListings extends StatefulWidget {
-  const ViewListings({super.key});
+class PendingRequest extends StatelessWidget {
+  const PendingRequest({super.key});
 
-  @override
-  State<ViewListings> createState() => _ViewListings();
-}
-
-class _ViewListings extends State<ViewListings> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: BoldText("All LISTINGS", deepGreer, 18),
+        title: BoldText("PENDING REQUESTS", deepGreer, 18),
         centerTitle: true,
         elevation: 0.5,
         backgroundColor: whiteColor,
@@ -44,16 +39,12 @@ class _ViewListings extends State<ViewListings> {
               const SizedBox(
                 height: 27,
               ),
-              const Divider(color: hint),
-              const SizedBox(height: 27),
               listItem(ImagePath.house, () {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => const PlaceYourBid()));
               }),
-              const SizedBox(height: 27),
-              const Divider(color: hint),
               const SizedBox(height: 27),
               listItem(ImagePath.house, () {
                 Navigator.push(
@@ -74,7 +65,7 @@ Widget listItem(image, onTap) {
   return Row(
     children: [
       ClipRRect(
-        borderRadius: BorderRadius.circular(5),
+        borderRadius: BorderRadius.circular(12),
         child: Image.asset(
           image,
           height: 100,
@@ -88,11 +79,9 @@ Widget listItem(image, onTap) {
           children: [
             BoldText("Property Title", deepGreer, 17),
             const SizedBox(width: 8),
-            BoldText("PKR 2CR", deepBlue, 17)
+            BoldText("PKR 90L", deepBlue, 17)
           ],
         ),
-        const SizedBox(height: 2),
-        LightText("by Asif Raza|asif@gmail.com", deepGreer, 13),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -102,7 +91,7 @@ Widget listItem(image, onTap) {
               height: 28,
               minWidth: 95,
               onPressed: onTap,
-              child: BoldText("BUY", whiteColor, 13),
+              child: BoldText("Approve", whiteColor, 13),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5),
                   side: const BorderSide(color: deepBlue)),
@@ -114,7 +103,7 @@ Widget listItem(image, onTap) {
               height: 28,
               minWidth: 95,
               onPressed: () {},
-              child: BoldText("BID", deepBlue, 13),
+              child: BoldText("Decline", deepBlue, 13),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5),
                   side: const BorderSide(color: deepBlue)),
