@@ -14,6 +14,7 @@ class _HistoryScreen extends State<HistoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: whiteColor,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: BoldText("HISTORY", deepGreer, 18),
@@ -27,26 +28,35 @@ class _HistoryScreen extends State<HistoryScreen> {
           icon: const Icon(Icons.arrow_back, color: black),
         ),
       ),
-      body: Center(
+      body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(24, 44, 24, 10),
+          padding: const EdgeInsets.all(20),
           child: Column(
             children: [
+              const SizedBox(height: 10),
+              BoldText('All Property Purchase Will Appear Here', deepGreer, 12),
               const SizedBox(height: 20),
-              BoldText('All Property Purchese Will Appear Here', deepGreer, 12),
-              const SizedBox(height: 35),
-              listItem(ImagePath.house),
-              const SizedBox(height: 25),
-              const Divider(color: hint),
-              const SizedBox(height: 25),
-              listItem(ImagePath.house),
-              const SizedBox(height: 25),
-              const Divider(color: hint),
-              const SizedBox(height: 25),
-              listItem(ImagePath.house),
-              const SizedBox(height: 25),
-              const Divider(color: hint),
-              const SizedBox(height: 25),
+              listItem(
+                ImagePath.house,
+                "Property Title",
+                "PKR 2Cr",
+                "by Asif Raza | asif@gmail.com",
+                "by Asif Raza | asif@gmail.com",
+              ),
+              listItem(
+                ImagePath.house,
+                "Property Title",
+                "PKR 2Cr",
+                "by Asif Raza | asif@gmail.com",
+                "by Asif Raza | asif@gmail.com",
+              ),
+              listItem(
+                ImagePath.house,
+                "Property Title",
+                "PKR 2Cr",
+                "by Asif Raza | asif@gmail.com",
+                "by Asif Raza | asif@gmail.com",
+              ),
             ],
           ),
         ),
@@ -56,44 +66,53 @@ class _HistoryScreen extends State<HistoryScreen> {
 }
 
 //Clickable Tabs ---------->>>
-Widget listItem(
-  image,
-) {
-  return Row(
+Widget listItem(image, title, rate, seller, buyer) {
+  return Column(
     children: [
-      ClipRRect(
-        borderRadius: BorderRadius.circular(5),
-        child: Image.asset(
-          image,
-          height: 100,
-          width: 120,
-        ),
-      ),
-      const SizedBox(width: 22),
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      const SizedBox(height: 10),
+      Row(
         children: [
-          Row(children: [
-            BoldText("Property Title", deepGreer, 15),
-            const SizedBox(width: 8),
-            BoldText("PKR 2Cr", deepBlue, 15),
-          ]),
-          const SizedBox(height: 15),
-          Row(
-            children: [
-              BoldText("SELLER: ", deepGreer, 11),
-              LightText("by Asif Raza|asif@gmail.com", deepGreer, 11),
-            ],
+          Container(
+            height: 80,
+            width: 110,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(7),
+                border: Border.all(color: deepBlue, width: 1),
+                image: DecorationImage(
+                  image: AssetImage(image),
+                  fit: BoxFit.cover,
+                )),
           ),
-          const SizedBox(height: 5),
-          Row(
+          const SizedBox(width: 22),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              BoldText("BUYER: ", deepBlue, 11),
-              LightText("by Asif Raza|asif@gmail.com", deepGreer, 11),
+              Row(children: [
+                BoldText(title, deepGreer, 15),
+                const SizedBox(width: 8),
+                BoldText(rate, deepBlue, 15),
+              ]),
+              const SizedBox(height: 15),
+              Row(
+                children: [
+                  BoldText("SELLER: ", deepBlue, 11),
+                  LightText(seller, deepGreer, 11),
+                ],
+              ),
+              const SizedBox(height: 5),
+              Row(
+                children: [
+                  BoldText("BUYER: ", deepGreer, 11),
+                  LightText(buyer, deepGreer, 11),
+                ],
+              ),
             ],
           ),
         ],
       ),
+      const SizedBox(height: 20),
+      const Divider(color: hint),
+      const SizedBox(height: 10),
     ],
   );
 }

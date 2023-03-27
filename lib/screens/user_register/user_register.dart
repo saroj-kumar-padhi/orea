@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:Orea/common_utils/common_utils.dart';
 import 'package:Orea/common_utils/image_paths.dart';
+import '../orea_real_estate_bidding/orea_real_estate_bidding.dart';
 import '../user_singIn/user_signIn.dart';
 
 class UserRegister extends StatelessWidget {
-  const UserRegister({super.key});
+  UserRegister({super.key});
+
+  //editing controllers
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  //formkey
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +31,11 @@ class UserRegister extends StatelessWidget {
       ),
       body: SafeArea(
         top: true,
-        child: Center(
+        child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.fromLTRB(24, 20, 24, 0),
-            child: SingleChildScrollView(
+            child: Form(
+              key: _formKey,
               child: Column(
                 children: [
                   Image.asset(ImagePath.orea, height: 140),
@@ -51,6 +61,20 @@ class UserRegister extends StatelessWidget {
                           borderRadius: BorderRadius.circular(30),
                           borderSide: const BorderSide(color: deepBlue)),
                     ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return ("Please enter your Full Name");
+                      }
+                      //reg expression for name validation
+                      if (!RegExp(r'^.{4,}$').hasMatch(value)) {
+                        return ("Please enter a valid Name");
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      nameController.text = value!;
+                    },
+                    textInputAction: TextInputAction.next,
                   ),
                   const SizedBox(height: 25),
                   //EMAIL FIELD ---------->>>
@@ -68,6 +92,21 @@ class UserRegister extends StatelessWidget {
                           borderRadius: BorderRadius.circular(30),
                           borderSide: const BorderSide(color: deepBlue)),
                     ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return ("Please enter your Email");
+                      }
+                      //reg expression for email validation
+                      if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+[a-z]")
+                          .hasMatch(value)) {
+                        return ("Please enter a valid Email (xyz@email.com)");
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      emailController.text = value!;
+                    },
+                    textInputAction: TextInputAction.next,
                   ),
                   const SizedBox(height: 25),
                   //PASSWORD FIELD ---------->>>
@@ -85,6 +124,20 @@ class UserRegister extends StatelessWidget {
                           borderRadius: BorderRadius.circular(30),
                           borderSide: const BorderSide(color: deepBlue)),
                     ),
+                    validator: (value) {
+                      //reg expression for passowrd validation
+                      RegExp regex = RegExp(r'^.{6,}$');
+                      if (value!.isEmpty) {
+                        return ("Please enter your password");
+                      }
+                      if (!regex.hasMatch(value)) {
+                        return ("Please enter a valid password (min 6 char)");
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      passwordController.text = value!;
+                    },
                   ),
                   const SizedBox(height: 50),
                   //REGISTER BUTTON ---------->>>
@@ -95,14 +148,19 @@ class UserRegister extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(28),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => RealEstateBidding()));
+                      }
+                    },
                     child: BoldText("Register", whiteColor, 18),
                   ),
                   const SizedBox(height: 9),
                   GestureDetector(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const UserSignIn()));
+                          builder: (context) => UserSignIn()));
                     },
                     child: BoldText("Already a User ? Login", deepGreer, 15),
                   ),

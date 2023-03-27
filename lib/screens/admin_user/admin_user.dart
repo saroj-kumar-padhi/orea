@@ -36,7 +36,7 @@ class AdminUserScreen extends StatelessWidget {
                   ),
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const AdminSignIn(),
+                      builder: (context) => AdminSignIn(),
                     ));
                   },
                   child: BoldText("ADMIN", whiteColor, 18),
@@ -53,8 +53,8 @@ class AdminUserScreen extends StatelessWidget {
                     side: const BorderSide(color: deepBlue, width: 1.0),
                   ),
                   onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const UserSignIn()));
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => UserSignIn()));
                   },
                   child: BoldText("USER", deepBlue, 18),
                 ),

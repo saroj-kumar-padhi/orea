@@ -1,3 +1,4 @@
+// ignore: file_names
 import 'package:flutter/material.dart';
 import 'package:Orea/common_utils/common_utils.dart';
 import 'package:Orea/common_utils/image_paths.dart';
@@ -6,7 +7,14 @@ import '../orea_real_estate_bidding/orea_real_estate_bidding.dart';
 import '../user_register/user_register.dart';
 
 class UserSignIn extends StatelessWidget {
-  const UserSignIn({super.key});
+  UserSignIn({super.key});
+
+  //editing controllers
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  //formkey
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +32,11 @@ class UserSignIn extends StatelessWidget {
       ),
       body: SafeArea(
         top: true,
-        child: Center(
+        child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.fromLTRB(24, 20, 24, 0),
-            child: SingleChildScrollView(
+            child: Form(
+              key: _formKey,
               child: Column(
                 children: [
                   Image.asset(ImagePath.orea, height: 150),
@@ -36,6 +45,7 @@ class UserSignIn extends StatelessWidget {
                   const SizedBox(height: 5),
                   BoldText("Fill your credentials", deepBlue, 15),
                   const SizedBox(height: 43),
+                  // USER EMAIL FIELD ---------->>>
                   TextFormField(
                     autofocus: false,
                     keyboardType: TextInputType.name,
@@ -50,8 +60,24 @@ class UserSignIn extends StatelessWidget {
                           borderRadius: BorderRadius.circular(30),
                           borderSide: const BorderSide(color: deepBlue)),
                     ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return ("Please enter your Email");
+                      }
+                      //reg expression for email validation
+                      if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+[a-z]")
+                          .hasMatch(value)) {
+                        return ("Please enter a valid Email (xyz@email.com)");
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      emailController.text = value!;
+                    },
+                    textInputAction: TextInputAction.next,
                   ),
                   const SizedBox(height: 25),
+                  // USER PASSWORD FIELD ---------->>>
                   TextFormField(
                     autofocus: false,
                     keyboardType: TextInputType.name,
@@ -66,6 +92,19 @@ class UserSignIn extends StatelessWidget {
                           borderRadius: BorderRadius.circular(30),
                           borderSide: const BorderSide(color: deepBlue)),
                     ),
+                    validator: (value) {
+                      RegExp regex = RegExp(r'^.{6,}$');
+                      if (value!.isEmpty) {
+                        return ("Please enter your password");
+                      }
+                      if (!regex.hasMatch(value)) {
+                        return ("Please enter a valid password (min 6 char)");
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      passwordController.text = value!;
+                    },
                   ),
                   const SizedBox(height: 95),
                   MaterialButton(
@@ -76,8 +115,10 @@ class UserSignIn extends StatelessWidget {
                       borderRadius: BorderRadius.circular(28),
                     ),
                     onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => RealEstateBidding()));
+                      if (_formKey.currentState!.validate()) {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => RealEstateBidding()));
+                      }
                     },
                     child: BoldText("Sign In", whiteColor, 18),
                   ),
@@ -88,14 +129,14 @@ class UserSignIn extends StatelessWidget {
                       GestureDetector(
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const ForgotPassword()));
+                              builder: (context) => ForgotPassword()));
                         },
                         child: BoldText("Forgot Password |", deepGreer, 15),
                       ),
                       GestureDetector(
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const UserRegister()));
+                              builder: (context) => UserRegister()));
                         },
                         child: BoldText(" Register", deepGreer, 15),
                       ),
