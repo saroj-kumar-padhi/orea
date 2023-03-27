@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:Orea/common_utils/common_utils.dart';
 import 'package:Orea/common_utils/image_paths.dart';
 import 'package:Orea/screens/admin_user/admin_user.dart';
-import 'package:Orea/screens/all_listings_delete/all_listings_delete.dart';
+import 'package:Orea/screens/all_listings_delete/edit_all_listings.dart';
 import 'package:Orea/screens/history_screen/history_screen.dart';
 
 import '../pending_request/pending_request.dart';
@@ -49,7 +49,7 @@ class _OreaAdmin extends State<OreaAdmin> {
                             builder: (context) => const PendingRequest()));
                   }),
                   adminTabs(
-                    "LISTINGS",
+                    "EDIT LISTINGS",
                     () {
                       Navigator.push(
                           context,

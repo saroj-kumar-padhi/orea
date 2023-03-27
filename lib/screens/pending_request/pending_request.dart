@@ -10,6 +10,7 @@ class PendingRequest extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: whiteColor,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: BoldText("PENDING REQUESTS", deepGreer, 18),
@@ -23,35 +24,59 @@ class PendingRequest extends StatelessWidget {
           icon: const Icon(Icons.arrow_back, color: black),
         ),
       ),
-      body: Center(
+      body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(24, 44, 24, 10),
+          padding: const EdgeInsets.all(20),
           child: Column(
             children: [
-              listItem(ImagePath.house, () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const PlaceYourBid(),
-                  ),
-                );
-              }),
-              const SizedBox(
-                height: 27,
+              listItem(
+                ImagePath.house,
+                "Property Title",
+                "PKR 90L",
+                // APPROVE ------->>>
+                () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const PlaceYourBid(),
+                    ),
+                  );
+                },
+                // DECLINE ------->>>
+                () {},
               ),
-              listItem(ImagePath.house, () {
-                Navigator.push(
+              listItem(
+                ImagePath.house,
+                "Property Title",
+                "PKR 90L",
+                // APPROVE ------->>>
+                () {
+                  Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const PlaceYourBid()));
-              }),
-              const SizedBox(height: 27),
-              listItem(ImagePath.house, () {
-                Navigator.push(
+                      builder: (context) => const PlaceYourBid(),
+                    ),
+                  );
+                },
+                // DECLINE ------->>>
+                () {},
+              ),
+              listItem(
+                ImagePath.house,
+                "Property Title",
+                "PKR 90L",
+                // APPROVE ------->>>
+                () {
+                  Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const PlaceYourBid()));
-              })
+                      builder: (context) => const PlaceYourBid(),
+                    ),
+                  );
+                },
+                // DECLINE ------->>>
+                () {},
+              )
             ],
           ),
         ),
@@ -61,56 +86,66 @@ class PendingRequest extends StatelessWidget {
 }
 
 //Clickable Tabs ---------->>>
-Widget listItem(image, onTap) {
-  return Row(
+Widget listItem(image, title, rate, approve, decline) {
+  return Column(
     children: [
-      ClipRRect(
-        borderRadius: BorderRadius.circular(12),
-        child: Image.asset(
-          image,
-          height: 100,
-          width: 120,
-        ),
+      const SizedBox(height: 12),
+      Row(
+        children: [
+          Container(
+            height: 70,
+            width: 110,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(7),
+                border: Border.all(color: deepBlue, width: 1),
+                image: DecorationImage(
+                  image: AssetImage(image),
+                  fit: BoxFit.cover,
+                )),
+          ),
+          const SizedBox(width: 22),
+          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                BoldText(title, deepGreer, 16),
+                const SizedBox(width: 10),
+                BoldText(rate, deepBlue, 16)
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                MaterialButton(
+                  elevation: 0.0,
+                  color: deepBlue,
+                  height: 28,
+                  minWidth: 95,
+                  onPressed: approve,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                      side: const BorderSide(color: deepBlue)),
+                  child: BoldText("Approve", whiteColor, 13),
+                ),
+                const SizedBox(width: 8),
+                MaterialButton(
+                  elevation: 0.0,
+                  color: whiteColor,
+                  height: 28,
+                  minWidth: 95,
+                  onPressed: decline,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                      side: const BorderSide(color: deepBlue)),
+                  child: BoldText("Decline", deepBlue, 13),
+                ),
+              ],
+            )
+          ]),
+        ],
       ),
-      const SizedBox(width: 22),
-      Column(children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            BoldText("Property Title", deepGreer, 17),
-            const SizedBox(width: 8),
-            BoldText("PKR 90L", deepBlue, 17)
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            MaterialButton(
-              elevation: 0.0,
-              color: deepBlue,
-              height: 28,
-              minWidth: 95,
-              onPressed: onTap,
-              child: BoldText("Approve", whiteColor, 13),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5),
-                  side: const BorderSide(color: deepBlue)),
-            ),
-            const SizedBox(width: 8),
-            MaterialButton(
-              elevation: 0.0,
-              color: whiteColor,
-              height: 28,
-              minWidth: 95,
-              onPressed: () {},
-              child: BoldText("Decline", deepBlue, 13),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5),
-                  side: const BorderSide(color: deepBlue)),
-            ),
-          ],
-        )
-      ]),
+      const SizedBox(height: 15),
+      const Divider(color: hint),
     ],
   );
 }
