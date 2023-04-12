@@ -1,9 +1,10 @@
 // ignore: file_names
+import 'package:Orea/screens/orea_real_estate_bidding/orea_real_estate_bidding.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:Orea/common_utils/common_utils.dart';
 import 'package:Orea/common_utils/image_paths.dart';
 import '../forgot_password/forgot_password.dart';
-import '../orea_real_estate_bidding/orea_real_estate_bidding.dart';
 import '../user_register/user_register.dart';
 
 class UserSignIn extends StatelessWidget {
@@ -47,6 +48,7 @@ class UserSignIn extends StatelessWidget {
                   const SizedBox(height: 43),
                   // USER EMAIL FIELD ---------->>>
                   TextFormField(
+                    controller: emailController,
                     autofocus: false,
                     keyboardType: TextInputType.name,
                     decoration: InputDecoration(
@@ -79,6 +81,7 @@ class UserSignIn extends StatelessWidget {
                   const SizedBox(height: 25),
                   // USER PASSWORD FIELD ---------->>>
                   TextFormField(
+                    controller: passwordController,
                     autofocus: false,
                     keyboardType: TextInputType.name,
                     decoration: InputDecoration(
@@ -114,10 +117,22 @@ class UserSignIn extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(28),
                     ),
-                    onPressed: () {
+                    onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => RealEstateBidding()));
+                        try {
+                          final credential = await FirebaseAuth.instance
+                              .signInWithEmailAndPassword(
+                                  email: emailController.text,
+                                  password: passwordController.text);
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const RealEstateBidding()));
+                        } on FirebaseAuthException catch (e) {
+                          if (e.code == 'user-not-found') {
+                            print('No user found for that email.');
+                          } else if (e.code == 'wrong-password') {
+                            print('Wrong password provided for that user.');
+                          }
+                        }
                       }
                     },
                     child: BoldText("Sign In", whiteColor, 18),

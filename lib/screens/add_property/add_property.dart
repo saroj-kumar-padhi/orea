@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:Orea/common_utils/common_utils.dart';
 
@@ -8,6 +10,11 @@ class AddProperty extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController addProperty = TextEditingController();
+    final TextEditingController addDescription = TextEditingController();
+    final TextEditingController addAmount = TextEditingController();
+    CollectionReference usersRef =
+        FirebaseFirestore.instance.collection('users');
     return Scaffold(
       backgroundColor: whiteColor,
       appBar: AppBar(
@@ -66,6 +73,7 @@ class AddProperty extends StatelessWidget {
                 BoldText("Add property Tilte", black, 15),
                 const SizedBox(height: 10),
                 TextFormField(
+                  controller: addProperty,
                   autofocus: false,
                   keyboardType: TextInputType.name,
                   decoration: InputDecoration(
@@ -81,6 +89,7 @@ class AddProperty extends StatelessWidget {
                 BoldText("Add property Description", black, 15),
                 const SizedBox(height: 10),
                 TextFormField(
+                  controller: addDescription,
                   minLines: 3,
                   maxLines: 5,
                   maxLength: 100,
@@ -98,6 +107,7 @@ class AddProperty extends StatelessWidget {
                 BoldText("Add amount", black, 15),
                 const SizedBox(height: 10),
                 TextFormField(
+                  controller: addAmount,
                   keyboardType: TextInputType.name,
                   decoration: InputDecoration(
                     fillColor: whiteColor,
@@ -116,7 +126,17 @@ class AddProperty extends StatelessWidget {
                     elevation: 0.0,
                     height: 40,
                     minWidth: MediaQuery.of(context).size.width,
-                    onPressed: () {
+                    onPressed: () async {
+                      Map<String, String> data = {
+                        'propertyName': addProperty.text,
+                        'propertyDescription': addDescription.text,
+                        'addAmoount': addAmount.text,
+                        'status': 'panding',
+                        'userId': FirebaseAuth.instance.currentUser!.uid
+                      };
+                      DocumentReference docRef = await usersRef.add(data);
+                      print('Added document with ID: ${docRef.id}');
+
                       Navigator.push(
                           context,
                           MaterialPageRoute(

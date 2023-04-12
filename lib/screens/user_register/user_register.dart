@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:Orea/common_utils/common_utils.dart';
 import 'package:Orea/common_utils/image_paths.dart';
@@ -79,6 +80,7 @@ class UserRegister extends StatelessWidget {
                   const SizedBox(height: 25),
                   //EMAIL FIELD ---------->>>
                   TextFormField(
+                    controller: emailController,
                     autofocus: false,
                     keyboardType: TextInputType.name,
                     decoration: InputDecoration(
@@ -111,6 +113,7 @@ class UserRegister extends StatelessWidget {
                   const SizedBox(height: 25),
                   //PASSWORD FIELD ---------->>>
                   TextFormField(
+                    controller: passwordController,
                     autofocus: false,
                     keyboardType: TextInputType.name,
                     decoration: InputDecoration(
@@ -148,10 +151,25 @@ class UserRegister extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(28),
                     ),
-                    onPressed: () {
+                    onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => RealEstateBidding()));
+                        try {
+                          final credential = await FirebaseAuth.instance
+                              .createUserWithEmailAndPassword(
+                            email: emailController.text,
+                            password: passwordController.text,
+                          );
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const RealEstateBidding()));
+                        } on FirebaseAuthException catch (e) {
+                          if (e.code == 'weak-password') {
+                            print('The password provided is too weak.');
+                          } else if (e.code == 'email-already-in-use') {
+                            print('The account already exists for that email.');
+                          }
+                        } catch (e) {
+                          print(e);
+                        }
                       }
                     },
                     child: BoldText("Register", whiteColor, 18),

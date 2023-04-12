@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:Orea/common_utils/common_utils.dart';
 
@@ -14,63 +15,90 @@ class ViewListings extends StatefulWidget {
 class _ViewListings extends State<ViewListings> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: BoldText("All LISTINGS", deepGreer, 18),
-        centerTitle: true,
-        elevation: 0.5,
-        backgroundColor: whiteColor,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(Icons.arrow_back, color: black),
-        ),
-      ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(24, 44, 24, 10),
-          child: Column(
-            children: [
-              listItem(ImagePath.house, () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const PlaceYourBid(),
-                  ),
-                );
-              }),
-              const SizedBox(
-                height: 27,
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+    final CollectionReference propertiesRef = firestore.collection('users');
+    Future<QuerySnapshot<Map<String, dynamic>>> fetchAppropedRequest() async {
+      final Query query = propertiesRef.where('status', isEqualTo: 'approved');
+      final QuerySnapshot<Map<String, dynamic>> snapshot =
+          await query.get() as QuerySnapshot<Map<String, dynamic>>;
+
+      return snapshot;
+    }
+
+    return FutureBuilder<QuerySnapshot>(
+        future: FirebaseFirestore.instance
+            .collection('listings')
+            .where('status', isEqualTo: 'approved')
+            .get(),
+        builder: (context, snapshot) {
+          // Your code here
+          return Scaffold(
+            appBar: AppBar(
+              automaticallyImplyLeading: false,
+              title: BoldText("All LISTINGS", deepGreer, 18),
+              centerTitle: true,
+              elevation: 0.5,
+              backgroundColor: whiteColor,
+              leading: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const Icon(Icons.arrow_back, color: black),
               ),
-              const Divider(color: hint),
-              const SizedBox(height: 27),
-              listItem(ImagePath.house, () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const PlaceYourBid()));
-              }),
-              const SizedBox(height: 27),
-              const Divider(color: hint),
-              const SizedBox(height: 27),
-              listItem(ImagePath.house, () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const PlaceYourBid()));
-              })
-            ],
-          ),
-        ),
-      ),
-    );
+            ),
+            body: Center(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(24, 44, 24, 10),
+                child: FutureBuilder<QuerySnapshot>(
+                    future: FirebaseFirestore.instance
+                        .collection('users')
+                        .where('status', isEqualTo: 'approved')
+                        .get(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        // return a loading indicator while the data is being fetched
+                        return const Center(child: CircularProgressIndicator());
+                      } else if (snapshot.hasError) {
+                        // handle any errors that occur while fetching the data
+                        return const Center(child: Text('Error fetching data'));
+                      }
+                      final List<QueryDocumentSnapshot<Map<String, dynamic>>>
+                          documents = snapshot.data?.docs as List<
+                              QueryDocumentSnapshot<Map<String, dynamic>>>;
+                      return ListView.builder(
+                          itemCount: documents.length,
+                          itemBuilder: (context, index) {
+                            Map<String, dynamic>? data =
+                                documents[index].data();
+                            return Column(
+                              children: [
+                                listItem(ImagePath.house, () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const PlaceYourBid(),
+                                    ),
+                                  );
+                                }, data['propertyName'] ?? 'N/A'),
+                                const SizedBox(
+                                  height: 27,
+                                ),
+                                const Divider(color: hint),
+                                const SizedBox(height: 27),
+                              ],
+                            );
+                          });
+                    }),
+              ),
+            ),
+          );
+        });
   }
 }
 
 //Clickable Tabs ---------->>>
-Widget listItem(image, onTap) {
+Widget listItem(image, onTap, title) {
   return Row(
     children: [
       ClipRRect(
@@ -88,7 +116,7 @@ Widget listItem(image, onTap) {
           children: [
             BoldText("Property Title", deepGreer, 17),
             const SizedBox(width: 8),
-            BoldText("PKR 2CR", deepBlue, 17)
+            BoldText(title, deepBlue, 17)
           ],
         ),
         const SizedBox(height: 2),
@@ -102,10 +130,10 @@ Widget listItem(image, onTap) {
               height: 28,
               minWidth: 95,
               onPressed: onTap,
-              child: BoldText("BUY", whiteColor, 13),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5),
                   side: const BorderSide(color: deepBlue)),
+              child: BoldText("BUY", whiteColor, 13),
             ),
             const SizedBox(width: 8),
             MaterialButton(
@@ -114,10 +142,10 @@ Widget listItem(image, onTap) {
               height: 28,
               minWidth: 95,
               onPressed: () {},
-              child: BoldText("BID", deepBlue, 13),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5),
                   side: const BorderSide(color: deepBlue)),
+              child: BoldText("BID", deepBlue, 13),
             ),
           ],
         )

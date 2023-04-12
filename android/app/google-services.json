@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "484884179069",
+    "project_id": "orea-275b6",
+    "storage_bucket": "orea-275b6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:484884179069:android:bd6a599eaef9771b26e914",
+        "android_client_info": {
+          "package_name": "com.example.orea"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "484884179069-c9hgkkgkrq5vbaqt0hu31vhmkl37qeb2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.orea",
+            "certificate_hash": "be627b4f335db872257e4c58f32cfe80de49d96e"
+          }
+        },
+        {
+          "client_id": "484884179069-v4qnn8672hqp4rrd45udt8qlluver34t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.orea",
+            "certificate_hash": "c1c5698e5f8df3b96928ef745709c9b8e97467d7"
+          }
+        },
+        {
+          "client_id": "484884179069-hukui6m0hqtihakbbjmss4i8t85klqou.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANJMJgPkxeASZ2Lxr6-hsfxFf3Mmormzw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "484884179069-hukui6m0hqtihakbbjmss4i8t85klqou.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
