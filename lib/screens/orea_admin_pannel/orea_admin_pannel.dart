@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:Orea/common_utils/common_utils.dart';
 import 'package:Orea/common_utils/image_paths.dart';
 import 'package:Orea/screens/admin_user/admin_user.dart';
-import 'package:Orea/screens/all_listings_delete/edit_all_listings.dart';
+import 'package:Orea/screens/edit_all_listings_delete/edit_all_listings.dart';
 import 'package:Orea/screens/history_screen/history_screen.dart';
 
 import '../pending_request/pending_request.dart';
@@ -47,7 +47,7 @@ class _OreaAdmin extends State<OreaAdmin> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => const PendingRequest()));
-                  }),
+                  },context),
                   adminTabs(
                     "EDIT LISTINGS",
                     () {
@@ -55,7 +55,7 @@ class _OreaAdmin extends State<OreaAdmin> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => const AllListingsDelete()));
-                    },
+                    },context
                   ),
                 ],
               ),
@@ -65,11 +65,11 @@ class _OreaAdmin extends State<OreaAdmin> {
                   adminTabs("HISTORY", () {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const HistoryScreen()));
-                  }),
+                  },context),
                   adminTabs("LOGOUT", () {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const AdminUserScreen()));
-                  }),
+                  },context),
                 ],
               ),
               const SizedBox(height: 30),
@@ -82,14 +82,14 @@ class _OreaAdmin extends State<OreaAdmin> {
 }
 
 //Clickable Tabs ---------->>>
-adminTabs(txt, clk) {
+adminTabs(txt, clk,context) {
   return InkWell(
     onTap: clk,
     child: Padding(
       padding: const EdgeInsets.all(10.0),
       child: Container(
         height: 63,
-        width: 134,
+        width: MediaQuery.of(context).size.width/2.79,
         decoration: BoxDecoration(
             color: whiteColor,
             border: Border.all(color: deepBlue, width: 1),

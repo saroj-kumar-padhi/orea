@@ -112,6 +112,7 @@ Widget listItem(image, onTap, title) {
       const SizedBox(width: 22),
       Column(children: [
         Row(
+          mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             BoldText("Property Title", deepGreer, 17),
@@ -121,7 +122,8 @@ Widget listItem(image, onTap, title) {
         ),
         const SizedBox(height: 2),
         LightText("by Asif Raza|asif@gmail.com", deepGreer, 13),
-        Row(
+        Row(          
+          mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             MaterialButton(
