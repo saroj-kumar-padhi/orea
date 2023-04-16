@@ -76,7 +76,7 @@ Widget listItem(image, title, rate, owner) {
             ],
           ),
           Expanded(
-            flex: 19,
+            flex: 2,
             // DELETE LISTINGS BUTTON ------->>>
             child: IconButton(
               onPressed: () {},

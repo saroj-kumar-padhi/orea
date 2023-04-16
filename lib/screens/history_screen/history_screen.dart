@@ -71,6 +71,7 @@ Widget listItem(image, title, rate, seller, buyer) {
     children: [
       const SizedBox(height: 10),
       Row(
+        
         children: [
           Container(
             height: 80,
@@ -87,13 +88,16 @@ Widget listItem(image, title, rate, seller, buyer) {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(children: [
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
                 BoldText(title, deepGreer, 15),
                 const SizedBox(width: 8),
                 BoldText(rate, deepBlue, 15),
               ]),
               const SizedBox(height: 15),
               Row(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   BoldText("SELLER: ", deepBlue, 11),
                   LightText(seller, deepGreer, 11),
@@ -101,6 +105,7 @@ Widget listItem(image, title, rate, seller, buyer) {
               ),
               const SizedBox(height: 5),
               Row(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   BoldText("BUYER: ", deepGreer, 11),
                   LightText(buyer, deepGreer, 11),
@@ -108,6 +113,7 @@ Widget listItem(image, title, rate, seller, buyer) {
               ),
             ],
           ),
+        
         ],
       ),
       const SizedBox(height: 20),

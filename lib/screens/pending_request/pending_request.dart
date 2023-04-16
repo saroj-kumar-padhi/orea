@@ -80,6 +80,7 @@ class _PendingRequestState extends State<PendingRequest> {
                         // rebuild the list view to reflect the updated status
                         setState(() {});
 
+                        // ignore: use_build_context_synchronously
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -88,7 +89,7 @@ class _PendingRequestState extends State<PendingRequest> {
                         );
                       },
                       // DECLINE ------->>>
-                      () {},
+                      () {}, context
                     ),
                   ],
                 );
@@ -102,7 +103,7 @@ class _PendingRequestState extends State<PendingRequest> {
 }
 
 //Clickable Tabs ---------->>>
-Widget listItem(image, title, rate, approve, decline) {
+Widget listItem(image, title, rate, approve, decline,context) {
   return Column(
     children: [
       const SizedBox(height: 12),
@@ -148,7 +149,7 @@ Widget listItem(image, title, rate, approve, decline) {
                   elevation: 0.0,
                   color: whiteColor,
                   height: 28,
-                  minWidth: 95,
+                  minWidth: MediaQuery.of(context).size.width/3.5,
                   onPressed: decline,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5),
