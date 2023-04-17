@@ -53,16 +53,18 @@ Widget listItem(image, title, rate, owner) {
       const SizedBox(height: 7),
       Row(
         children: [
-          Container(
-            height: 70,
-            width: 110,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(7),
-                border: Border.all(color: deepBlue, width: 1),
-                image: DecorationImage(
-                  image: AssetImage(image),
-                  fit: BoxFit.cover,
-                )),
+          Expanded(
+            child: Container(
+              height: 70,
+              width: 110,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(7),
+                  border: Border.all(color: deepBlue, width: 1),
+                  image: DecorationImage(
+                    image: AssetImage(image),
+                    fit: BoxFit.cover,
+                  )),
+            ),
           ),
           const SizedBox(width: 22),
           Column(
@@ -75,15 +77,11 @@ Widget listItem(image, title, rate, owner) {
               LightText(owner, deepGreer, 13),
             ],
           ),
-          Expanded(
-            flex: 2,
-            // DELETE LISTINGS BUTTON ------->>>
-            child: IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.delete,
-                color: deepBlue,
-              ),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.delete,
+              color: deepBlue,
             ),
           ),
         ],

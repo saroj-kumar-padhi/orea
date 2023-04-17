@@ -64,33 +64,31 @@ class _PendingRequestState extends State<PendingRequest> {
                 Map<String, dynamic>? data = documents[index].data();
                 return Column(
                   children: [
-                    listItem(
-                      ImagePath.house,
-                      data['propertyName'] ?? 'N/A',
-                      "PKR 90L",
-                      // APPROVE ------->>>
-                      () async {
-                        // get the document reference for the property
-                        final DocumentReference propertyRef =
-                            propertiesRef.doc(documents[index].id);
+                    listItem(ImagePath.house, data['propertyName'] ?? 'N/A',
+                        "PKR 90L",
+                        // APPROVE ------->>>
+                        () async {
+                      // get the document reference for the property
+                      final DocumentReference propertyRef =
+                          propertiesRef.doc(documents[index].id);
 
-                        // update the status of the property to approved
-                        await propertyRef.update({'status': 'approved'});
+                      // update the status of the property to approved
+                      await propertyRef.update({'status': 'approved'});
 
-                        // rebuild the list view to reflect the updated status
-                        setState(() {});
+                      // rebuild the list view to reflect the updated status
+                      setState(() {});
 
-                        // ignore: use_build_context_synchronously
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const PlaceYourBid(),
-                          ),
-                        );
-                      },
-                      // DECLINE ------->>>
-                      () {}, context
-                    ),
+                      // ignore: use_build_context_synchronously
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const PlaceYourBid(),
+                        ),
+                      );
+                    },
+                        // DECLINE ------->>>
+                        () {},
+                        context),
                   ],
                 );
               },
@@ -103,22 +101,24 @@ class _PendingRequestState extends State<PendingRequest> {
 }
 
 //Clickable Tabs ---------->>>
-Widget listItem(image, title, rate, approve, decline,context) {
+Widget listItem(image, title, rate, approve, decline, context) {
   return Column(
     children: [
       const SizedBox(height: 12),
       Row(
         children: [
-          Container(
-            height: 70,
-            width: 110,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(7),
-                border: Border.all(color: deepBlue, width: 1),
-                image: DecorationImage(
-                  image: AssetImage(image),
-                  fit: BoxFit.cover,
-                )),
+          Expanded(
+            child: Container(
+              height: 70,
+              width: 110,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(7),
+                  border: Border.all(color: deepBlue, width: 1),
+                  image: DecorationImage(
+                    image: AssetImage(image),
+                    fit: BoxFit.cover,
+                  )),
+            ),
           ),
           const SizedBox(width: 22),
           Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -149,7 +149,7 @@ Widget listItem(image, title, rate, approve, decline,context) {
                   elevation: 0.0,
                   color: whiteColor,
                   height: 28,
-                  minWidth: MediaQuery.of(context).size.width/3.5,
+                  minWidth: MediaQuery.of(context).size.width / 3.5,
                   onPressed: decline,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5),

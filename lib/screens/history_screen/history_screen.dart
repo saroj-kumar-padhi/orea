@@ -71,33 +71,31 @@ Widget listItem(image, title, rate, seller, buyer) {
     children: [
       const SizedBox(height: 10),
       Row(
-        
         children: [
-          Container(
-            height: 80,
-            width: 110,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(7),
-                border: Border.all(color: deepBlue, width: 1),
-                image: DecorationImage(
-                  image: AssetImage(image),
-                  fit: BoxFit.cover,
-                )),
+          Expanded(
+            child: Container(
+              height: 80,
+              width: 110,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(7),
+                  border: Border.all(color: deepBlue, width: 1),
+                  image: DecorationImage(
+                    image: AssetImage(image),
+                    fit: BoxFit.cover,
+                  )),
+            ),
           ),
           const SizedBox(width: 22),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
+              Row(children: [
                 BoldText(title, deepGreer, 15),
                 const SizedBox(width: 8),
                 BoldText(rate, deepBlue, 15),
               ]),
               const SizedBox(height: 15),
               Row(
-                mainAxisSize: MainAxisSize.min,
                 children: [
                   BoldText("SELLER: ", deepBlue, 11),
                   LightText(seller, deepGreer, 11),
@@ -113,7 +111,6 @@ Widget listItem(image, title, rate, seller, buyer) {
               ),
             ],
           ),
-        
         ],
       ),
       const SizedBox(height: 20),

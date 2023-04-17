@@ -89,7 +89,7 @@ adminTabs(txt, clk,context) {
       padding: const EdgeInsets.all(10.0),
       child: Container(
         height: 63,
-        width: MediaQuery.of(context).size.width/2.79,
+        width: MediaQuery.of(context).size.width/2.9,
         decoration: BoxDecoration(
             color: whiteColor,
             border: Border.all(color: deepBlue, width: 1),
