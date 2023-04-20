@@ -1,7 +1,10 @@
 import 'package:Orea/screens/admin_user/admin_user.dart';
+import 'package:Orea/screens/contact_us_screen/contact_us_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:Orea/common_utils/common_utils.dart';
 import 'package:Orea/common_utils/image_paths.dart';
+
+import '../edit_profile/edit_profile.dart';
 
 class UserProfile extends StatefulWidget {
   const UserProfile({Key? key}) : super(key: key);
@@ -86,7 +89,13 @@ class _UserProfileState extends State<UserProfile> {
                             color: whiteColor, size: 21),
                         const SizedBox(width: 10),
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const EditProfileScreen()));
+                          },
                           child: BoldText("Edit profile", whiteColor, 17),
                         ),
                       ],
@@ -111,8 +120,15 @@ class _UserProfileState extends State<UserProfile> {
                             color: whiteColor, size: 21),
                         const SizedBox(width: 10),
                         GestureDetector(
-                          onTap: () {},
-                          child: BoldText("Purchase History", whiteColor, 17),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const ContactUsScreen(),
+                              ),
+                            );
+                          },
+                          child: BoldText("Contact Us", whiteColor, 17),
                         ),
                       ],
                     ),
@@ -124,7 +140,11 @@ class _UserProfileState extends State<UserProfile> {
                         const SizedBox(width: 10),
                         GestureDetector(
                           onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>const AdminUserScreen()));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const AdminUserScreen()));
                           },
                           child: BoldText("Log Out", whiteColor, 17),
                         ),
