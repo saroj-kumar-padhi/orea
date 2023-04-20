@@ -130,17 +130,6 @@ class _RealEstateBiddingState extends State<RealEstateBidding> {
                     ),
                   );
                 }),
-                userTabs("BALANCE", () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const YourBalance()));
-                }),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
                 userTabs("OUR POLICY", () {
                   Navigator.push(
                     context,
@@ -149,12 +138,9 @@ class _RealEstateBiddingState extends State<RealEstateBidding> {
                     ),
                   );
                 }),
-                userTabs("CONTACT US", () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const ContactUsScreen()));
-                }),
               ],
             ),
+
             const SizedBox(height: 20),
             BoldText("...Interactive Contents...", deepGreer, 15),
             // INTERACTIVE CONTENTS ------->>>
