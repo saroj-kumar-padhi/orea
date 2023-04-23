@@ -68,7 +68,7 @@ class _UserProfileState extends State<UserProfile> {
                         fit: BoxFit.fill)),
               ),
               const SizedBox(
-                width: 30,
+                width: 15,
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,7 +79,7 @@ class _UserProfileState extends State<UserProfile> {
                     children: [
                       BoldText("Email: ", deepGreer, 16),
                       BoldText("${user?.email}", deepBlue,
-                          MediaQuery.of(context).size.width * 0.04),
+                          16),
                     ],
                   ),
                   BoldText("Phone no. :", deepGreer, 16),

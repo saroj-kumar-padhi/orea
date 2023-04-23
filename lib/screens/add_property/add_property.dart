@@ -23,6 +23,7 @@ class _AddPropertyState extends State<AddProperty> {
   final TextEditingController addProperty = TextEditingController();
   final TextEditingController addDescription = TextEditingController();
   final TextEditingController addAmount = TextEditingController();
+    final _formKey = GlobalKey<FormState>();
 
   // Upload the image to Firebase Storage
   Future<String> uploadImageToStorage(XFile? photo) async {
@@ -110,134 +111,149 @@ class _AddPropertyState extends State<AddProperty> {
         child: Padding(
           padding: const EdgeInsets.fromLTRB(27, 30, 27, 0),
           child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                LightText("Add your property OREA", deepGreer, 12),
-                const SizedBox(height: 22),
-                BoldText("Add property details", deepGreer, 13),
-                const SizedBox(height: 30),
-                LightText(
-                    "Add on the image showing the overview of your\nproperty",
-                    deepGreer,
-                    13),
-                const SizedBox(height: 10),
-                Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () async {
-                        String imageUrl = await pickImageFromGallery();
-                        log('Image URL: $imageUrl');
-                      },
-                      // backgroundImage: NetworkImage(placeholderImage),
-                      child: Container(
-                        height: 100,
-                        width: 150,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: whiteColor,
-                            border: Border.all(width: 1, color: deepBlue)),
-                        child: placeholderImage == null
-                            ? const Icon(
-                                Icons.add,
-                                color: deepBlue,
-                                size: 30,
-                              )
-                            : ClipRRect(
-                                child: Container(
-                                  height: 100,
-                                  width: 150,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    image: DecorationImage(
-                                      image: NetworkImage(
-                                        placeholderImage,
-                                      ),
-                                      fit: BoxFit.cover
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  LightText("Add your property OREA", deepGreer, 12),
+                  const SizedBox(height: 22),
+                  BoldText("Add property details", deepGreer, 13),
+                  const SizedBox(height: 30),
+                  LightText(
+                      "Add on the image showing the overview of your\nproperty",
+                      deepGreer,
+                      13),
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () async {
+                          String imageUrl = await pickImageFromGallery();
+                          log('Image URL: $imageUrl');
+                        },
+                        // backgroundImage: NetworkImage(placeholderImage),
+                        child: Container(
+                          height: 100,
+                          width: 150,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: whiteColor,
+                              border: Border.all(width: 1, color: deepBlue)),
+                          child: placeholderImage == null
+                              ? const Icon(
+                                  Icons.add,
+                                  color: deepBlue,
+                                  size: 30,
+                                )
+                              : ClipRRect(
+                                  child: Container(
+                                    height: 100,
+                                    width: 150,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      image: DecorationImage(
+                                          image: NetworkImage(
+                                            placeholderImage,
+                                          ),
+                                          fit: BoxFit.cover),
                                     ),
                                   ),
                                 ),
-                              ),
-                      ),
-                    ),
-                    const SizedBox(width: 15),
-                    BoldText("Select Image", deepBlue, 15)
-                  ],
-                ),
-                const SizedBox(height: 30),
-                BoldText("Add property Tilte", black, 15),
-                const SizedBox(height: 10),
-                TextFormField(
-                  controller: addProperty,
-                  autofocus: false,
-                  keyboardType: TextInputType.name,
-                  decoration: InputDecoration(
-                    fillColor: whiteColor,
-                    filled: true,
-                    contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: const BorderSide(color: deepBlue)),
-                  ),
-                ),
-                const SizedBox(height: 30),
-                const SizedBox(height: 30),
-                BoldText("Add property Description", black, 15),
-                const SizedBox(height: 10),
-                TextFormField(
-                  controller: addDescription,
-                  minLines: 3,
-                  maxLines: 5,
-                  maxLength: 100,
-                  autofocus: false,
-                  keyboardType: TextInputType.name,
-                  decoration: InputDecoration(
-                    fillColor: whiteColor,
-                    filled: true,
-                    contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: const BorderSide(color: deepBlue)),
-                  ),
-                ),
-                BoldText("Add amount", black, 15),
-                const SizedBox(height: 10),
-                TextFormField(
-                  controller: addAmount,
-                  keyboardType: TextInputType.name,
-                  decoration: InputDecoration(
-                    fillColor: whiteColor,
-                    filled: true,
-                    contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: const BorderSide(color: deepBlue)),
-                  ),
-                ),
-                const SizedBox(height: 70),
-                MaterialButton(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20)),
-                    color: deepBlue,
-                    elevation: 0.0,
-                    height: 40,
-                    minWidth: MediaQuery.of(context).size.width,
-                    onPressed: () async {
-                      String imageUrl = await uploadImageToStorage(photo);
-                      String propertyTitle = addProperty.text;
-                      String propertyDescription = addDescription.text;
-                      String amount = addAmount.text;
-                      await savePropertyToFirestore(
-                          imageUrl, propertyTitle, propertyDescription, amount);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const AddedByYou(),
                         ),
-                      );
+                      ),
+                      const SizedBox(width: 15),
+                      BoldText("Select Image", deepBlue, 15)
+                    ],
+                  ),
+                  const SizedBox(height: 30),
+                  BoldText("Add property Tilte*", black, 15),
+                  const SizedBox(height: 10),
+                  TextFormField(
+                    controller: addProperty,
+                    autofocus: false,
+                    keyboardType: TextInputType.name,
+                    decoration: InputDecoration(
+                      fillColor: whiteColor,
+                      filled: true,
+                      contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: const BorderSide(color: deepBlue)),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your title';
+                      }
+                      return null;
                     },
-                    child: BoldText("Add Property", whiteColor, 18)),
-              ],
+                  ),
+                  const SizedBox(height: 30),
+                  const SizedBox(height: 30),
+                  BoldText("Add property Description", black, 15),
+                  const SizedBox(height: 10),
+                  TextFormField(
+                    controller: addDescription,
+                    minLines: 3,
+                    maxLines: 5,
+                    maxLength: 100,
+                    autofocus: false,
+                    keyboardType: TextInputType.name,
+                    decoration: InputDecoration(
+                      fillColor: whiteColor,
+                      filled: true,
+                      contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: const BorderSide(color: deepBlue)),
+                    ),
+                  ),
+                  BoldText("Add amount*", black, 15),
+                  const SizedBox(height: 10),
+                  TextFormField(
+                    controller: addAmount,
+                    keyboardType: const TextInputType.numberWithOptions(),
+                    decoration: InputDecoration(
+                      fillColor: whiteColor,
+                      filled: true,
+                      contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: const BorderSide(color: deepBlue)),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your price';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 70),
+                  MaterialButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)),
+                      color: deepBlue,
+                      elevation: 0.0,
+                      height: 40,
+                      minWidth: MediaQuery.of(context).size.width,
+                      onPressed: () async {
+                        if(_formKey.currentState!.validate()){
+                        String imageUrl = await uploadImageToStorage(photo);
+                        String propertyTitle = addProperty.text;
+                        String propertyDescription = addDescription.text;
+                        String amount = addAmount.text;
+                        await savePropertyToFirestore(
+                            imageUrl, propertyTitle, propertyDescription, amount);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const AddedByYou(),
+                          ),
+                        );}
+                      },
+                      child: BoldText("Add Property", whiteColor, 18)),
+                ],
+              ),
             ),
           ),
         ),

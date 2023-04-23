@@ -41,7 +41,7 @@ class _RealEstateBiddingState extends State<RealEstateBidding> {
             BoldText("Real Estate Bidding", deepGreer, 15),
             const Spacer(),
             IconButton(
-              icon: const Icon(Icons.notifications, color: hint),
+              icon: const Icon(Icons.notifications, color: deepGreer),
               onPressed: () {
                 Navigator.push(
                     context,

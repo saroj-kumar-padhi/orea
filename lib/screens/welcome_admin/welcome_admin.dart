@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:Orea/common_utils/common_utils.dart';
 import '../orea_admin_pannel/orea_admin_pannel.dart';
 
-class WelcomeScreen extends StatefulWidget {
-  const WelcomeScreen({super.key});
+class WelcomeAdminScreen extends StatefulWidget {
+  const WelcomeAdminScreen({super.key});
 
   @override
-  State<WelcomeScreen> createState() => _WelcomeScreenState();
+  State<WelcomeAdminScreen> createState() => _WelcomeAdminScreen();
 }
 
-class _WelcomeScreenState extends State<WelcomeScreen> {
+class _WelcomeAdminScreen extends State<WelcomeAdminScreen> {
   @override
   void initState() {
     Timer(

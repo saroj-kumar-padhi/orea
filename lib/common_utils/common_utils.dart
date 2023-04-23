@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 const black = Color(0xFF000000);
 const deepGreer = Color(0xFF204D2A);
+const background = Color(0xFFF5F5F5);
 const deepBlue = Color(0xFF0066FF);
 const whiteColor = Color(0xFFFFFFFF);
 const hint = Color(0xFFA5A4A4);
