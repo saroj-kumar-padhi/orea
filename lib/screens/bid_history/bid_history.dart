@@ -38,69 +38,92 @@ class _BidHistory extends State<BidHistory> {
       ),
       body: Center(
         child: Padding(
-            padding: const EdgeInsets.fromLTRB(24, 24, 24, 10),
-            child: FutureBuilder<QuerySnapshot>(
-                future: FirebaseFirestore.instance
-                    .collection('users')
-                    .where('status', isEqualTo: 'approved')
-                    .get(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    // return a loading indicator while the data is being fetched
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (snapshot.hasError) {
-                    // handle any errors that occur while fetching the data
-                    return const Center(child: Text('Error fetching data'));
-                  }
-                  final List<QueryDocumentSnapshot<Map<String, dynamic>>>
-                      documents = snapshot.data?.docs
-                          as List<QueryDocumentSnapshot<Map<String, dynamic>>>;
-                  return ListView.builder(
-                      itemCount: documents.length,
-                      itemBuilder: ((context, index) {
-                        Map<String, dynamic>? data = documents[index].data();
-                        return Row(
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(5),
-                              child: Image.network(
-                                data['imageUrl'],
+          padding: const EdgeInsets.fromLTRB(24, 24, 24, 10),
+          child: FutureBuilder<QuerySnapshot>(
+            future: FirebaseFirestore.instance
+                .collection('users')
+                .where('status', isEqualTo: 'approved')
+                .get(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                // return a loading indicator while the data is being fetched
+                return const Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                // handle any errors that occur while fetching the data
+                return const Center(child: Text('Error fetching data'));
+              }
+              final List<QueryDocumentSnapshot<Map<String, dynamic>>>
+                  documents = snapshot.data?.docs
+                      as List<QueryDocumentSnapshot<Map<String, dynamic>>>;
+              return ListView.builder(
+                itemCount: documents.length,
+                itemBuilder: ((context, index) {
+                  Map<String, dynamic>? data = documents[index].data();
+                  return Column(
+                    children: [
+                      //  Image.network(
+                      //         data['imageUrl'],
+                      //         height: 100,
+                      //         width: 120,
+                      Row(
+                        children: [
+                          Expanded(
+                            child: ClipRRect(
+                              child: Container(
                                 height: 100,
-                                width: 120,
+                                width: 150,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  border: Border.all(color: deepBlue, width: 1),
+                                  image: DecorationImage(
+                                      image: NetworkImage(
+                                        data['imageUrl'],
+                                      ),
+                                      fit: BoxFit.cover),
+                                ),
                               ),
                             ),
-                            const SizedBox(width: 22),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(children: [
-                                  BoldText("Property Title", deepGreer, 15),
-                                  const SizedBox(width: 8),
-                                  BoldText(data['propertyTitle'] ?? 'N/A',
-                                      deepBlue, 15),
-                                ]),
-                                const SizedBox(height: 15),
-                                Row(
-                                  children: [
-                                    LightText("placed by dilshad@gmail.com",
-                                        deepGreer, 11),
-                                  ],
-                                ),
-                                const SizedBox(height: 5),
-                                Row(
-                                  children: [
-                                    LightText(
-                                        "Amount: ${data['bidAmount'] + " pkr" ?? "9999"}",
-                                        deepGreer,
-                                        11),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
-                        );
-                      }));
-                })),
+                          ),
+                          const SizedBox(width: 22),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(children: [
+                                BoldText("Property Title", deepGreer, 15),
+                                const SizedBox(width: 8),
+                                BoldText(data['propertyTitle'] ?? 'N/A',
+                                    deepBlue, 15),
+                              ]),
+                              const SizedBox(height: 15),
+                              Row(
+                                children: [
+                                  LightText("placed by dilshad@gmail.com",
+                                      deepGreer, 11),
+                                ],
+                              ),
+                              const SizedBox(height: 5),
+                              Row(
+                                children: [
+                                  LightText(
+                                      "Amount: ${data['bidAmount'] + " pkr" ?? "9999"}",
+                                      deepGreer,
+                                      11),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      )
+                    ],
+                  );
+                }),
+              );
+            },
+          ),
+        ),
       ),
     );
   }

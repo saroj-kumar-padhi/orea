@@ -6,12 +6,20 @@ import 'package:Orea/screens/admin_user/admin_user.dart';
 
 import '../welcome_admin/welcome_admin.dart';
 
-class AdminSignIn extends StatelessWidget {
+class AdminSignIn extends StatefulWidget {
   AdminSignIn({super.key});
 
+  @override
+  State<AdminSignIn> createState() => _AdminSignInState();
+}
+
+class _AdminSignInState extends State<AdminSignIn> {
   //editing controllers
   final TextEditingController emailController = TextEditingController();
+
   final TextEditingController passwordController = TextEditingController();
+
+  bool _obscureText = true;
 
   //formkey
   final _formKey = GlobalKey<FormState>();
@@ -78,18 +86,32 @@ class AdminSignIn extends StatelessWidget {
                       autofocus: false,
                       keyboardType: TextInputType.name,
                       decoration: InputDecoration(
-                        fillColor: whiteColor,
-                        filled: true,
-                        contentPadding:
-                            const EdgeInsets.fromLTRB(20, 15, 20, 15),
-                        hintText: "Enter Password",
-                        hintStyle: const TextStyle(
-                            fontFamily: "Poppins", color: hint, fontSize: 15),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30),
-                          borderSide: const BorderSide(color: deepBlue),
-                        ),
-                      ),
+                          fillColor: whiteColor,
+                          filled: true,
+                          contentPadding:
+                              const EdgeInsets.fromLTRB(20, 15, 20, 15),
+                          hintText: "Enter Password",
+                          hintStyle: const TextStyle(
+                              fontFamily: "Poppins", color: hint, fontSize: 15),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30),
+                            borderSide: const BorderSide(color: deepBlue),
+                          ),
+                          suffixIcon: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _obscureText = !_obscureText;
+                              });
+                            },
+                            child: Icon(
+                              _obscureText
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              semanticLabel: _obscureText
+                                  ? 'show password'
+                                  : 'hide password',
+                            ),
+                          )),
                       validator: (value) {
                         RegExp regex = RegExp(r'^.{6,}$');
                         if (value!.isEmpty) {

@@ -101,12 +101,21 @@ class _ViewListings extends State<ViewListings> {
 Widget listItem(image, onTap, title) {
   return Row(
     children: [
-      ClipRRect(
-        borderRadius: BorderRadius.circular(5),
-        child: Image.network(
-          image,
-          height: 100,
-          width: 120,
+      Expanded(
+        child: ClipRRect(
+          child: Container(
+            height: 100,
+            width: 150,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              border: Border.all(color: deepBlue, width: 1),
+              image: DecorationImage(
+                  image: NetworkImage(
+                    image,
+                  ),
+                  fit: BoxFit.cover),
+            ),
+          ),
         ),
       ),
       const SizedBox(width: 22),

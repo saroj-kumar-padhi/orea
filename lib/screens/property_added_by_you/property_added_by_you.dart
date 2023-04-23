@@ -50,54 +50,78 @@ class _AddedByYou extends State<AddedByYou> {
                 return Column(
                   children: [
                     LightText("Properties you have added will be shown here",
-                        deepGreer, 13),
+                        deepGreer, 15),
+                    const SizedBox(height: 15),
                     Expanded(
                       child: ListView.builder(
                           itemCount: documents.length,
                           itemBuilder: (context, index) {
                             Map<String, dynamic>? data = documents[index].data()
                                 as Map<String, dynamic>?;
-                            return Row(
+                            return Column(
                               children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(5),
-                                  child: Image.network(
-                                    data?['imageUrl'] ??
-                                        Image.asset(ImagePath.house),
-                                    height: 100,
-                                    width: 120,
-                                  ),
-                                ),
-                                const SizedBox(width: 22),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                Row(
                                   children: [
-                                    BoldText("Property Title", deepGreer, 17),
-                                    const SizedBox(width: 8),
-                                    BoldText(data?['propertyTitle'] ?? 'N/A',
-                                        deepBlue, 17),
-                                    const SizedBox(height: 2),
-                                    LightText("added by you", deepGreer, 13),
+                                    ClipRRect(
+                                      child: Container(
+                                        height: 100,
+                                        width: 150,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          color: whiteColor,
+                                          border: Border.all(
+                                              width: 1, color: deepBlue),
+                                          image: DecorationImage(
+                                            image: NetworkImage(
+                                              data?['imageUrl'] ??
+                                                  Image.asset(ImagePath.base),
+                                            ),
+                                            fit: BoxFit.cover
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 22),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        BoldText(
+                                            "Property Title", deepGreer, 17),
+                                        const SizedBox(width: 8),
+                                        BoldText(
+                                            data?['propertyTitle'] ?? 'N/A',
+                                            deepBlue,
+                                            17),
+                                        const SizedBox(height: 2),
+                                        LightText(
+                                            "added by you", deepGreer, 13),
+                                      ],
+                                    ),
+                                    Expanded(
+                                      flex: 19,
+                                      child: IconButton(
+                                        onPressed: () async {
+                                          await documents[index]
+                                              .reference
+                                              .delete();
+                                          setState(() {
+                                            // rebuild the list view after deleting the document
+                                          });
+                                        },
+                                        icon: const Icon(
+                                          Icons.delete,
+                                          color: deepBlue,
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 35),
+                                    const Divider(color: hint),
+                                    const SizedBox(height: 35),
                                   ],
                                 ),
-                                Expanded(
-                                  flex: 19,
-                                  child: IconButton(
-                                    onPressed: () async {
-                                      await documents[index].reference.delete();
-                                      setState(() {
-                                        // rebuild the list view after deleting the document
-                                      });
-                                    },
-                                    icon: const Icon(
-                                      Icons.delete,
-                                      color: deepBlue,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(height: 35),
-                                const Divider(color: hint),
-                                const SizedBox(height: 35),
+                                const SizedBox(height: 20),
                               ],
                             );
                           }),
