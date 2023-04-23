@@ -1,10 +1,12 @@
 import 'package:Orea/screens/admin_user/admin_user.dart';
 import 'package:Orea/screens/contact_us_screen/contact_us_screen.dart';
+import 'package:Orea/screens/property_added_by_you/property_added_by_you.dart';
 import 'package:flutter/material.dart';
 import 'package:Orea/common_utils/common_utils.dart';
 import 'package:Orea/common_utils/image_paths.dart';
 
 import '../edit_profile/edit_profile.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class UserProfile extends StatefulWidget {
   const UserProfile({Key? key}) : super(key: key);
@@ -16,6 +18,17 @@ class UserProfile extends StatefulWidget {
 class _UserProfileState extends State<UserProfile> {
   @override
   Widget build(BuildContext context) {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? user = auth.currentUser;
+    if (user != null) {
+      // User is signed in, you can access the email address
+      String? email = user.email;
+      print('User email: $email');
+    } else {
+      // User is not signed in
+      print('User is not signed in');
+    }
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -61,7 +74,7 @@ class _UserProfileState extends State<UserProfile> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   BoldText("User Name", deepGreer, 16),
-                  BoldText("useremail@gmail.com", deepBlue, 16),
+                  BoldText("${user?.email}", deepBlue, 16),
                 ],
               ),
             ],
@@ -107,7 +120,14 @@ class _UserProfileState extends State<UserProfile> {
                             color: whiteColor, size: 21),
                         const SizedBox(width: 10),
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const AddedByYou(),
+                              ),
+                            );
+                          },
                           child:
                               BoldText("View your properties", whiteColor, 17),
                         ),

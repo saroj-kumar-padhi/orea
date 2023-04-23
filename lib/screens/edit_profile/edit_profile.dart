@@ -1,4 +1,6 @@
 import 'package:Orea/screens/user_profile/user_profile.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../common_utils/common_utils.dart';
@@ -9,6 +11,9 @@ class EditProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController fullName = TextEditingController();
+    TextEditingController phoneNumber = TextEditingController();
+    TextEditingController address = TextEditingController();
     return Scaffold(
       backgroundColor: whiteColor,
       appBar: AppBar(
@@ -45,8 +50,6 @@ class EditProfileScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 18),
-                BoldText("Pick up profile pic", deepBlue, 16),
                 const SizedBox(height: 46),
                 Row(
                   children: [
@@ -56,6 +59,7 @@ class EditProfileScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 5),
                 TextFormField(
+                  controller: fullName,
                   autofocus: false,
                   keyboardType: TextInputType.name,
                   decoration: InputDecoration(
@@ -82,6 +86,7 @@ class EditProfileScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 5),
                 TextFormField(
+                  controller: phoneNumber,
                   autofocus: false,
                   keyboardType: TextInputType.name,
                   decoration: InputDecoration(
@@ -134,6 +139,7 @@ class EditProfileScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 5),
                 TextFormField(
+                  controller: address,
                   autofocus: false,
                   keyboardType: TextInputType.name,
                   decoration: InputDecoration(
@@ -159,6 +165,19 @@ class EditProfileScreen extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(28)),
                   onPressed: () {
+                    FirebaseAuth auth = FirebaseAuth.instance;
+                    User? user = auth.currentUser;
+                    String? userId = user?.uid;
+                    final FirebaseFirestore firestore =
+                        FirebaseFirestore.instance;
+                    final CollectionReference usersRef =
+                        firestore.collection('users');
+                    usersRef.doc(userId).update({
+                      'fullName': fullName.text,
+                      'phoneNumber': phoneNumber.text,
+                      'address': address.text,
+                    });
+
                     Navigator.push(
                         context,
                         MaterialPageRoute(

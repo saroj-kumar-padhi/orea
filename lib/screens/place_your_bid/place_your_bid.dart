@@ -1,14 +1,27 @@
-import 'package:flutter/material.dart';
 import 'package:Orea/common_utils/common_utils.dart';
-
 import 'package:Orea/common_utils/image_paths.dart';
 import 'package:Orea/screens/buy_property/buy_property.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
-class PlaceYourBid extends StatelessWidget {
-  const PlaceYourBid({super.key});
+class PlaceYourBid extends StatefulWidget {
+  String id;
+  PlaceYourBid({
+    Key? key,
+    required this.id,
+  }) : super(key: key);
 
   @override
+  State<PlaceYourBid> createState() => _PlaceYourBidState();
+}
+
+class _PlaceYourBidState extends State<PlaceYourBid> {
+  @override
   Widget build(BuildContext context) {
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+    final CollectionReference propertiesRef = firestore.collection('users');
+    final TextEditingController amountContrller = TextEditingController();
+    final TextEditingController amountDescription = TextEditingController();
     return Scaffold(
       backgroundColor: whiteColor,
       appBar: AppBar(
@@ -24,10 +37,10 @@ class PlaceYourBid extends StatelessWidget {
           icon: const Icon(Icons.arrow_back, color: black),
         ),
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(34, 37, 34, 10),
-          child: SingleChildScrollView(
+      body: SingleChildScrollView(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(34, 37, 34, 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -54,6 +67,7 @@ class PlaceYourBid extends StatelessWidget {
                     TextAlign.left),
                 const SizedBox(height: 45),
                 TextFormField(
+                  controller: amountContrller,
                   autofocus: false,
                   keyboardType: TextInputType.name,
                   decoration: InputDecoration(
@@ -70,6 +84,7 @@ class PlaceYourBid extends StatelessWidget {
                 ),
                 const SizedBox(height: 25),
                 TextFormField(
+                  controller: amountDescription,
                   autofocus: false,
                   keyboardType: TextInputType.name,
                   decoration: InputDecoration(
@@ -84,14 +99,27 @@ class PlaceYourBid extends StatelessWidget {
                         borderSide: const BorderSide(color: deepBlue)),
                   ),
                 ),
-                const SizedBox(height: 70),
+                const SizedBox(height: 80),
                 MaterialButton(
                   color: deepBlue,
                   height: 40,
                   minWidth: MediaQuery.of(context).size.width,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(28)),
-                  onPressed: () {
+                  onPressed: () async {
+                    // get the document reference for the property
+                    final DocumentReference propertyRef =
+                        propertiesRef.doc(widget.id);
+
+                    // update the status of the property to approved
+                    await propertyRef.update({
+                      'bidAmount': amountContrller.text,
+                      'bidDescription': amountDescription.text
+                    });
+
+                    // rebuild the list view to reflect the updated status
+                    setState(() {});
+
                     Navigator.push(
                         context,
                         MaterialPageRoute(

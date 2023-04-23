@@ -1,20 +1,96 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:Orea/common_utils/common_utils.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../property_added_by_you/property_added_by_you.dart';
 
-class AddProperty extends StatelessWidget {
+class AddProperty extends StatefulWidget {
   const AddProperty({super.key});
 
   @override
+  State<AddProperty> createState() => _AddPropertyState();
+}
+
+class _AddPropertyState extends State<AddProperty> {
+  String placeholderImage = 'assets/images/placeholder.png';
+  XFile? photo;
+  final TextEditingController addProperty = TextEditingController();
+  final TextEditingController addDescription = TextEditingController();
+  final TextEditingController addAmount = TextEditingController();
+
+  // Upload the image to Firebase Storage
+  Future<String> uploadImageToStorage(XFile? photo) async {
+    if (photo == null || photo.path.isEmpty) {
+      // Handle the case when photo is null or its path is empty
+      log("no file selected");
+      return '';
+    }
+    String fileName = '${DateTime.now().millisecondsSinceEpoch}.png';
+    Reference ref = FirebaseStorage.instance.ref().child(fileName);
+    UploadTask uploadTask = ref.putFile(File(photo.path));
+    TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() => null);
+
+    String imageUrl = await taskSnapshot.ref.getDownloadURL();
+    if (taskSnapshot.state == TaskState.success) {
+      imageUrl = await taskSnapshot.ref.getDownloadURL();
+    }
+
+    return imageUrl;
+  }
+
+  Future<String> pickImageFromGallery() async {
+    final picker = ImagePicker();
+    var pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      photo = pickedFile;
+      // Use the picked image file as needed
+      String imageUrl = await uploadImageToStorage(photo);
+      setState(() {
+        placeholderImage = imageUrl;
+      });
+      print('Picked image path: $placeholderImage');
+    } else {
+      // User cancelled the image picking
+      print('No image picked');
+    }
+    return placeholderImage;
+  }
+
+  // Function to save download URL to Firestore
+  Future<void> savePropertyToFirestore(String imageUrl, String propertyTitle,
+      String propertyDescription, String amount) async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        CollectionReference propertiesRef =
+            FirebaseFirestore.instance.collection('users');
+        await propertiesRef.add({
+          'imageUrl': imageUrl,
+          'propertyTitle': propertyTitle,
+          'propertyDescription': propertyDescription,
+          'amount': amount,
+          'addedBy': user.uid,
+          'createdAt': FieldValue.serverTimestamp(),
+          'status': 'panding',
+          'bidAmount': '',
+          'bidDescription': ''
+        });
+        // Success, show toast or dialog
+      }
+    } catch (e) {
+      // Handle error, show toast or dialog
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final TextEditingController addProperty = TextEditingController();
-    final TextEditingController addDescription = TextEditingController();
-    final TextEditingController addAmount = TextEditingController();
-    CollectionReference usersRef =
-        FirebaseFirestore.instance.collection('users');
     return Scaffold(
       backgroundColor: whiteColor,
       appBar: AppBar(
@@ -32,117 +108,87 @@ class AddProperty extends StatelessWidget {
       ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(27, 30, 27, 30),
+          padding: const EdgeInsets.fromLTRB(27, 30, 0, 27),
           child: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                LightText("Add your property OREA", deepGreer, 12),
-                const SizedBox(height: 22),
-                BoldText("Add property details", deepGreer, 13),
-                const SizedBox(height: 30),
-                LightText(
-                    "Add on the image showing the overview of your\nproperty",
-                    deepGreer,
-                    13),
-                const SizedBox(height: 10),
-                Row(
-                  children: [
-                    Container(
-                      height: 100,
-                      width: 150,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: whiteColor,
-                          border: Border.all(width: 1, color: deepBlue)),
-                      child: Center(
-                          child: IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.add,
-                          color: deepBlue,
-                          size: 30,
-                        ),
-                      )),
-                    ),
-                    const SizedBox(width: 15),
-                    BoldText("Select Image", deepBlue, 15)
-                  ],
+                GestureDetector(
+                  onTap: () async {
+                    String imageUrl = await pickImageFromGallery();
+                    log('Image URL: $imageUrl');
+                  },
+                  child: CircleAvatar(
+                    radius: 60,
+                    backgroundImage: NetworkImage(placeholderImage),
+                  ),
                 ),
-                const SizedBox(height: 30),
-                BoldText("Add property Tilte", black, 15),
-                const SizedBox(height: 10),
-                TextFormField(
+                const SizedBox(height: 20),
+                TextField(
                   controller: addProperty,
-                  autofocus: false,
-                  keyboardType: TextInputType.name,
-                  decoration: InputDecoration(
-                    fillColor: whiteColor,
-                    filled: true,
-                    contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: const BorderSide(color: deepBlue)),
+                  decoration: const InputDecoration(
+                    labelText: "Property Title",
+                    labelStyle: TextStyle(color: black),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: black),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: deepBlue),
+                    ),
                   ),
                 ),
-                const SizedBox(height: 30),
-                BoldText("Add property Description", black, 15),
-                const SizedBox(height: 10),
-                TextFormField(
+                const SizedBox(height: 20),
+                TextField(
                   controller: addDescription,
-                  minLines: 3,
-                  maxLines: 5,
-                  maxLength: 100,
-                  autofocus: false,
-                  keyboardType: TextInputType.name,
-                  decoration: InputDecoration(
-                    fillColor: whiteColor,
-                    filled: true,
-                    contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: const BorderSide(color: deepBlue)),
+                  maxLines: 4,
+                  decoration: const InputDecoration(
+                    labelText: "Property Description",
+                    labelStyle: TextStyle(color: black),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: black),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: deepBlue),
+                    ),
                   ),
                 ),
-                BoldText("Add amount", black, 15),
-                const SizedBox(height: 10),
-                TextFormField(
+                const SizedBox(height: 20),
+                TextField(
                   controller: addAmount,
-                  keyboardType: TextInputType.name,
-                  decoration: InputDecoration(
-                    fillColor: whiteColor,
-                    filled: true,
-                    contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: const BorderSide(color: deepBlue)),
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    labelText: "Amount",
+                    labelStyle: TextStyle(color: black),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: black),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: deepBlue),
+                    ),
                   ),
                 ),
-                const SizedBox(height: 70),
-                MaterialButton(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20)),
-                    color: deepBlue,
-                    elevation: 0.0,
-                    height: 40,
-                    minWidth: MediaQuery.of(context).size.width,
-                    onPressed: () async {
-                      Map<String, String> data = {
-                        'propertyName': addProperty.text,
-                        'propertyDescription': addDescription.text,
-                        'addAmoount': addAmount.text,
-                        'status': 'panding',
-                        'userId': FirebaseAuth.instance.currentUser!.uid
-                      };
-                      DocumentReference docRef = await usersRef.add(data);
-                      print('Added document with ID: ${docRef.id}');
-
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const AddedByYou()));
-                    },
-                    child: BoldText("Add Property", whiteColor, 18)),
+                const SizedBox(height: 40),
+                ElevatedButton(
+                  onPressed: () async {
+                    String imageUrl = await uploadImageToStorage(photo);
+                    String propertyTitle = addProperty.text;
+                    String propertyDescription = addDescription.text;
+                    String amount = addAmount.text;
+                    await savePropertyToFirestore(
+                        imageUrl, propertyTitle, propertyDescription, amount);
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const AddedByYou()));
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 60),
+                    child: Text(
+                      "Add Property",
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),

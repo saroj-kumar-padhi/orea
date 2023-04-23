@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:Orea/common_utils/common_utils.dart';
 
-import 'package:Orea/common_utils/image_paths.dart';
 import 'package:Orea/screens/place_your_bid/place_your_bid.dart';
 
 class PendingRequest extends StatefulWidget {
@@ -64,7 +63,7 @@ class _PendingRequestState extends State<PendingRequest> {
                 Map<String, dynamic>? data = documents[index].data();
                 return Column(
                   children: [
-                    listItem(ImagePath.house, data['propertyName'] ?? 'N/A',
+                    listItem(data['imageUrl'], data['propertyTitle'] ?? 'N/A',
                         "PKR 90L",
                         // APPROVE ------->>>
                         () async {
@@ -82,7 +81,9 @@ class _PendingRequestState extends State<PendingRequest> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const PlaceYourBid(),
+                          builder: (context) => PlaceYourBid(
+                            id: documents[index].id,
+                          ),
                         ),
                       );
                     },
@@ -115,7 +116,7 @@ Widget listItem(image, title, rate, approve, decline, context) {
                   borderRadius: BorderRadius.circular(7),
                   border: Border.all(color: deepBlue, width: 1),
                   image: DecorationImage(
-                    image: AssetImage(image),
+                    image: NetworkImage(image),
                     fit: BoxFit.cover,
                   )),
             ),

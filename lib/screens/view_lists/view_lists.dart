@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:Orea/common_utils/common_utils.dart';
 
-import 'package:Orea/common_utils/image_paths.dart';
 import 'package:Orea/screens/place_your_bid/place_your_bid.dart';
 
 class ViewListings extends StatefulWidget {
@@ -72,15 +71,16 @@ class _ViewListings extends State<ViewListings> {
                                 documents[index].data();
                             return Column(
                               children: [
-                                listItem(ImagePath.house, () {
+                                listItem(data['imageUrl'], () {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                          const PlaceYourBid(),
+                                      builder: (context) => PlaceYourBid(
+                                        id: documents[index].id,
+                                      ),
                                     ),
                                   );
-                                }, data['propertyName'] ?? 'N/A'),
+                                }, data['propertyTitle'] ?? 'N/A'),
                                 const SizedBox(
                                   height: 27,
                                 ),
@@ -103,7 +103,7 @@ Widget listItem(image, onTap, title) {
     children: [
       ClipRRect(
         borderRadius: BorderRadius.circular(5),
-        child: Image.asset(
+        child: Image.network(
           image,
           height: 100,
           width: 120,
@@ -122,7 +122,7 @@ Widget listItem(image, onTap, title) {
         ),
         const SizedBox(height: 2),
         LightText("by Asif Raza|asif@gmail.com", deepGreer, 13),
-        Row(          
+        Row(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

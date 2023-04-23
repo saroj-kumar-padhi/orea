@@ -61,8 +61,9 @@ class _AddedByYou extends State<AddedByYou> {
                               children: [
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(5),
-                                  child: Image.asset(
-                                    ImagePath.house,
+                                  child: Image.network(
+                                    data?['imageUrl'] ??
+                                        Image.asset(ImagePath.house),
                                     height: 100,
                                     width: 120,
                                   ),
@@ -73,7 +74,7 @@ class _AddedByYou extends State<AddedByYou> {
                                   children: [
                                     BoldText("Property Title", deepGreer, 17),
                                     const SizedBox(width: 8),
-                                    BoldText(data?['propertyName'] ?? 'N/A',
+                                    BoldText(data?['propertyTitle'] ?? 'N/A',
                                         deepBlue, 17),
                                     const SizedBox(height: 2),
                                     LightText("added by you", deepGreer, 13),
@@ -131,7 +132,7 @@ class _AddedByYou extends State<AddedByYou> {
       FirebaseFirestore.instance.collection('users');
 
   Future<QuerySnapshot> fetchProperties() async {
-    return await propertiesRef.where('userId', isEqualTo: uid).get();
+    return await propertiesRef.where('addedBy', isEqualTo: uid).get();
   }
 }
 
