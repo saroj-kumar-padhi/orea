@@ -6,9 +6,14 @@ import 'package:flutter/material.dart';
 import '../../common_utils/common_utils.dart';
 import '../../common_utils/image_paths.dart';
 
-class EditProfileScreen extends StatelessWidget {
+class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
 
+  @override
+  State<EditProfileScreen> createState() => _EditProfileScreenState();
+}
+
+class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   Widget build(BuildContext context) {
     TextEditingController fullName = TextEditingController();
@@ -50,6 +55,8 @@ class EditProfileScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+                const SizedBox(height: 18),
+                BoldText('Pick up profile pic', deepBlue, 18),
                 const SizedBox(height: 46),
                 Row(
                   children: [
@@ -94,32 +101,6 @@ class EditProfileScreen extends StatelessWidget {
                     filled: true,
                     contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
                     hintText: "Phone number",
-                    hintStyle: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontFamily: "Poppins",
-                        color: hint,
-                        fontSize: 15),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        borderSide: const BorderSide(color: deepBlue)),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  children: [
-                    const SizedBox(width: 20),
-                    LightText("Enter your email", black, 15),
-                  ],
-                ),
-                const SizedBox(height: 5),
-                TextFormField(
-                  autofocus: false,
-                  keyboardType: TextInputType.name,
-                  decoration: InputDecoration(
-                    fillColor: whiteColor,
-                    filled: true,
-                    contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-                    hintText: "Email Id",
                     hintStyle: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontFamily: "Poppins",

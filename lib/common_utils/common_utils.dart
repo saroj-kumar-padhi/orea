@@ -45,8 +45,6 @@ class LightText extends StatelessWidget {
   }
 }
 
-
-
 class ParagraphText extends StatelessWidget {
   String text;
   Color color;
@@ -72,5 +70,21 @@ class ParagraphText extends StatelessWidget {
         ),
       ],
     );
+  }
+}
+
+class AuthState extends ChangeNotifier {
+  bool _isAuthenticated = false;
+
+  bool get isAuthenticated => _isAuthenticated;
+
+  void login() {
+    _isAuthenticated = true;
+    notifyListeners();
+  }
+
+  void logout() {
+    _isAuthenticated = false;
+    notifyListeners();
   }
 }

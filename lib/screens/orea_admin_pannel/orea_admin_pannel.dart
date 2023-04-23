@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:Orea/common_utils/common_utils.dart';
 import 'package:Orea/common_utils/image_paths.dart';
@@ -47,16 +48,13 @@ class _OreaAdmin extends State<OreaAdmin> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => const PendingRequest()));
-                  },context),
-                  adminTabs(
-                    "EDIT LISTINGS",
-                    () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const AllListingsDelete()));
-                    },context
-                  ),
+                  }, context),
+                  adminTabs("EDIT LISTINGS", () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const AllListingsDelete()));
+                  }, context),
                 ],
               ),
               Row(
@@ -65,11 +63,14 @@ class _OreaAdmin extends State<OreaAdmin> {
                   adminTabs("HISTORY", () {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const HistoryScreen()));
-                  },context),
-                  adminTabs("LOGOUT", () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const AdminUserScreen()));
-                  },context),
+                  }, context),
+                  adminTabs("LOGOUT", () async {
+                    await FirebaseAuth.instance.signOut();
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const AdminUserScreen()));
+                  }, context),
                 ],
               ),
               const SizedBox(height: 30),
@@ -82,14 +83,14 @@ class _OreaAdmin extends State<OreaAdmin> {
 }
 
 //Clickable Tabs ---------->>>
-adminTabs(txt, clk,context) {
+adminTabs(txt, clk, context) {
   return InkWell(
     onTap: clk,
     child: Padding(
       padding: const EdgeInsets.all(10.0),
       child: Container(
         height: 63,
-        width: MediaQuery.of(context).size.width/2.9,
+        width: MediaQuery.of(context).size.width / 2.9,
         decoration: BoxDecoration(
             color: whiteColor,
             border: Border.all(color: deepBlue, width: 1),

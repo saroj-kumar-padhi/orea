@@ -73,8 +73,17 @@ class _UserProfileState extends State<UserProfile> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  BoldText("User Name", deepGreer, 16),
-                  BoldText("${user?.email}", deepBlue, 16),
+                  BoldText("Name:", deepGreer, 16),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      BoldText("Email: ", deepGreer, 16),
+                      BoldText("${user?.email}", deepBlue,
+                          MediaQuery.of(context).size.width * 0.04),
+                    ],
+                  ),
+                  BoldText("Phone no. :", deepGreer, 16),
+                  BoldText("Address:", deepGreer, 16)
                 ],
               ),
             ],
@@ -159,8 +168,9 @@ class _UserProfileState extends State<UserProfile> {
                             color: whiteColor, size: 21),
                         const SizedBox(width: 10),
                         GestureDetector(
-                          onTap: () {
-                            Navigator.push(
+                          onTap: () async{
+                            await FirebaseAuth.instance.signOut();
+                            Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>

@@ -7,12 +7,20 @@ import 'package:Orea/common_utils/image_paths.dart';
 import '../forgot_password/forgot_password.dart';
 import '../user_register/user_register.dart';
 
-class UserSignIn extends StatelessWidget {
+class UserSignIn extends StatefulWidget {
   UserSignIn({super.key});
 
+  @override
+  State<UserSignIn> createState() => _UserSignInState();
+}
+
+class _UserSignInState extends State<UserSignIn> {
   //editing controllers
   final TextEditingController emailController = TextEditingController();
+
   final TextEditingController passwordController = TextEditingController();
+
+  bool _obscureText = true;
 
   //formkey
   final _formKey = GlobalKey<FormState>();
@@ -20,6 +28,7 @@ class UserSignIn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: whiteColor,
       appBar: AppBar(
         elevation: 0,
@@ -81,20 +90,29 @@ class UserSignIn extends StatelessWidget {
                   const SizedBox(height: 25),
                   // USER PASSWORD FIELD ---------->>>
                   TextFormField(
+                    obscureText: _obscureText,
                     controller: passwordController,
                     autofocus: false,
                     keyboardType: TextInputType.name,
                     decoration: InputDecoration(
-                      fillColor: whiteColor,
-                      filled: true,
-                      contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-                      hintText: "Enter Password",
-                      hintStyle: const TextStyle(
-                          fontFamily: "Poppins", color: hint, fontSize: 15),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30),
-                          borderSide: const BorderSide(color: deepBlue)),
-                    ),
+                        fillColor: whiteColor,
+                        filled: true,
+                        contentPadding:
+                            const EdgeInsets.fromLTRB(20, 15, 20, 15),
+                        hintText: "Enter Password",
+                        hintStyle: const TextStyle(
+                            fontFamily: "Poppins", color: hint, fontSize: 15),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30),
+                            borderSide: const BorderSide(color: deepBlue)),
+                        suffixIcon: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _obscureText = !_obscureText;
+                            });
+                          },
+                          child: Icon(_obscureText?Icons.visibility:Icons.visibility_off,semanticLabel: _obscureText?'show password':'hide password',),
+                        )),
                     validator: (value) {
                       RegExp regex = RegExp(r'^.{6,}$');
                       if (value!.isEmpty) {
@@ -150,8 +168,11 @@ class UserSignIn extends StatelessWidget {
                       ),
                       GestureDetector(
                         onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => UserRegister()));
+                          Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(
+                              builder: (context) => UserRegister(),
+                            ),
+                          );
                         },
                         child: BoldText(" Register", deepGreer, 15),
                       ),

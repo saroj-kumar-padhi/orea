@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:jazzcash_flutter/jazzcash_flutter.dart';
 
 import '../../common_utils/common_utils.dart';
-import '../add_property/add_property.dart';
 
 class PaymentScreen extends StatefulWidget {
   const PaymentScreen({super.key});
@@ -11,16 +11,22 @@ class PaymentScreen extends StatefulWidget {
 }
 
 class _PaymentScreenState extends State<PaymentScreen> {
-  String months = 'Option 1';
-  String year = 'Option A';
+  String paymentStatus = "pending";
+  ProductModel productModel = ProductModel("Product 1", "100");
+  String integritySalt = "v3s3y665vf";
+  String merchantID = "MC12686";
+  String merchantPassword = "5z932w9sa5";
+  String transactionUrl =
+      "https://sandbox.jazzcash.com.pk/ApplicationAPI/API/payment/DoTransaction";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: BoldText("PAYMENT", deepGreer, 18),
+        title: BoldText("Payment", deepGreer, 18),
         centerTitle: true,
-        elevation: 0.0,
+        elevation: 0.5,
         backgroundColor: whiteColor,
         leading: IconButton(
           onPressed: () {
@@ -31,95 +37,81 @@ class _PaymentScreenState extends State<PaymentScreen> {
       ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(24, 30, 24, 30),
+          padding: const EdgeInsets.all(20),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              BoldText("Credit / Debit / ATM Card", deepBlue, 13),
-              const SizedBox(height: 9),
-              TextFormField(
-                autofocus: false,
-                keyboardType: TextInputType.name,
-                decoration: InputDecoration(
-                  fillColor: whiteColor,
-                  filled: true,
-                  contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-                  hintText: "Enter Card Number",
-                  hintStyle: const TextStyle(
-                      fontFamily: "Poppins", color: hint, fontSize: 15),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: const BorderSide(color: deepBlue)),
-                ),
-              ),
-              const SizedBox(height: 25),
-              Row(
-                children: [
-                  SizedBox(
-                    width: 230,
-                    child: TextFormField(
-                      autofocus: false,
-                      keyboardType: TextInputType.name,
-                      decoration: InputDecoration(
-                        suffixIcon:
-                            const Icon(Icons.arrow_drop_down, color: hint),
-                        suffixText: "MM",
-                        fillColor: whiteColor,
-                        filled: true,
-                        contentPadding:
-                            const EdgeInsets.fromLTRB(20, 15, 20, 15),
-                        hintText: "Valid thru",
-                        hintStyle: const TextStyle(
-                            fontFamily: "Poppins", color: hint, fontSize: 15),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                          borderSide: const BorderSide(color: deepBlue),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  SizedBox(
-                    width: 100,
-                    child: TextFormField(
-                      autofocus: false,
-                      keyboardType: TextInputType.name,
-                      decoration: InputDecoration(
-                        fillColor: whiteColor,
-                        filled: true,
-                        contentPadding:
-                            const EdgeInsets.fromLTRB(20, 15, 20, 15),
-                        hintText: "CVV",
-                        hintStyle: const TextStyle(
-                            fontFamily: "Poppins", color: hint, fontSize: 15),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(color: deepBlue)),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const Spacer(),
+              // Text("Product Name : ${productModel.productName}"),
+              // Text("Product Price : ${productModel.productPrice}"),
               MaterialButton(
-                elevation: 0.0,
+                color: deepBlue,
                 height: 40,
                 minWidth: MediaQuery.of(context).size.width,
-                color: deepBlue,
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => AddProperty()),
-                  );
-                },
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20)),
+                    borderRadius: BorderRadius.circular(10)),
+                onPressed: () {
+                  _payViaJazzCash(productModel, context);
+                },
                 child: BoldText("Pay Now", whiteColor, 18),
-              )
+              ),
             ],
           ),
         ),
       ),
     );
   }
+
+  Future _payViaJazzCash(ProductModel element, BuildContext c) async {
+    // print("clicked on Product ${element.name}");
+
+    try {
+      JazzCashFlutter jazzCashFlutter = JazzCashFlutter(
+        merchantId: merchantID,
+        merchantPassword: merchantPassword,
+        integritySalt: integritySalt,
+        isSandbox: true,
+      );
+
+      DateTime date = DateTime.now();
+
+      JazzCashPaymentDataModelV1 paymentDataModelV1 =
+          JazzCashPaymentDataModelV1(
+        ppAmount: '${element.productPrice}',
+        ppBillReference:
+            'refbill${date.year}${date.month}${date.day}${date.hour}${date.millisecond}',
+        ppDescription:
+            'Product details  ${element.productName} - ${element.productPrice}',
+        ppMerchantID: merchantID,
+        ppPassword: merchantPassword,
+        ppReturnURL: transactionUrl,
+      );
+
+      jazzCashFlutter
+          .startPayment(
+              paymentDataModelV1: paymentDataModelV1, context: context)
+          .then((_response) {
+        print("response from jazzcash $_response");
+
+        // _checkIfPaymentSuccessfull(_response, element, context).then((res) {
+        //   // res is the response you returned from your return url;
+        //   return res;
+        // });
+
+        setState(() {});
+      });
+    } catch (err) {
+      print("Error in payment $err");
+      // CommonFunctions.CommonToast(
+      //   message: "Error in payment $err",
+      // );
+      return false;
+    }
+  }
+}
+
+class ProductModel {
+  String? productName;
+  String? productPrice;
+
+  ProductModel(this.productName, this.productPrice);
 }
