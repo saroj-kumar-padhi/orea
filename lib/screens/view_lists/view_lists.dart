@@ -119,12 +119,14 @@ Widget listItem(image, onTap, title) {
         ),
       ),
       const SizedBox(width: 22),
-      Column(children: [
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
         Row(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            BoldText("Property Title", deepGreer, 17),
+            BoldText("Property Title:", deepGreer, 17),
             const SizedBox(width: 8),
             BoldText(title, deepBlue, 17)
           ],

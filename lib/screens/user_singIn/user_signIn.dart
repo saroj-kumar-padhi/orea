@@ -111,7 +111,14 @@ class _UserSignInState extends State<UserSignIn> {
                               _obscureText = !_obscureText;
                             });
                           },
-                          child: Icon(_obscureText?Icons.visibility:Icons.visibility_off,semanticLabel: _obscureText?'show password':'hide password',),
+                          child: Icon(
+                            _obscureText
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            semanticLabel: _obscureText
+                                ? 'show password'
+                                : 'hide password',
+                          ),
                         )),
                     validator: (value) {
                       RegExp regex = RegExp(r'^.{6,}$');
@@ -142,8 +149,10 @@ class _UserSignInState extends State<UserSignIn> {
                               .signInWithEmailAndPassword(
                                   email: emailController.text,
                                   password: passwordController.text);
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const RealEstateBidding()));
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const RealEstateBidding()));
                         } on FirebaseAuthException catch (e) {
                           if (e.code == 'user-not-found') {
                             print('No user found for that email.');

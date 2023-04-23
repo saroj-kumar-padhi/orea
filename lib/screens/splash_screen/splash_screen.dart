@@ -1,8 +1,10 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:Orea/common_utils/common_utils.dart';
 import '../../common_utils/image_paths.dart';
-import '../admin_user/admin_user.dart';
+import '../welcome_screen/welcome_screen.dart';
+
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -17,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(
         const Duration(seconds: 3),
         () => Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const AdminUserScreen())));
+            MaterialPageRoute(builder: (context) => const WelcomeScreen())));
     super.initState();
   }
 

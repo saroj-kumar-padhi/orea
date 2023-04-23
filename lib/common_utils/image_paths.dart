@@ -11,4 +11,5 @@ class ImagePath {
   static String prop2 = "${base}prop2.jpg";
   static String prop3 = "${base}prop3.jpg";
   static String prop4 = "${base}prop4.webp";
+  static String verify = "${base}verify.png";
 }

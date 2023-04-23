@@ -6,6 +6,8 @@ import 'package:Orea/screens/admin_user/admin_user.dart';
 
 import '../welcome_admin/welcome_admin.dart';
 
+
+
 class AdminSignIn extends StatefulWidget {
   AdminSignIn({super.key});
 
@@ -144,7 +146,7 @@ class _AdminSignInState extends State<AdminSignIn> {
                                   "azizkhan51569@gmail.com" &&
                               passwordController.text == "aziz1234") {
                             Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => const WelcomeScreen()));
+                                builder: (context) => const WelcomeAdminScreen()));
                           } else {
                             showDialog(
                               context: context,
