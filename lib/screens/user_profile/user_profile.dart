@@ -73,17 +73,17 @@ class _UserProfileState extends State<UserProfile> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  BoldText("Name:", deepGreer, 16),
+                  BoldText("Name:", deepGreer, 13),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      BoldText("Email: ", deepGreer, 16),
-                      BoldText("${user?.email}", deepBlue,
-                          16),
+                      BoldText("Email: ", deepGreer, 13),
+                      BoldText("${user?.email}", deepGreer,
+                          13),
                     ],
                   ),
-                  BoldText("Phone no. :", deepGreer, 16),
-                  BoldText("Address:", deepGreer, 16)
+                  BoldText("Phone no. :", deepGreer, 13),
+                  BoldText("Address:", deepGreer, 13)
                 ],
               ),
             ],

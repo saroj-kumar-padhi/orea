@@ -81,17 +81,11 @@ class _PendingRequestState extends State<PendingRequest> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => PlaceYourBid(
-                            id: documents[index].id,
-                            imageUrl: data['imageUrl'],
-                            discription: data["propertyDescription"],
-                            amount: data['amount'],
-                            propertyTitle: data['propertyTitle'],
-                          ),
+                          builder: (context) => const PendingRequest(),
                         ),
                       );
                     },
-                        // DECLINE ------->>>
+                        
                         () {},
                         context),
                   ],

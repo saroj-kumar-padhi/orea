@@ -1,10 +1,13 @@
 import 'package:Orea/common_utils/image_paths.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:Orea/common_utils/common_utils.dart';
 
 class BidHistory extends StatefulWidget {
-  const BidHistory({super.key});
+  BidHistory({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<BidHistory> createState() => _BidHistory();
@@ -13,6 +16,17 @@ class BidHistory extends StatefulWidget {
 class _BidHistory extends State<BidHistory> {
   @override
   Widget build(BuildContext context) {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? user = auth.currentUser;
+    if (user != null) {
+      // User is signed in, you can access the email address
+      String? email = user.email;
+      print('User email: $email');
+    } else {
+      // User is not signed in
+      print('User is not signed in');
+    }
+
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
     final CollectionReference propertiesRef = firestore.collection('users');
     Future<QuerySnapshot<Map<String, dynamic>>> fetchAppropedRequest() async {
@@ -89,15 +103,13 @@ class _BidHistory extends State<BidHistory> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(children: [
-                                BoldText("Property Title", deepGreer, 15),
-                                const SizedBox(width: 8),
                                 BoldText(data['propertyTitle'] ?? 'N/A',
                                     deepBlue, 15),
                               ]),
                               const SizedBox(height: 15),
                               Row(
                                 children: [
-                                  LightText("placed by dilshad@gmail.com",
+                                  LightText("placed by \n${user!.email}",
                                       deepGreer, 11),
                                 ],
                               ),

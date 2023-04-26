@@ -18,7 +18,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
   String merchantPassword = "5z932w9sa5";
   String transactionUrl =
       "https://sandbox.jazzcash.com.pk/ApplicationAPI/API/payment/DoTransaction";
-
+  bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,6 +65,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
     // print("clicked on Product ${element.name}");
 
     try {
+      setState(() {
+        _isLoading = true;
+      });
       JazzCashFlutter jazzCashFlutter = JazzCashFlutter(
         merchantId: merchantID,
         merchantPassword: merchantPassword,
@@ -97,13 +100,18 @@ class _PaymentScreenState extends State<PaymentScreen> {
         //   return res;
         // });
 
-        setState(() {});
+        setState(() {
+          _isLoading = false;
+        });
       });
     } catch (err) {
       print("Error in payment $err");
       // CommonFunctions.CommonToast(
       //   message: "Error in payment $err",
       // );
+      setState(() {
+        _isLoading = false;
+      });
       return false;
     }
   }
