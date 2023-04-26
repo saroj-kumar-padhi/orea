@@ -77,6 +77,11 @@ class _ViewListings extends State<ViewListings> {
                                     MaterialPageRoute(
                                       builder: (context) => PlaceYourBid(
                                         id: documents[index].id,
+                                        imageUrl: data['imageUrl'],
+                                        discription:
+                                            data['propertyDescription'],
+                                        amount: data['amount'],
+                                        propertyTitle: data['propertyTitle'],
                                       ),
                                     ),
                                   );
@@ -119,9 +124,7 @@ Widget listItem(image, onTap, title) {
         ),
       ),
       const SizedBox(width: 22),
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+      Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,

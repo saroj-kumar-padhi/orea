@@ -1,15 +1,23 @@
 import 'package:Orea/common_utils/common_utils.dart';
-import 'package:Orea/common_utils/image_paths.dart';
 import 'package:Orea/screens/buy_property/buy_property.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class PlaceYourBid extends StatefulWidget {
   String id;
-  PlaceYourBid({
-    Key? key,
-    required this.id,
-  }) : super(key: key);
+  String imageUrl;
+  String discription;
+  String amount;
+  String propertyTitle;
+  PlaceYourBid(
+      {Key? key,
+      required this.id,
+      required this.imageUrl,
+      required this.amount,
+      required this.discription,
+      required this.propertyTitle})
+      : super(key: key);
 
   @override
   State<PlaceYourBid> createState() => _PlaceYourBidState();
@@ -18,6 +26,17 @@ class PlaceYourBid extends StatefulWidget {
 class _PlaceYourBidState extends State<PlaceYourBid> {
   @override
   Widget build(BuildContext context) {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? user = auth.currentUser;
+    if (user != null) {
+      // User is signed in, you can access the email address
+      String? email = user.email;
+      print('User email: $email');
+    } else {
+      // User is not signed in
+      print('User is not signed in');
+    }
+
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
     final CollectionReference propertiesRef = firestore.collection('users');
     final TextEditingController amountContrller = TextEditingController();
@@ -44,27 +63,24 @@ class _PlaceYourBidState extends State<PlaceYourBid> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Image.asset(
-                  ImagePath.house,
+                Image.network(
+                  widget.imageUrl,
                   height: 185,
                   width: MediaQuery.of(context).size.width,
                 ),
                 const SizedBox(height: 37),
                 Row(
                   children: [
-                    BoldText("Property Title", deepGreer, 15),
+                    BoldText(widget.propertyTitle, deepGreer, 15),
                     const SizedBox(width: 10),
-                    BoldText("PKR  2CR", deepBlue, 13),
+                    BoldText("PKR  ${widget.amount}", deepBlue, 13),
                   ],
                 ),
                 const SizedBox(height: 8),
-                LightText("by Asif Raza|asif@gmail.com", deepGreer, 12),
+                LightText("by Asif Raza | ${user!.email}", deepGreer, 12),
                 const SizedBox(height: 8),
                 ParagraphText(
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in scelerisque velit, a interdum libero. In quis molestie nunc. Pellentesque lacinia pulvinar felis non faucibus. Suspendisse potenti.",
-                    deepGreer,
-                    15,
-                    TextAlign.left),
+                    widget.discription, deepGreer, 15, TextAlign.left),
                 const SizedBox(height: 45),
                 TextFormField(
                   controller: amountContrller,
