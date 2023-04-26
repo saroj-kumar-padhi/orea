@@ -1,3 +1,4 @@
+import 'package:Orea/common_utils/image_paths.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:Orea/common_utils/common_utils.dart';
@@ -76,9 +77,8 @@ class _BidHistory extends State<BidHistory> {
                                   borderRadius: BorderRadius.circular(5),
                                   border: Border.all(color: deepBlue, width: 1),
                                   image: DecorationImage(
-                                      image: NetworkImage(
-                                        data['imageUrl'],
-                                      ),
+                                      image: NetworkImage(data['imageUrl'] ??
+                                          AssetImage(ImagePath.house)),
                                       fit: BoxFit.cover),
                                 ),
                               ),
