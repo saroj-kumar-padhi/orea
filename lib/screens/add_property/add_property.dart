@@ -163,11 +163,21 @@ class _AddPropertyState extends State<AddProperty> {
                         ),
                       ),
                       const SizedBox(width: 15),
-                      BoldText("Select Image", deepBlue, 15)
+                      Row(
+                        children: [
+                          BoldText("Select Image", deepBlue, 15),
+                          BoldText("*", Colors.red, 15),
+                        ],
+                      )
                     ],
                   ),
                   const SizedBox(height: 30),
-                  BoldText("Add property Tilte*", black, 15),
+                   Row(
+                        children: [
+                          BoldText("Add property Tilte", deepBlue, 15),
+                          BoldText("*", Colors.red, 15),
+                        ],
+                      ),
                   const SizedBox(height: 10),
                   TextFormField(
                     controller: addProperty,
@@ -208,7 +218,12 @@ class _AddPropertyState extends State<AddProperty> {
                           borderSide: const BorderSide(color: deepBlue)),
                     ),
                   ),
-                  BoldText("Add amount*", black, 15),
+                   Row(
+                        children: [
+                          BoldText("Add amount", deepBlue, 15),
+                          BoldText("*", Colors.red, 15),
+                        ],
+                      ),
                   const SizedBox(height: 10),
                   TextFormField(
                     controller: addAmount,
@@ -244,7 +259,7 @@ class _AddPropertyState extends State<AddProperty> {
                         String amount = addAmount.text;
                         await savePropertyToFirestore(
                             imageUrl, propertyTitle, propertyDescription, amount);
-                        Navigator.push(
+                        Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                             builder: (context) => const AddedByYou(),

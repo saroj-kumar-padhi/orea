@@ -111,11 +111,12 @@ class _RealEstateBiddingState extends State<RealEstateBidding> {
               children: [
                 userTabs("ADDED BY YOU", () {
                   Navigator.of(context).push(MaterialPageRoute(
+                    
                       builder: (context) => const AddedByYou()));
                 }),
                 userTabs("VIEW BIDS", () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const BidHistory()));
+                      builder: (context) =>  BidHistory()));
                 }),
               ],
             ),

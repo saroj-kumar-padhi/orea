@@ -74,12 +74,11 @@ class _AddedByYou extends State<AddedByYou> {
                                           border: Border.all(
                                               width: 1, color: deepBlue),
                                           image: DecorationImage(
-                                            image: NetworkImage(
-                                              data?['imageUrl'] ??
-                                                  Image.asset(ImagePath.base),
-                                            ),
-                                            fit: BoxFit.cover
-                                          ),
+                                              image: NetworkImage(
+                                                data?['imageUrl'] ??
+                                                    Image.asset(ImagePath.base),
+                                              ),
+                                              fit: BoxFit.cover),
                                         ),
                                       ),
                                     ),
@@ -88,9 +87,6 @@ class _AddedByYou extends State<AddedByYou> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        BoldText(
-                                            "Property Title", deepGreer, 17),
-                                        const SizedBox(width: 8),
                                         BoldText(
                                             data?['propertyTitle'] ?? 'N/A',
                                             deepBlue,

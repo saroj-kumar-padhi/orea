@@ -49,6 +49,7 @@ class UserRegister extends StatelessWidget {
                   const SizedBox(height: 72),
                   //FULL NAME FIELD ---------->>>
                   TextFormField(
+                    controller: nameController,
                     autofocus: false,
                     keyboardType: TextInputType.name,
                     decoration: InputDecoration(
