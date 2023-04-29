@@ -23,7 +23,7 @@ class _AddPropertyState extends State<AddProperty> {
   final TextEditingController addProperty = TextEditingController();
   final TextEditingController addDescription = TextEditingController();
   final TextEditingController addAmount = TextEditingController();
-    final _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
 
   // Upload the image to Firebase Storage
   Future<String> uploadImageToStorage(XFile? photo) async {
@@ -172,12 +172,12 @@ class _AddPropertyState extends State<AddProperty> {
                     ],
                   ),
                   const SizedBox(height: 30),
-                   Row(
-                        children: [
-                          BoldText("Add property Tilte", deepBlue, 15),
-                          BoldText("*", Colors.red, 15),
-                        ],
-                      ),
+                  Row(
+                    children: [
+                      BoldText("Add property Tilte", deepBlue, 15),
+                      BoldText("*", Colors.red, 15),
+                    ],
+                  ),
                   const SizedBox(height: 10),
                   TextFormField(
                     controller: addProperty,
@@ -218,12 +218,12 @@ class _AddPropertyState extends State<AddProperty> {
                           borderSide: const BorderSide(color: deepBlue)),
                     ),
                   ),
-                   Row(
-                        children: [
-                          BoldText("Add amount", deepBlue, 15),
-                          BoldText("*", Colors.red, 15),
-                        ],
-                      ),
+                  Row(
+                    children: [
+                      BoldText("Add amount", deepBlue, 15),
+                      BoldText("*", Colors.red, 15),
+                    ],
+                  ),
                   const SizedBox(height: 10),
                   TextFormField(
                     controller: addAmount,
@@ -252,19 +252,20 @@ class _AddPropertyState extends State<AddProperty> {
                       height: 40,
                       minWidth: MediaQuery.of(context).size.width,
                       onPressed: () async {
-                        if(_formKey.currentState!.validate()){
-                        String imageUrl = await uploadImageToStorage(photo);
-                        String propertyTitle = addProperty.text;
-                        String propertyDescription = addDescription.text;
-                        String amount = addAmount.text;
-                        await savePropertyToFirestore(
-                            imageUrl, propertyTitle, propertyDescription, amount);
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const AddedByYou(),
-                          ),
-                        );}
+                        if (_formKey.currentState!.validate()) {
+                          String imageUrl = await uploadImageToStorage(photo);
+                          String propertyTitle = addProperty.text;
+                          String propertyDescription = addDescription.text;
+                          String amount = addAmount.text;
+                          await savePropertyToFirestore(imageUrl, propertyTitle,
+                              propertyDescription, amount);
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const AddedByYou(),
+                            ),
+                          );
+                        }
                       },
                       child: BoldText("Add Property", whiteColor, 18)),
                 ],
