@@ -55,8 +55,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 18),
-                BoldText('Pick up profile pic', deepBlue, 18),
                 const SizedBox(height: 46),
                 Row(
                   children: [
@@ -145,19 +143,30 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   minWidth: MediaQuery.of(context).size.width,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(28)),
-                  onPressed: () {
+                  onPressed: () async {
                     FirebaseAuth auth = FirebaseAuth.instance;
-                    User? user = auth.currentUser;
-                    String? userId = user?.uid;
-                    final FirebaseFirestore firestore =
-                        FirebaseFirestore.instance;
-                    final CollectionReference usersRef =
-                        firestore.collection('users');
-                    usersRef.doc(userId).update({
-                      'fullName': fullName.text,
-                      'phoneNumber': phoneNumber.text,
-                      'address': address.text,
-                    });
+                    String? userId = auth.currentUser?.uid;
+                    if (userId != null) {
+                      CollectionReference usersRef =
+                          FirebaseFirestore.instance.collection('info');
+                      QuerySnapshot querySnapshot = await usersRef
+                          .where('userUid', isEqualTo: userId)
+                          .get();
+                      if (querySnapshot.size > 0) {
+                        DocumentSnapshot docSnapshot = querySnapshot.docs.first;
+                        Map<String, dynamic> updateData = {
+                          'name': fullName.text,
+                          'phoneNo': phoneNumber.text,
+                          'Address': address.text,
+                        };
+                        await docSnapshot.reference.update(updateData);
+                        // Document updated successfully
+                      } else {
+                        // User not found in the collection
+                      }
+                    } else {
+                      // User not signed in
+                    }
 
                     Navigator.push(
                         context,
