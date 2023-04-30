@@ -20,6 +20,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     TextEditingController phoneNumber = TextEditingController();
     TextEditingController address = TextEditingController();
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: whiteColor,
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -36,147 +37,127 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(26, 38, 26, 0),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                ClipRRect(
-                  child: Expanded(
-                    child: Container(
-                      height: 100,
-                      width: 100,
-                      decoration: BoxDecoration(
-                          color: hint,
-                          boxShadow: const [],
-                          borderRadius: BorderRadius.circular(100),
-                          image: DecorationImage(
-                              image: AssetImage(ImagePath.profile),
-                              fit: BoxFit.fill)),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 46),
-                Row(
-                  children: [
-                    const SizedBox(width: 20),
-                    LightText("Enter full name ", black, 15),
-                  ],
-                ),
-                const SizedBox(height: 5),
-                TextFormField(
-                  controller: fullName,
-                  autofocus: false,
-                  keyboardType: TextInputType.name,
-                  decoration: InputDecoration(
-                    fillColor: whiteColor,
-                    filled: true,
-                    contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-                    hintText: "Full Name",
-                    hintStyle: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontFamily: "Poppins",
+          padding: const EdgeInsets.fromLTRB(26, 30, 26, 0),
+          child: Column(
+            children: [
+              ClipRRect(
+                child: Expanded(
+                  child: Container(
+                    height: 100,
+                    width: 100,
+                    decoration: BoxDecoration(
                         color: hint,
-                        fontSize: 15),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        borderSide: const BorderSide(color: deepBlue)),
+                        borderRadius: BorderRadius.circular(100),
+                        image: DecorationImage(
+                            image: AssetImage(ImagePath.profile),
+                            fit: BoxFit.fill)),
                   ),
                 ),
-                const SizedBox(height: 20),
-                Row(
-                  children: [
-                    const SizedBox(width: 20),
-                    LightText("Enter your phone number", black, 15),
-                  ],
+              ),
+              const SizedBox(height: 30),
+              Row(
+                children: [
+                  const SizedBox(width: 20),
+                  LightText("Enter full name ", black, 15),
+                ],
+              ),
+              const SizedBox(height: 5),
+              TextFormField(
+                controller: fullName,
+                autofocus: false,
+                keyboardType: TextInputType.name,
+                decoration: InputDecoration(
+                  fillColor: whiteColor,
+                  filled: true,
+                  contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30),
+                      borderSide: const BorderSide(color: deepBlue)),
                 ),
-                const SizedBox(height: 5),
-                TextFormField(
-                  controller: phoneNumber,
-                  autofocus: false,
-                  keyboardType: TextInputType.name,
-                  decoration: InputDecoration(
-                    fillColor: whiteColor,
-                    filled: true,
-                    contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-                    hintText: "Phone number",
-                    hintStyle: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontFamily: "Poppins",
-                        color: hint,
-                        fontSize: 15),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        borderSide: const BorderSide(color: deepBlue)),
-                  ),
+              ),
+              const SizedBox(height: 20),
+              Row(
+                children: [
+                  const SizedBox(width: 20),
+                  LightText("Enter your phone number", black, 15),
+                ],
+              ),
+              const SizedBox(height: 5),
+              TextFormField(
+                controller: phoneNumber,
+                autofocus: false,
+                keyboardType: const TextInputType.numberWithOptions(),
+                decoration: InputDecoration(
+                  fillColor: whiteColor,
+                  filled: true,
+                  contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30),
+                      borderSide: const BorderSide(color: deepBlue)),
                 ),
-                const SizedBox(height: 20),
-                Row(
-                  children: [
-                    const SizedBox(width: 20),
-                    LightText("Enter your address", black, 15),
-                  ],
+              ),
+              const SizedBox(height: 20),
+              Row(
+                children: [
+                  const SizedBox(width: 20),
+                  LightText("Enter your address", black, 15),
+                ],
+              ),
+              const SizedBox(height: 5),
+              TextFormField(
+                controller: address,
+                autofocus: false,
+                keyboardType: TextInputType.name,
+                decoration: InputDecoration(
+                  fillColor: whiteColor,
+                  filled: true,
+                  contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30),
+                      borderSide: const BorderSide(color: deepBlue)),
                 ),
-                const SizedBox(height: 5),
-                TextFormField(
-                  controller: address,
-                  autofocus: false,
-                  keyboardType: TextInputType.name,
-                  decoration: InputDecoration(
-                    fillColor: whiteColor,
-                    filled: true,
-                    contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-                    hintText: "Address",
-                    hintStyle: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontFamily: "Poppins",
-                        color: hint,
-                        fontSize: 15),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        borderSide: const BorderSide(color: deepBlue)),
-                  ),
-                ),
-                const SizedBox(height: 70),
-                MaterialButton(
-                  color: deepBlue,
-                  height: 40,
-                  minWidth: MediaQuery.of(context).size.width,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(28)),
-                  onPressed: () async {
-                    FirebaseAuth auth = FirebaseAuth.instance;
-                    String? userId = auth.currentUser?.uid;
-                    if (userId != null) {
-                      CollectionReference usersRef =
-                          FirebaseFirestore.instance.collection('info');
-                      QuerySnapshot querySnapshot = await usersRef
-                          .where('userUid', isEqualTo: userId)
-                          .get();
-                      if (querySnapshot.size > 0) {
-                        DocumentSnapshot docSnapshot = querySnapshot.docs.first;
-                        Map<String, dynamic> updateData = {
-                          'name': fullName.text,
-                          'phoneNo': phoneNumber.text,
-                          'Address': address.text,
-                        };
-                        await docSnapshot.reference.update(updateData);
-                        // Document updated successfully
-                      } else {
-                        // User not found in the collection
-                      }
+              ),
+              const Spacer(),
+              MaterialButton(
+                color: deepBlue,
+                height: 40,
+                minWidth: MediaQuery.of(context).size.width,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(28)),
+                onPressed: () async {
+                  FirebaseAuth auth = FirebaseAuth.instance;
+                  String? userId = auth.currentUser?.uid;
+                  if (userId != null) {
+                    CollectionReference usersRef =
+                        FirebaseFirestore.instance.collection('info');
+                    QuerySnapshot querySnapshot = await usersRef
+                        .where('userUid', isEqualTo: userId)
+                        .get();
+                    if (querySnapshot.size > 0) {
+                      DocumentSnapshot docSnapshot = querySnapshot.docs.first;
+                      Map<String, dynamic> updateData = {
+                        'name': fullName.text,
+                        'phoneNo': phoneNumber.text,
+                        'Address': address.text,
+                      };
+                      await docSnapshot.reference.update(updateData);
+                      // Document updated successfully
                     } else {
-                      // User not signed in
+                      // User not found in the collection
                     }
+                  } else {
+                    // User not signed in
+                  }
 
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const UserProfile()));
-                  },
-                  child: BoldText("Save Profile", whiteColor, 18),
-                ),
-              ],
-            ),
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const UserProfile()));
+                },
+                child: BoldText("Save Profile", whiteColor, 18),
+              ),
+              const SizedBox(height: 30,)
+            ],
           ),
         ),
       ),

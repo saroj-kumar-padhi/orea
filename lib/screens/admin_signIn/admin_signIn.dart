@@ -1,12 +1,11 @@
 // ignore: file_names
+import 'package:Orea/screens/welcome_screen/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:Orea/common_utils/common_utils.dart';
 import 'package:Orea/common_utils/image_paths.dart';
 import 'package:Orea/screens/admin_user/admin_user.dart';
 
 import '../welcome_admin/welcome_admin.dart';
-
-
 
 class AdminSignIn extends StatefulWidget {
   AdminSignIn({super.key});
@@ -84,6 +83,7 @@ class _AdminSignInState extends State<AdminSignIn> {
                     const SizedBox(height: 25),
                     //ADMIN PASSWORD FIELD ---------->>>
                     TextFormField(
+                      obscureText: _obscureText,
                       controller: passwordController,
                       autofocus: false,
                       keyboardType: TextInputType.name,
@@ -146,7 +146,8 @@ class _AdminSignInState extends State<AdminSignIn> {
                                   "azizkhan51569@gmail.com" &&
                               passwordController.text == "aziz1234") {
                             Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => const WelcomeAdminScreen()));
+                                builder: (context) =>
+                                    const WelcomeAdminScreen()));
                           } else {
                             showDialog(
                               context: context,
@@ -180,8 +181,8 @@ class _AdminSignInState extends State<AdminSignIn> {
                     const SizedBox(height: 9),
                     GestureDetector(
                       onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const AdminUserScreen()));
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => const WelcomeScreen()));
                       },
                       child: BoldText("Not an Admin ? Go Back", deepGreer, 15),
                     ),

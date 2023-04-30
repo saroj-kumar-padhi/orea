@@ -45,6 +45,7 @@ class _PlaceYourBidState extends State<PlaceYourBid> {
     final TextEditingController amountContrller = TextEditingController();
     final TextEditingController amountDescription = TextEditingController();
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: whiteColor,
       appBar: AppBar(
         automaticallyImplyLeading: false,

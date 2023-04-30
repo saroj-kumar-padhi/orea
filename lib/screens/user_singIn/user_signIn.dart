@@ -18,7 +18,6 @@ class UserSignIn extends StatefulWidget {
 class _UserSignInState extends State<UserSignIn> {
   //editing controllers
   final TextEditingController emailController = TextEditingController();
-  final TextEditingController nameController = TextEditingController();
 
   final TextEditingController passwordController = TextEditingController();
 
@@ -58,30 +57,6 @@ class _UserSignInState extends State<UserSignIn> {
                   BoldText("Fill your credentials", deepBlue, 15),
                   const SizedBox(height: 43),
 
-                  // name textField
-
-                  TextFormField(
-                    controller: nameController,
-                    autofocus: false,
-                    keyboardType: TextInputType.name,
-                    decoration: InputDecoration(
-                      fillColor: whiteColor,
-                      filled: true,
-                      contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-                      hintText: "Enter your Name",
-                      hintStyle: const TextStyle(
-                          fontFamily: "Poppins", color: hint, fontSize: 15),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30),
-                          borderSide: const BorderSide(color: deepBlue)),
-                    ),
-                    onSaved: (value) {
-                      emailController.text = value!;
-                    },
-                    textInputAction: TextInputAction.next,
-                  ),
-
-                  const SizedBox(height: 25),
                   // USER EMAIL FIELD ---------->>>
                   TextFormField(
                     controller: emailController,
@@ -122,31 +97,30 @@ class _UserSignInState extends State<UserSignIn> {
                     autofocus: false,
                     keyboardType: TextInputType.name,
                     decoration: InputDecoration(
-                        fillColor: whiteColor,
-                        filled: true,
-                        contentPadding:
-                            const EdgeInsets.fromLTRB(20, 15, 20, 15),
-                        hintText: "Enter Password",
-                        hintStyle: const TextStyle(
-                            fontFamily: "Poppins", color: hint, fontSize: 15),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30),
-                            borderSide: const BorderSide(color: deepBlue)),
-                        suffixIcon: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _obscureText = !_obscureText;
-                            });
-                          },
-                          child: Icon(
-                            _obscureText
-                                ? Icons.visibility
-                                : Icons.visibility_off,
-                            semanticLabel: _obscureText
-                                ? 'show password'
-                                : 'hide password',
-                          ),
-                        )),
+                      fillColor: whiteColor,
+                      filled: true,
+                      contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+                      hintText: "Enter Password",
+                      hintStyle: const TextStyle(
+                          fontFamily: "Poppins", color: hint, fontSize: 15),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                          borderSide: const BorderSide(color: deepBlue)),
+                      suffixIcon: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _obscureText = !_obscureText;
+                          });
+                        },
+                        child: Icon(
+                          _obscureText
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                          semanticLabel:
+                              _obscureText ? 'show password' : 'hide password',
+                        ),
+                      ),
+                    ),
                     validator: (value) {
                       RegExp regex = RegExp(r'^.{6,}$');
                       if (value!.isEmpty) {
@@ -184,7 +158,6 @@ class _UserSignInState extends State<UserSignIn> {
                               .collection('info')
                               .doc(user!.uid);
                           await userRef.set({
-                            'name': nameController.text,
                             'email': emailController.text,
                             'userUid': u,
                             'phoneNo': "",

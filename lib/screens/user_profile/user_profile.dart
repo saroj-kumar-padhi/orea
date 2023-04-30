@@ -1,6 +1,7 @@
 import 'package:Orea/screens/admin_user/admin_user.dart';
 import 'package:Orea/screens/contact_us_screen/contact_us_screen.dart';
 import 'package:Orea/screens/property_added_by_you/property_added_by_you.dart';
+import 'package:Orea/screens/user_singIn/user_signIn.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:Orea/common_utils/common_utils.dart';
@@ -44,8 +45,8 @@ class _UserProfileState extends State<UserProfile> {
     }
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        automaticallyImplyLeading: false,
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back_rounded,
@@ -61,90 +62,92 @@ class _UserProfileState extends State<UserProfile> {
         backgroundColor: whiteColor,
       ),
       backgroundColor: whiteColor,
-      body: Column(
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          const SizedBox(
-            height: 50,
-          ),
-          FutureBuilder<List<DocumentSnapshot>>(
-              future: getPropertiesOfCurrentUser(),
-              builder: (context, snapshot) {
-                List<DocumentSnapshot> properties = snapshot.data!;
-                String userName = properties.isNotEmpty
-                    ? properties.first['name'] ?? 'Unknown'
-                    : 'Unknown';
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const SizedBox(
+              height: 50,
+            ),
+            FutureBuilder<List<DocumentSnapshot>>(
+                future: getPropertiesOfCurrentUser(),
+                builder: (context, snapshot) {
+                  List<DocumentSnapshot> properties = snapshot.data!;
 
-                String phoneNumber = properties.isNotEmpty
-                    ? properties.first['phoneNo'] ?? ''
-                    : '';
+                  String userName = properties.isNotEmpty
+                      ? properties.first['name'] ?? ''
+                      : '';
 
-                String address = properties.isNotEmpty
-                    ? properties.first['Address'] ?? ''
-                    : '';
+                  String phoneNumber = properties.isNotEmpty
+                      ? properties.first['phoneNo'] ?? ''
+                      : '';
 
-                return Row(
-                  children: [
-                    const Padding(padding: EdgeInsets.all(10)),
-                    Container(
-                      height: 70,
-                      width: 70,
-                      decoration: BoxDecoration(
-                          color: hint,
-                          boxShadow: const [],
-                          borderRadius: BorderRadius.circular(100),
-                          image: DecorationImage(
-                              image: AssetImage(ImagePath.profile),
-                              fit: BoxFit.fill)),
-                    ),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            BoldText("Name:", deepGreer, 13),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            BoldText(userName, deepGreer, 13),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            BoldText("Email: ", deepGreer, 13),
-                            BoldText("${user?.email}", deepGreer, 13),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            BoldText("Phone no. :", deepGreer, 13),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            BoldText(phoneNumber, deepGreer, 13),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            BoldText("Address:", deepGreer, 13),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            BoldText(address, deepGreer, 13),
-                          ],
-                        )
-                      ],
-                    ),
-                  ],
-                );
-              }),
-          const SizedBox(height: 70),
-          Expanded(
-            child: Container(
+                  String address = properties.isNotEmpty
+                      ? properties.first['Address'] ?? ''
+                      : '';
+
+                  return Row(
+                    children: [
+                      const Padding(padding: EdgeInsets.all(10)),
+                      Container(
+                        height: 70,
+                        width: 70,
+                        decoration: BoxDecoration(
+                            color: hint,
+                            boxShadow: const [],
+                            borderRadius: BorderRadius.circular(100),
+                            image: DecorationImage(
+                                image: AssetImage(ImagePath.profile),
+                                fit: BoxFit.fill)),
+                      ),
+                      const SizedBox(
+                        width: 15,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              BoldText("Name:", deepGreer, 13),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              BoldText(userName, deepGreer, 13),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              BoldText("Email: ", deepGreer, 13),
+                              BoldText("${user?.email}", deepGreer, 13),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              BoldText("Phone no. :", deepGreer, 13),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              BoldText(phoneNumber, deepGreer, 13),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              BoldText("Address:", deepGreer, 13),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              BoldText(address, deepGreer, 13),
+                            ],
+                          )
+                        ],
+                      ),
+                    ],
+                  );
+                }),
+            const SizedBox(height: 70),
+            Container(
+              height: MediaQuery.of(context).size.height,
               decoration: const BoxDecoration(
                   color: deepGreer,
                   borderRadius: BorderRadius.only(
@@ -223,12 +226,14 @@ class _UserProfileState extends State<UserProfile> {
                         const SizedBox(width: 10),
                         GestureDetector(
                           onTap: () async {
-                            await FirebaseAuth.instance.signOut();
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const AdminUserScreen()));
+                            await auth.signOut();
+                            if (auth.currentUser == null) {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const UserSignIn()));
+                            }
                           },
                           child: BoldText("Log Out", whiteColor, 17),
                         ),
@@ -238,8 +243,8 @@ class _UserProfileState extends State<UserProfile> {
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

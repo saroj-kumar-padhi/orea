@@ -78,16 +78,7 @@ class _PendingRequestState extends State<PendingRequest> {
                       setState(() {});
 
                       // ignore: use_build_context_synchronously
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const PendingRequest(),
-                        ),
-                      );
-                    },
-                        
-                        () {},
-                        context),
+                    }, () {}, context),
                   ],
                 );
               },

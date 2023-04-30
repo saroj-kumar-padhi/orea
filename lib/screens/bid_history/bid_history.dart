@@ -109,10 +109,11 @@ class _BidHistory extends State<BidHistory> {
                               const SizedBox(height: 15),
                               Row(
                                 children: [
-                                  LightText("placed by \n${user!.email}",
+                                  LightText("placed by 'BidUser' name",
                                       deepGreer, 11),
                                 ],
                               ),
+                              LightText("${user!.email}", deepGreer, 11),
                               const SizedBox(height: 5),
                               Row(
                                 children: [
