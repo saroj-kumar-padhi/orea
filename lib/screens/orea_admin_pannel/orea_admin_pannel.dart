@@ -1,3 +1,5 @@
+import 'package:Orea/screens/user_singIn/user_signIn.dart';
+import 'package:Orea/screens/welcome_screen/welcome_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:Orea/common_utils/common_utils.dart';
@@ -69,7 +71,7 @@ class _OreaAdmin extends State<OreaAdmin> {
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const AdminUserScreen()));
+                            builder: (context) => const WelcomeScreen()));
                   }, context),
                 ],
               ),

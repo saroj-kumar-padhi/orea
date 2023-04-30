@@ -126,7 +126,7 @@ class _SkipUser extends State<SkipUser> {
                 ),
               ),
               onTap: () {
-                Navigator.of(context).push(
+                Navigator.of(context).pushReplacement(
                     MaterialPageRoute(builder: (context) => AdminSignIn()));
               },
             ),

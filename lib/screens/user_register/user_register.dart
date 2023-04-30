@@ -5,13 +5,22 @@ import 'package:Orea/common_utils/image_paths.dart';
 import '../orea_real_estate_bidding/orea_real_estate_bidding.dart';
 import '../user_singIn/user_signIn.dart';
 
-class UserRegister extends StatelessWidget {
+class UserRegister extends StatefulWidget {
   UserRegister({super.key});
 
+  @override
+  State<UserRegister> createState() => _UserRegisterState();
+}
+
+class _UserRegisterState extends State<UserRegister> {
   //editing controllers
   final TextEditingController nameController = TextEditingController();
+
   final TextEditingController emailController = TextEditingController();
+
   final TextEditingController passwordController = TextEditingController();
+
+  bool _obscureText = true;
 
   //formkey
   final _formKey = GlobalKey<FormState>();
@@ -114,20 +123,36 @@ class UserRegister extends StatelessWidget {
                   const SizedBox(height: 25),
                   //PASSWORD FIELD ---------->>>
                   TextFormField(
+                    obscureText: _obscureText,
                     controller: passwordController,
                     autofocus: false,
                     keyboardType: TextInputType.name,
                     decoration: InputDecoration(
-                      fillColor: whiteColor,
-                      filled: true,
-                      contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-                      hintText: "Enter Password",
-                      hintStyle: const TextStyle(
-                          fontFamily: "Poppins", color: hint, fontSize: 15),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30),
-                          borderSide: const BorderSide(color: deepBlue)),
-                    ),
+                        fillColor: whiteColor,
+                        filled: true,
+                        contentPadding:
+                            const EdgeInsets.fromLTRB(20, 15, 20, 15),
+                        hintText: "Enter Password",
+                        hintStyle: const TextStyle(
+                            fontFamily: "Poppins", color: hint, fontSize: 15),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30),
+                            borderSide: const BorderSide(color: deepBlue)),
+                        suffixIcon: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _obscureText = !_obscureText;
+                            });
+                          },
+                          child: Icon(
+                            _obscureText
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            semanticLabel: _obscureText
+                                ? 'show passowrod'
+                                : 'hide password',
+                          ),
+                        )),
                     validator: (value) {
                       //reg expression for passowrd validation
                       RegExp regex = RegExp(r'^.{6,}$');
@@ -178,7 +203,7 @@ class UserRegister extends StatelessWidget {
                   const SizedBox(height: 9),
                   GestureDetector(
                     onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
                           builder: (context) => UserSignIn()));
                     },
                     child: BoldText("Already a User ? Login", deepGreer, 15),
