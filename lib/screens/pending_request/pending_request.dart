@@ -64,13 +64,12 @@ class _PendingRequestState extends State<PendingRequest> {
                 return Column(
                   children: [
                     listItem(data['imageUrl'], data['propertyTitle'] ?? 'N/A',
-                        "PKR 90L",
+                        data['amount'],
                         // APPROVE ------->>>
                         () async {
                       // get the document reference for the property
                       final DocumentReference propertyRef =
                           propertiesRef.doc(documents[index].id);
-
                       // update the status of the property to approved
                       await propertyRef.update({'status': 'approved'});
 
@@ -117,7 +116,7 @@ Widget listItem(image, title, rate, approve, decline, context) {
               children: [
                 BoldText(title, deepGreer, 16),
                 const SizedBox(width: 10),
-                BoldText(rate, deepBlue, 16)
+                BoldText("PKR ${rate}", deepBlue, 16)
               ],
             ),
             Row(

@@ -1,9 +1,7 @@
-import 'package:Orea/screens/admin_user/admin_user.dart';
 import 'package:Orea/screens/skip_user/skip_user.dart';
 import 'package:flutter/material.dart';
 import 'package:Orea/common_utils/common_utils.dart';
 import 'package:Orea/common_utils/image_paths.dart';
-import 'package:Orea/screens/admin_signIn/admin_signIn.dart';
 import '../user_singIn/user_signIn.dart';
 
 class WelcomeScreen extends StatelessWidget {
@@ -39,7 +37,7 @@ class WelcomeScreen extends StatelessWidget {
                   ),
                   onPressed: () {
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) =>  UserSignIn(),
+                      builder: (context) => UserSignIn(),
                     ));
                   },
                   child: BoldText("Sign In", whiteColor, 18),

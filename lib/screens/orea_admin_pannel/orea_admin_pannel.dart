@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:Orea/common_utils/common_utils.dart';
 import 'package:Orea/common_utils/image_paths.dart';
-import 'package:Orea/screens/admin_user/admin_user.dart';
 import 'package:Orea/screens/edit_all_listings_delete/edit_all_listings.dart';
 import 'package:Orea/screens/history_screen/history_screen.dart';
 

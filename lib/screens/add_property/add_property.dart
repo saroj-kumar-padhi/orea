@@ -199,8 +199,7 @@ class _AddPropertyState extends State<AddProperty> {
                     },
                   ),
                   const SizedBox(height: 30),
-                  const SizedBox(height: 30),
-                  BoldText("Add property Description", black, 15),
+                  BoldText("Add property Description", deepBlue, 15),
                   const SizedBox(height: 10),
                   TextFormField(
                     controller: addDescription,
