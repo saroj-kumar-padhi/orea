@@ -16,9 +16,8 @@ class EditProfileScreen extends StatefulWidget {
 class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   Widget build(BuildContext context) {
-    TextEditingController fullName = TextEditingController();
-    TextEditingController phoneNumber = TextEditingController();
-    TextEditingController address = TextEditingController();
+    final TextEditingController fullName = TextEditingController();
+    final TextEditingController address = TextEditingController();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: whiteColor,
@@ -37,21 +36,22 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(26, 30, 26, 0),
+          padding: const EdgeInsets.fromLTRB(26, 10, 26, 0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               ClipRRect(
-                child: Expanded(
-                  child: Container(
-                    height: 100,
-                    width: 100,
-                    decoration: BoxDecoration(
-                        color: hint,
-                        borderRadius: BorderRadius.circular(100),
-                        image: DecorationImage(
-                            image: AssetImage(ImagePath.profile),
-                            fit: BoxFit.fill)),
-                  ),
+                child: Container(
+                  height: 100,
+                  width: 100,
+                  decoration: BoxDecoration(
+                      color: deepBlue,
+                      borderRadius: BorderRadius.circular(100),
+                      image: DecorationImage(
+                          image: AssetImage(
+                            ImagePath.profile,
+                          ),
+                          fit: BoxFit.fill)),
                 ),
               ),
               const SizedBox(height: 30),
@@ -64,7 +64,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               const SizedBox(height: 5),
               TextFormField(
                 controller: fullName,
-                autofocus: false,
                 keyboardType: TextInputType.name,
                 decoration: InputDecoration(
                   fillColor: whiteColor,
@@ -79,34 +78,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               Row(
                 children: [
                   const SizedBox(width: 20),
-                  LightText("Enter your phone number", black, 15),
-                ],
-              ),
-              const SizedBox(height: 5),
-              TextFormField(
-                controller: phoneNumber,
-                autofocus: false,
-                keyboardType: const TextInputType.numberWithOptions(),
-                decoration: InputDecoration(
-                  fillColor: whiteColor,
-                  filled: true,
-                  contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30),
-                      borderSide: const BorderSide(color: deepBlue)),
-                ),
-              ),
-              const SizedBox(height: 20),
-              Row(
-                children: [
-                  const SizedBox(width: 20),
-                  LightText("Enter your address", black, 15),
+                  LightText("Enter your  Address",black, 15),
                 ],
               ),
               const SizedBox(height: 5),
               TextFormField(
                 controller: address,
-                autofocus: false,
                 keyboardType: TextInputType.name,
                 decoration: InputDecoration(
                   fillColor: whiteColor,
@@ -117,7 +94,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       borderSide: const BorderSide(color: deepBlue)),
                 ),
               ),
-              const Spacer(),
+              const SizedBox(height: 30),
               MaterialButton(
                 color: deepBlue,
                 height: 40,
@@ -137,7 +114,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       DocumentSnapshot docSnapshot = querySnapshot.docs.first;
                       Map<String, dynamic> updateData = {
                         'name': fullName.text,
-                        'phoneNo': phoneNumber.text,
                         'Address': address.text,
                       };
                       await docSnapshot.reference.update(updateData);
@@ -156,7 +132,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 },
                 child: BoldText("Save Profile", whiteColor, 18),
               ),
-              const SizedBox(height: 30,)
+              const SizedBox(
+                height: 30,
+              )
             ],
           ),
         ),

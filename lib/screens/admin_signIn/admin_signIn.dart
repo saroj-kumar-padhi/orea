@@ -3,7 +3,7 @@ import 'package:Orea/screens/welcome_screen/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:Orea/common_utils/common_utils.dart';
 import 'package:Orea/common_utils/image_paths.dart';
-import 'package:Orea/screens/admin_user/admin_user.dart';
+
 
 import '../welcome_admin/welcome_admin.dart';
 
