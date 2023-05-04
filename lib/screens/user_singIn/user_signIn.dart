@@ -1,5 +1,6 @@
-// ignore: file_names
-import 'package:Orea/screens/orea_real_estate_bidding/orea_real_estate_bidding.dart';
+
+//ignore: file_names
+import 'package:Orea/screens/orea_real_estate_bidding/orea_real_estate_bidding.dart' show RealEstateBidding;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -163,14 +164,17 @@ class _UserSignInState extends State<UserSignIn> {
                             'phoneNo': "",
                             'Address': "",
                           });
+                          // ignore: use_build_context_synchronously
                           Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
                                   builder: (context) =>
                                       const RealEstateBidding()));
                         } on FirebaseAuthException catch (e) {
                           if (e.code == 'user-not-found') {
+                            // ignore: avoid_print
                             print('No user found for that email.');
                           } else if (e.code == 'wrong-password') {
+                            // ignore: avoid_print
                             print('Wrong password provided for that user.');
                           }
                         }
@@ -193,7 +197,7 @@ class _UserSignInState extends State<UserSignIn> {
                         onTap: () {
                           Navigator.of(context).pushReplacement(
                             MaterialPageRoute(
-                              builder: (context) => UserRegister(),
+                              builder: (context) => const UserRegister(),
                             ),
                           );
                         },

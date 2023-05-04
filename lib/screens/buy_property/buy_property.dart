@@ -3,10 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:Orea/common_utils/common_utils.dart';
 
-import 'package:Orea/common_utils/image_paths.dart';
+
 
 import '../payment_screen/payment_screen.dart';
 
+// ignore: must_be_immutable
 class BuyProperty extends StatefulWidget {
   String id;
   String imageUrl;
@@ -34,9 +35,11 @@ class _BuyPropertyState extends State<BuyProperty> {
     if (user != null) {
       // User is signed in, you can access the email address
       String? email = user.email;
+      // ignore: avoid_print
       print('User email: $email');
     } else {
       // User is not signed in
+      // ignore: avoid_print
       print('User is not signed in');
     }
 
@@ -110,6 +113,7 @@ class _BuyPropertyState extends State<BuyProperty> {
                   });
                   // rebuild the list view to reflect the updated status
                   setState(() {});
+                  // ignore: use_build_context_synchronously
                   Navigator.push(
                       context,
                       MaterialPageRoute(

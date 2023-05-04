@@ -4,11 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:Orea/common_utils/common_utils.dart';
 import 'package:Orea/common_utils/image_paths.dart';
 
-
 import '../welcome_admin/welcome_admin.dart';
 
 class AdminSignIn extends StatefulWidget {
-  AdminSignIn({super.key});
+  const AdminSignIn({super.key});
 
   @override
   State<AdminSignIn> createState() => _AdminSignInState();

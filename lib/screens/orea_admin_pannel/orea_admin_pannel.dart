@@ -1,4 +1,3 @@
-import 'package:Orea/screens/user_singIn/user_signIn.dart';
 import 'package:Orea/screens/welcome_screen/welcome_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -67,6 +66,7 @@ class _OreaAdmin extends State<OreaAdmin> {
                   }, context),
                   adminTabs("LOGOUT", () async {
                     await FirebaseAuth.instance.signOut();
+                    // ignore: use_build_context_synchronously
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(

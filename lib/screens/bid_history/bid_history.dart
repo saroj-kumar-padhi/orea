@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:Orea/common_utils/common_utils.dart';
 
 class BidHistory extends StatefulWidget {
-  BidHistory({
+  const BidHistory({
     Key? key,
   }) : super(key: key);
 
@@ -21,14 +21,17 @@ class _BidHistory extends State<BidHistory> {
     if (user != null) {
       // User is signed in, you can access the email address
       String? email = user.email;
+      // ignore: avoid_print
       print('User email: $email');
     } else {
       // User is not signed in
+      // ignore: avoid_print
       print('User is not signed in');
     }
 
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
     final CollectionReference propertiesRef = firestore.collection('users');
+    // ignore: unused_element
     Future<QuerySnapshot<Map<String, dynamic>>> fetchAppropedRequest() async {
       final Query query = propertiesRef.where('status', isEqualTo: 'approved');
       final QuerySnapshot<Map<String, dynamic>> snapshot =

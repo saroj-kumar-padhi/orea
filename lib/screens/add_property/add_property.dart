@@ -56,9 +56,11 @@ class _AddPropertyState extends State<AddProperty> {
       setState(() {
         placeholderImage = imageUrl;
       });
+      // ignore: avoid_print
       print('Picked image path: $placeholderImage');
     } else {
       // User cancelled the image picking
+      // ignore: avoid_print
       print('No image picked');
     }
     return placeholderImage;
@@ -140,6 +142,7 @@ class _AddPropertyState extends State<AddProperty> {
                               borderRadius: BorderRadius.circular(5),
                               color: whiteColor,
                               border: Border.all(width: 1, color: deepBlue)),
+                          // ignore: unnecessary_null_comparison
                           child: placeholderImage == null
                               ? const Icon(
                                   Icons.add,
@@ -258,6 +261,7 @@ class _AddPropertyState extends State<AddProperty> {
                           String amount = addAmount.text;
                           await savePropertyToFirestore(imageUrl, propertyTitle,
                               propertyDescription, amount);
+                          // ignore: use_build_context_synchronously
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(

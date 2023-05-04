@@ -85,7 +85,7 @@ class ForgotPassword extends StatelessWidget {
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => UserSignIn()));
+                            builder: (context) => const UserSignIn()));
                       }
                     },
                     child: BoldText("Send Reset Link", whiteColor, 18),
@@ -94,7 +94,7 @@ class ForgotPassword extends StatelessWidget {
                   GestureDetector(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => UserSignIn()));
+                          builder: (context) => const UserSignIn()));
                     },
                     child: BoldText("Back to Login", deepGreer, 15),
                   )

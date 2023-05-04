@@ -37,9 +37,11 @@ class _UserProfileState extends State<UserProfile> {
     User? user = auth.currentUser;
     if (user != null) {
       // User is signed in, you can access the email address
+      // ignore: unused_local_variable
       String? email = user.email;
     } else {
       // User is not signed in
+      // ignore: avoid_print
       print('User is not signed in');
     }
 
@@ -311,6 +313,7 @@ class _UserProfileState extends State<UserProfile> {
                           onTap: () async {
                             await auth.signOut();
                             if (auth.currentUser == null) {
+                              // ignore: use_build_context_synchronously
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
