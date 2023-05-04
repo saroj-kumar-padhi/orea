@@ -1,3 +1,4 @@
+import 'package:Orea/screens/orea_real_estate_bidding/searchBox.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:Orea/common_utils/common_utils.dart';
@@ -57,6 +58,53 @@ class _RealEstateBiddingState extends State<RealEstateBidding> {
         child: Column(
           children: [
             const SizedBox(height: 30),
+            // SEARCH FIELD ----->>>
+            Padding(
+              padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+              child: Container(
+                height: 40,
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                margin: const EdgeInsets.symmetric(horizontal: 3, vertical: 0),
+                decoration: BoxDecoration(
+                    border: Border.all(color: deepBlue),
+                    shape: BoxShape.rectangle,
+                    color: whiteColor,
+                    borderRadius: BorderRadius.circular(10)),
+                child: Material(
+                  clipBehavior: Clip.antiAlias,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(22.0)),
+                  color: whiteColor,
+                  child: InkWell(
+                    onTap: (() {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const SearchBox()));
+                    }),
+                    child: Row(children: [
+                      Container(
+                        margin: const EdgeInsets.fromLTRB(3, 0, 7, 0),
+                        child: const Icon(
+                          Icons.search,
+                          color: deepBlue,
+                        ),
+                      ),
+                      Expanded(
+                          child: BoldText("Search any property...", hint, 15)),
+                      // Container(
+                      //   child: Icon(
+                      //     Icons.person,
+                      //     color: whiteColor,
+                      //   ),
+                      //   margin: const EdgeInsets.fromLTRB(3, 0, 7, 0),
+                      // )
+                    ]),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 30),
             // CAROUSEL SLIDER ----->>>
             CarouselSlider(
               items: images.map((item) => Image.asset(item)).toList(),
@@ -85,9 +133,31 @@ class _RealEstateBiddingState extends State<RealEstateBidding> {
                 activeSize: Size.square(11.0),
               ),
             ),
-            const SizedBox(height: 20),
-            BoldText("...Quick Links...", deepGreer, 15),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                circularTab(Icons.home, () {}, "Home"),
+                circularTab(Icons.apartment, () {}, "Apartment"),
+                circularTab(Icons.add_home_work_sharp, () {}, "Commercial"),
+              ],
+            ),
             const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Container(
+                  height: 30,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: const BoxDecoration(color: deepGreer, boxShadow: [
+                    BoxShadow(
+                        color: hint,
+                        spreadRadius: 1,
+                        blurRadius: 2,
+                        offset: Offset(0, 2))
+                  ]),
+                  child: Center(child: BoldText("Quick Links", whiteColor, 15))),
+            ),
+            const SizedBox(height: 15),
             // QUICK LINK TABS ----->>>
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -140,9 +210,23 @@ class _RealEstateBiddingState extends State<RealEstateBidding> {
             ),
 
             const SizedBox(height: 20),
-            BoldText("...Interactive Contents...", deepGreer, 15),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Container(
+                  height: 30,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: const BoxDecoration(color: deepGreer, boxShadow: [
+                    BoxShadow(
+                        color: hint,
+                        spreadRadius: 1,
+                        blurRadius: 2,
+                        offset: Offset(0, 2))
+                  ]),
+                  child: Center(
+                      child: BoldText("Interactive Contents", whiteColor, 15))),
+            ),
             // INTERACTIVE CONTENTS ------->>>
-            const SizedBox(height: 20),
+            const SizedBox(height: 25),
             categories(ImagePath.prop4,
                 "The real estate sector accounts for 60–70% of the country’s wealth, or around USD 300–400 billion, according to World Bank estimates."),
             const SizedBox(height: 20),
@@ -228,6 +312,39 @@ Widget categories(String image, String text) {
           ),
         ),
       ],
+    ),
+  );
+}
+
+circularTab(icon, clk, txt) {
+  return InkWell(
+    onTap: clk,
+    child: Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Column(
+        children: [
+          Container(
+            height: 60,
+            width: 60,
+            decoration: BoxDecoration(
+                color: whiteColor,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.blueAccent.shade100,
+                    blurRadius: 5,
+                    spreadRadius: 0.5,
+                  )
+                ],
+                border: Border.all(color: deepGreer, width: 1),
+                borderRadius: BorderRadius.circular(30)),
+            child: Center(
+              child: Icon(icon, size: 25, color: deepGreer),
+            ),
+          ),
+          const SizedBox(height: 10),
+          LightText(txt, deepGreer, 15)
+        ],
+      ),
     ),
   );
 }
