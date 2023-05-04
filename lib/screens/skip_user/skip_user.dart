@@ -198,17 +198,20 @@ class _SkipUser extends State<SkipUser> {
               ),
             ),
             const SizedBox(height: 10),
-            Container(
-                height: 30,
-                width: MediaQuery.of(context).size.width,
-                decoration: const BoxDecoration(color: deepGreer, boxShadow: [
-                  BoxShadow(
-                      color: hint,
-                      spreadRadius: 1,
-                      blurRadius: 2,
-                      offset: Offset(0, 2))
-                ]),
-                child: Center(child: BoldText("Quick Links", whiteColor, 15))),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Container(
+                  height: 30,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: const BoxDecoration(color: deepGreer, boxShadow: [
+                    BoxShadow(
+                        color: hint,
+                        spreadRadius: 1,
+                        blurRadius: 2,
+                        offset: Offset(0, 2))
+                  ]),
+                  child: Center(child: BoldText("Quick Links", whiteColor, 15))),
+            ),
             const SizedBox(height: 15),
             // QUICK LINK TABS ----->>>
             Row(
@@ -250,18 +253,21 @@ class _SkipUser extends State<SkipUser> {
               ],
             ),
             const SizedBox(height: 20),
-            Container(
-                height: 30,
-                width: MediaQuery.of(context).size.width,
-                decoration: const BoxDecoration(color: deepGreer, boxShadow: [
-                  BoxShadow(
-                      color: hint,
-                      spreadRadius: 1,
-                      blurRadius: 2,
-                      offset: Offset(0, 2))
-                ]),
-                child: Center(
-                    child: BoldText("Interactive Contents", whiteColor, 15))),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Container(
+                  height: 30,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: const BoxDecoration(color: deepGreer, boxShadow: [
+                    BoxShadow(
+                        color: hint,
+                        spreadRadius: 1,
+                        blurRadius: 2,
+                        offset: Offset(0, 2))
+                  ]),
+                  child: Center(
+                      child: BoldText("Interactive Contents", whiteColor, 15))),
+            ),
             // INTERACTIVE CONTENTS ------->>>
             const SizedBox(height: 25),
             categories(ImagePath.prop4,
@@ -295,6 +301,7 @@ class _SkipUser extends State<SkipUser> {
 
   dialogue(String text) {
     return showDialog(
+      barrierDismissible: false,
       context: context,
       builder: (ctx) => AlertDialog(
         title: BoldText("Unauthorized User", Colors.red, 18),

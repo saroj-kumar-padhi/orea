@@ -1,6 +1,7 @@
 import 'package:Orea/screens/contact_us_screen/contact_us_screen.dart';
 import 'package:Orea/screens/property_added_by_you/property_added_by_you.dart';
 import 'package:Orea/screens/user_singIn/user_signIn.dart';
+import 'package:Orea/screens/welcome_screen/welcome_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:Orea/common_utils/common_utils.dart';
@@ -318,7 +319,7 @@ class _UserProfileState extends State<UserProfile> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          const UserSignIn()));
+                                          const WelcomeScreen()));
                             }
                           },
                           child: BoldText("Log Out", whiteColor, 17),
