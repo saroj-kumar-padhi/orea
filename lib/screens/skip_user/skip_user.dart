@@ -126,8 +126,8 @@ class _SkipUser extends State<SkipUser> {
                 ),
               ),
               onTap: () {
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => AdminSignIn()));
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => const AdminSignIn()));
               },
             ),
             ListTile(
@@ -142,8 +142,8 @@ class _SkipUser extends State<SkipUser> {
                 ),
               ),
               onTap: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => UserRegister()));
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const UserRegister()));
               },
             ),
             ListTile(

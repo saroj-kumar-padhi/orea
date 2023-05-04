@@ -2,8 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:Orea/common_utils/common_utils.dart';
 
-import 'package:Orea/screens/place_your_bid/place_your_bid.dart';
-
 class PendingRequest extends StatefulWidget {
   const PendingRequest({super.key});
 
@@ -116,6 +114,7 @@ Widget listItem(image, title, rate, approve, decline, context) {
               children: [
                 BoldText(title, deepGreer, 16),
                 const SizedBox(width: 10),
+                // ignore: unnecessary_brace_in_string_interps
                 BoldText("PKR ${rate}", deepBlue, 16)
               ],
             ),

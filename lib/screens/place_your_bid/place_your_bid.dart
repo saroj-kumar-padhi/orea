@@ -1,12 +1,11 @@
 import 'package:Orea/common_utils/common_utils.dart';
-import 'package:Orea/screens/buy_property/buy_property.dart';
+
 import 'package:Orea/screens/orea_real_estate_bidding/orea_real_estate_bidding.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../payment_screen/payment_screen.dart';
-
+// ignore: must_be_immutable
 class PlaceYourBid extends StatefulWidget {
   String id;
   String imageUrl;
@@ -34,9 +33,11 @@ class _PlaceYourBidState extends State<PlaceYourBid> {
     if (user != null) {
       // User is signed in, you can access the email address
       String? email = user.email;
+      // ignore: avoid_print
       print('User email: $email');
     } else {
       // User is not signed in
+      // ignore: avoid_print
       print('User is not signed in');
     }
 
@@ -148,10 +149,11 @@ class _PlaceYourBidState extends State<PlaceYourBid> {
                   // rebuild the list view to reflect the updated status
                   setState(() {});
 
+                  // ignore: use_build_context_synchronously
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => RealEstateBidding()));
+                          builder: (context) => const RealEstateBidding()));
                 },
                 child: BoldText("Place Bid", whiteColor, 18),
               ),

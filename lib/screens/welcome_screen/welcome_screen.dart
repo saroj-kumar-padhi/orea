@@ -37,7 +37,7 @@ class WelcomeScreen extends StatelessWidget {
                   ),
                   onPressed: () {
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => UserSignIn(),
+                      builder: (context) => const UserSignIn(),
                     ));
                   },
                   child: BoldText("Sign In", whiteColor, 18),

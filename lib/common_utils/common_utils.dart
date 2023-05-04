@@ -27,10 +27,12 @@ class BoldText extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class LightText extends StatelessWidget {
   String text;
   Color color;
   double size;
+  // ignore: use_key_in_widget_constructors
   LightText(this.text, this.color, this.size);
 
   @override
@@ -46,12 +48,14 @@ class LightText extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class ParagraphText extends StatelessWidget {
   String text;
   Color color;
   double size;
   final TextAlign textAlign;
 
+  // ignore: use_key_in_widget_constructors
   ParagraphText(this.text, this.color, this.size, this.textAlign);
 
   @override

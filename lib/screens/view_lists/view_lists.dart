@@ -21,14 +21,16 @@ class _ViewListings extends State<ViewListings> {
     if (user != null) {
       // User is signed in, you can access the email address
       String? email = user.email;
+      // ignore: avoid_print
       print('User email: $email');
     } else {
-      // User is not signed in
+      // ignore: avoid_print
       print('User is not signed in');
     }
 
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
     final CollectionReference propertiesRef = firestore.collection('users');
+    // ignore: unused_element
     Future<QuerySnapshot<Map<String, dynamic>>> fetchAppropedRequest() async {
       final Query query = propertiesRef.where('status', isEqualTo: 'approved');
       final QuerySnapshot<Map<String, dynamic>> snapshot =
@@ -150,6 +152,7 @@ class _ViewListings extends State<ViewListings> {
         Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           BoldText(title, deepBlue, 17),
           const SizedBox(height: 2),
+          // ignore: unnecessary_brace_in_string_interps
           LightText("by Asif Raza\n${email}", deepGreer, 13),
           Row(
             mainAxisSize: MainAxisSize.min,

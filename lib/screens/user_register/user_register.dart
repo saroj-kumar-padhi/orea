@@ -6,7 +6,7 @@ import '../orea_real_estate_bidding/orea_real_estate_bidding.dart';
 import '../user_singIn/user_signIn.dart';
 
 class UserRegister extends StatefulWidget {
-  UserRegister({super.key});
+  const UserRegister({super.key});
 
   @override
   State<UserRegister> createState() => _UserRegisterState();
@@ -180,20 +180,25 @@ class _UserRegisterState extends State<UserRegister> {
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         try {
+                          // ignore: unused_local_variable
                           final credential = await FirebaseAuth.instance
                               .createUserWithEmailAndPassword(
                             email: emailController.text,
                             password: passwordController.text,
                           );
+                          // ignore: use_build_context_synchronously
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => const RealEstateBidding()));
                         } on FirebaseAuthException catch (e) {
                           if (e.code == 'weak-password') {
+                            // ignore: avoid_print
                             print('The password provided is too weak.');
                           } else if (e.code == 'email-already-in-use') {
+                            // ignore: avoid_print
                             print('The account already exists for that email.');
                           }
                         } catch (e) {
+                          // ignore: avoid_print
                           print(e);
                         }
                       }
@@ -204,7 +209,7 @@ class _UserRegisterState extends State<UserRegister> {
                   GestureDetector(
                     onTap: () {
                       Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => UserSignIn()));
+                          builder: (context) => const UserSignIn()));
                     },
                     child: BoldText("Already a User ? Login", deepGreer, 15),
                   ),

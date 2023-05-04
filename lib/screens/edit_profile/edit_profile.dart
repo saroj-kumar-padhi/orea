@@ -125,6 +125,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     // User not signed in
                   }
 
+                  // ignore: use_build_context_synchronously
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(

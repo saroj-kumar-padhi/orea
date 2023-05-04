@@ -9,9 +9,7 @@ import 'package:Orea/screens/privecy_policy/privecy_policy.dart';
 import 'package:Orea/screens/property_added_by_you/property_added_by_you.dart';
 import 'package:Orea/screens/user_profile/user_profile.dart';
 import 'package:Orea/screens/view_lists/view_lists.dart';
-import 'package:Orea/screens/your_balance/your_balance.dart';
 import 'package:readmore/readmore.dart';
-import '../contact_us_screen/contact_us_screen.dart';
 import '../notifications/notification.dart';
 
 class RealEstateBidding extends StatefulWidget {
@@ -111,12 +109,11 @@ class _RealEstateBiddingState extends State<RealEstateBidding> {
               children: [
                 userTabs("ADDED BY YOU", () {
                   Navigator.of(context).push(MaterialPageRoute(
-                    
                       builder: (context) => const AddedByYou()));
                 }),
                 userTabs("VIEW BIDS", () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) =>  BidHistory()));
+                      builder: (context) => const BidHistory()));
                 }),
               ],
             ),

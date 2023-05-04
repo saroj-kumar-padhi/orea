@@ -1,4 +1,3 @@
-import 'package:Orea/screens/bid_history/bid_history.dart';
 import 'package:Orea/screens/orea_real_estate_bidding/orea_real_estate_bidding.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
