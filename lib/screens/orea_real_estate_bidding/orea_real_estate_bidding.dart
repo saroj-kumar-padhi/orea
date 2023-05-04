@@ -133,12 +133,12 @@ class _RealEstateBiddingState extends State<RealEstateBidding> {
                 activeSize: Size.square(11.0),
               ),
             ),
-
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 circularTab(Icons.home, () {}, "Home"),
                 circularTab(Icons.apartment, () {}, "Apartment"),
+                circularTab(Icons.add_home_work_sharp, () {}, "Plots"),
                 circularTab(Icons.add_home_work_sharp, () {}, "Commercial"),
               ],
             ),
@@ -155,7 +155,8 @@ class _RealEstateBiddingState extends State<RealEstateBidding> {
                         blurRadius: 2,
                         offset: Offset(0, 2))
                   ]),
-                  child: Center(child: BoldText("Quick Links", whiteColor, 15))),
+                  child:
+                      Center(child: BoldText("Quick Links", whiteColor, 15))),
             ),
             const SizedBox(height: 15),
             // QUICK LINK TABS ----->>>
@@ -208,7 +209,6 @@ class _RealEstateBiddingState extends State<RealEstateBidding> {
                 }),
               ],
             ),
-
             const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
