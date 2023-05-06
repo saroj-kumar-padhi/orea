@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:Orea/common_utils/common_utils.dart';
@@ -186,6 +187,19 @@ class _UserRegisterState extends State<UserRegister> {
                             email: emailController.text,
                             password: passwordController.text,
                           );
+                          final user = credential.user;
+                          FirebaseAuth auth = FirebaseAuth.instance;
+                          String u = auth.currentUser!.uid;
+                          final userRef = FirebaseFirestore.instance
+                              .collection('info')
+                              .doc(user!.uid);
+                          await userRef.set({
+                            'name': nameController.text,
+                            'email': emailController.text,
+                            'userUid': u,
+                            'phoneNo': "",
+                            'Address': "",
+                          });
                           // ignore: use_build_context_synchronously
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => const RealEstateBidding()));

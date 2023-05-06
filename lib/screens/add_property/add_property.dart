@@ -23,6 +23,7 @@ class _AddPropertyState extends State<AddProperty> {
   final TextEditingController addProperty = TextEditingController();
   final TextEditingController addDescription = TextEditingController();
   final TextEditingController addAmount = TextEditingController();
+  final TextEditingController type = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   // Upload the image to Firebase Storage
@@ -68,13 +69,14 @@ class _AddPropertyState extends State<AddProperty> {
 
   // Function to save download URL to Firestore
   Future<void> savePropertyToFirestore(String imageUrl, String propertyTitle,
-      String propertyDescription, String amount) async {
+      String propertyDescription, String amount, String type) async {
     try {
       User? user = FirebaseAuth.instance.currentUser;
       if (user != null) {
         CollectionReference propertiesRef =
             FirebaseFirestore.instance.collection('users');
         await propertiesRef.add({
+          'type': type,
           'imageUrl': imageUrl,
           'propertyTitle': propertyTitle,
           'propertyDescription': propertyDescription,
@@ -245,6 +247,32 @@ class _AddPropertyState extends State<AddProperty> {
                       return null;
                     },
                   ),
+                  const SizedBox(height: 20),
+                  Row(
+                    children: [
+                      BoldText("Type", deepBlue, 15),
+                      BoldText("*", Colors.red, 15),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  TextFormField(
+                    controller: type,
+                    // keyboardType: const TextInputType.numberWithOptions(),
+                    decoration: InputDecoration(
+                      fillColor: whiteColor,
+                      filled: true,
+                      contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: const BorderSide(color: deepBlue)),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your price';
+                      }
+                      return null;
+                    },
+                  ),
                   const SizedBox(height: 70),
                   MaterialButton(
                       shape: RoundedRectangleBorder(
@@ -259,8 +287,9 @@ class _AddPropertyState extends State<AddProperty> {
                           String propertyTitle = addProperty.text;
                           String propertyDescription = addDescription.text;
                           String amount = addAmount.text;
+                          String Type = type.text;
                           await savePropertyToFirestore(imageUrl, propertyTitle,
-                              propertyDescription, amount);
+                              propertyDescription, amount, Type);
                           // ignore: use_build_context_synchronously
                           Navigator.pushReplacement(
                             context,

@@ -1,4 +1,5 @@
 import 'package:Orea/screens/orea_real_estate_bidding/searchBox.dart';
+import 'package:Orea/screens/plot_screen/plotScreen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:Orea/common_utils/common_utils.dart';
@@ -138,7 +139,12 @@ class _RealEstateBiddingState extends State<RealEstateBidding> {
               children: [
                 circularTab(Icons.home, () {}, "Home"),
                 circularTab(Icons.apartment, () {}, "Apartment"),
-                circularTab(Icons.add_home_work_sharp, () {}, "Plots"),
+                circularTab(Icons.add_home_work_sharp, () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const plotScreen()));
+                }, "Plots"),
                 circularTab(Icons.add_home_work_sharp, () {}, "Commercial"),
               ],
             ),

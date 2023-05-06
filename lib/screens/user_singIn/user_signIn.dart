@@ -1,7 +1,6 @@
-
 //ignore: file_names
-import 'package:Orea/screens/orea_real_estate_bidding/orea_real_estate_bidding.dart' show RealEstateBidding;
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:Orea/screens/orea_real_estate_bidding/orea_real_estate_bidding.dart'
+    show RealEstateBidding;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:Orea/common_utils/common_utils.dart';
@@ -152,18 +151,6 @@ class _UserSignInState extends State<UserSignIn> {
                                   email: emailController.text,
                                   password: passwordController.text);
 
-                          final user = credential.user;
-                          FirebaseAuth auth = FirebaseAuth.instance;
-                          String u = auth.currentUser!.uid;
-                          final userRef = FirebaseFirestore.instance
-                              .collection('info')
-                              .doc(user!.uid);
-                          await userRef.set({
-                            'email': emailController.text,
-                            'userUid': u,
-                            'phoneNo': "",
-                            'Address': "",
-                          });
                           // ignore: use_build_context_synchronously
                           Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
