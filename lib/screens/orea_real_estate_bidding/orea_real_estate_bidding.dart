@@ -152,7 +152,7 @@ class _RealEstateBiddingState extends State<RealEstateBidding> {
                       MaterialPageRoute(
                           builder: (context) => const apartmentScreen()));
                 }, "Apartment"),
-                circularTab(Icons.add_home_work_sharp, () {
+                circularTab(Icons.map, () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(

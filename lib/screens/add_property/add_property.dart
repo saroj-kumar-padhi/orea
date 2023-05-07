@@ -26,6 +26,11 @@ class _AddPropertyState extends State<AddProperty> {
   final TextEditingController type = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
+  late Map data;
+  String photoUrl = "";
+  File? imageFile;
+  String? imageUrl;
+
   // Upload the image to Firebase Storage
   Future<String> uploadImageToStorage(XFile? photo) async {
     if (photo == null || photo.path.isEmpty) {
