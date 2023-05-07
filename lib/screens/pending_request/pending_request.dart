@@ -31,7 +31,7 @@ class _PendingRequestState extends State<PendingRequest> {
         automaticallyImplyLeading: false,
         title: BoldText("PENDING REQUESTS", deepGreer, 18),
         centerTitle: true,
-        elevation: 0.5,
+        elevation: 1,
         backgroundColor: whiteColor,
         leading: IconButton(
           onPressed: () {
@@ -40,26 +40,26 @@ class _PendingRequestState extends State<PendingRequest> {
           icon: const Icon(Icons.arrow_back, color: black),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: FutureBuilder<QuerySnapshot>(
-          future: fetchPendingProperties(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              // return a loading indicator while the data is being fetched
-              return const Center(child: CircularProgressIndicator());
-            } else if (snapshot.hasError) {
-              // handle any errors that occur while fetching the data
-              return const Center(child: Text('Error fetching data'));
-            }
-            final List<QueryDocumentSnapshot<Map<String, dynamic>>> documents =
-                snapshot.data?.docs
-                    as List<QueryDocumentSnapshot<Map<String, dynamic>>>;
-            return ListView.builder(
-              itemCount: documents.length,
-              itemBuilder: (context, index) {
-                Map<String, dynamic>? data = documents[index].data();
-                return Column(
+      body: FutureBuilder<QuerySnapshot>(
+        future: fetchPendingProperties(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            // return a loading indicator while the data is being fetched
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            // handle any errors that occur while fetching the data
+            return const Center(child: Text('Error fetching data'));
+          }
+          final List<QueryDocumentSnapshot<Map<String, dynamic>>> documents =
+              snapshot.data?.docs
+                  as List<QueryDocumentSnapshot<Map<String, dynamic>>>;
+          return ListView.builder(
+            itemCount: documents.length,
+            itemBuilder: (context, index) {
+              Map<String, dynamic>? data = documents[index].data();
+              return Padding(
+                padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
+                child: Column(
                   children: [
                     listItem(data['imageUrl'], data['propertyTitle'] ?? 'N/A',
                         data['amount'],
@@ -77,11 +77,11 @@ class _PendingRequestState extends State<PendingRequest> {
                       // ignore: use_build_context_synchronously
                     }, () {}, context),
                   ],
-                );
-              },
-            );
-          },
-        ),
+                ),
+              );
+            },
+          );
+        },
       ),
     );
   }

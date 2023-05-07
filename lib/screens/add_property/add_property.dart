@@ -255,31 +255,47 @@ class _AddPropertyState extends State<AddProperty> {
 
                   const SizedBox(height: 20),
                   //DropDown--->>
-                  DropdownButton<String>(
-                    value: dropdownValue,
-                    icon: const Icon(Icons.arrow_downward),
-                    iconSize: 24,
-                    elevation: 16,
-                    style: const TextStyle(color: Colors.deepPurple),
-                    underline: Container(
-                      height: 2,
-                      color: Colors.deepPurpleAccent,
-                    ),
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        dropdownValue = newValue!;
-                      });
-                    },
-                    items:
-                        options.map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
+                  Row(
+                    children: [
+                      BoldText("Select Category", deepBlue, 15),
+                      BoldText("*", Colors.red, 15),
+                      // SizedBox(width: MediaQuery.of(context).size.width / 11),
+                      // BoldText(" >>>", deepBlue, 15),
+                      SizedBox(width: MediaQuery.of(context).size.width / 13),
+                      DropdownButton<String>(
+                        value: dropdownValue,
+                        icon: const Icon(
+                          Icons.arrow_drop_down_circle_outlined,
+                          color: deepGreer,
+                        ),
+                        iconSize: 24,
+                        elevation: 16,
+                        style: const TextStyle(
+                            color: deepBlue,
+                            fontFamily: 'Poppins',
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500),
+                        underline: Container(
+                          height: 1,
+                          color: deepGreer,
+                        ),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            dropdownValue = newValue!;
+                          });
+                        },
+                        items: options
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
+                    ],
                   ),
 
-                  const SizedBox(height: 70),
+                  const SizedBox(height: 40),
                   MaterialButton(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20)),
@@ -306,6 +322,7 @@ class _AddPropertyState extends State<AddProperty> {
                         }
                       },
                       child: BoldText("Add Property", whiteColor, 18)),
+                  const SizedBox(height: 30),
                 ],
               ),
             ),

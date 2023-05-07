@@ -22,9 +22,55 @@ class _UserSignInState extends State<UserSignIn> {
   final TextEditingController passwordController = TextEditingController();
 
   bool _obscureText = true;
+  bool _isLoading = false;
 
   //formkey
   final _formKey = GlobalKey<FormState>();
+
+  Future<void> _signInWithEmailPassword(BuildContext context) async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+      );
+      // Sign in successful, show snackbar
+      // ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Signed in successfully'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+      // ignore: use_build_context_synchronously
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const RealEstateBidding()));
+    } on FirebaseAuthException catch (e) {
+      // Sign in failed, show error snackbar
+      String errorMessage;
+      if (e.code == 'user-not-found') {
+        errorMessage = 'User not found';
+      } else if (e.code == 'wrong-password') {
+        errorMessage = 'Wrong password';
+      } else {
+        errorMessage = 'Sign in failed, please try again';
+      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(errorMessage),
+          duration: const Duration(seconds: 2),
+        ),
+      );
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -136,39 +182,44 @@ class _UserSignInState extends State<UserSignIn> {
                     },
                   ),
                   const SizedBox(height: 95),
-                  MaterialButton(
-                    height: 40,
-                    minWidth: MediaQuery.of(context).size.width / 1.2,
-                    color: deepBlue,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(28),
-                    ),
-                    onPressed: () async {
-                      if (_formKey.currentState!.validate()) {
-                        try {
-                          final credential = await FirebaseAuth.instance
-                              .signInWithEmailAndPassword(
-                                  email: emailController.text,
-                                  password: passwordController.text);
+                  // SIGN IN BUTTON ------>>>>
+                  _isLoading
+                      ? CircularProgressIndicator()
+                      : MaterialButton(
+                          height: 40,
+                          minWidth: MediaQuery.of(context).size.width / 1.2,
+                          color: deepBlue,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(28),
+                          ),
+                          onPressed: () async {
+                            if (_formKey.currentState!.validate()) {
+                              _signInWithEmailPassword(context);
+                              // try {
+                              //   final credential = await FirebaseAuth.instance
+                              //       .signInWithEmailAndPassword(
+                              //           email: emailController.text,
+                              //           password: passwordController.text);
 
-                          // ignore: use_build_context_synchronously
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const RealEstateBidding()));
-                        } on FirebaseAuthException catch (e) {
-                          if (e.code == 'user-not-found') {
-                            // ignore: avoid_print
-                            print('No user found for that email.');
-                          } else if (e.code == 'wrong-password') {
-                            // ignore: avoid_print
-                            print('Wrong password provided for that user.');
-                          }
-                        }
-                      }
-                    },
-                    child: BoldText("Sign In", whiteColor, 18),
-                  ),
+                              //   // ignore: use_build_context_synchronously
+                              //   Navigator.of(context).pushReplacement(
+                              //       MaterialPageRoute(
+                              //           builder: (context) =>
+                              //               const RealEstateBidding()));
+                              // } on FirebaseAuthException catch (e) {
+                              //   if (e.code == 'user-not-found') {
+                              //     // ignore: avoid_print
+                              //     print('No user found for that email.');
+                              //   } else if (e.code == 'wrong-password') {
+                              //     // ignore: avoid_print
+                              //     print(
+                              //         'Wrong password provided for that user.');
+                              //   }
+                              // }
+                            }
+                          },
+                          child: BoldText("Sign In", whiteColor, 18),
+                        ),
                   const SizedBox(height: 9),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
