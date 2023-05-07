@@ -24,9 +24,9 @@ class WelcomeScreen extends StatelessWidget {
                 const SizedBox(
                   height: 113.31,
                 ),
-                BoldText("Welcome to the OREA application", deepBlue, 15),
+                BoldText("Welcome to the OREA application", deepGreer, 15),
                 const SizedBox(height: 25),
-                //ADMIN OPTION ---------->>>
+                //USER SIGN IN OPTION ---------->>>
                 MaterialButton(
                   elevation: 0.0,
                   minWidth: MediaQuery.of(context).size.width / 1.2,

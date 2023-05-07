@@ -36,15 +36,16 @@ class _RealEstateBiddingState extends State<RealEstateBidding> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: whiteColor,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
           children: [
-            BoldText("OREA ", deepGreer, 18),
+            BoldText("OREA ", deepBlue, 18),
             BoldText("Real Estate Bidding", deepGreer, 15),
             const Spacer(),
             IconButton(
-              icon: const Icon(Icons.notifications, color: deepGreer),
+              icon: const Icon(Icons.notifications, color: deepBlue),
               onPressed: () {
                 Navigator.push(
                     context,
@@ -54,14 +55,14 @@ class _RealEstateBiddingState extends State<RealEstateBidding> {
             ),
           ],
         ),
-        elevation: 0.5,
+        elevation: 0.0,
         backgroundColor: whiteColor,
       ),
       body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
+        // physics: const BouncingScrollPhysics(),
         child: Column(
           children: [
-            const SizedBox(height: 30),
+            const SizedBox(height: 15),
             // SEARCH FIELD ----->>>
             Padding(
               padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
@@ -73,11 +74,11 @@ class _RealEstateBiddingState extends State<RealEstateBidding> {
                     border: Border.all(color: deepBlue),
                     shape: BoxShape.rectangle,
                     color: whiteColor,
-                    borderRadius: BorderRadius.circular(10)),
+                    borderRadius: BorderRadius.circular(7)),
                 child: Material(
                   clipBehavior: Clip.antiAlias,
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(22.0)),
+                      borderRadius: BorderRadius.circular(7)),
                   color: whiteColor,
                   child: InkWell(
                     onTap: (() {
@@ -111,7 +112,24 @@ class _RealEstateBiddingState extends State<RealEstateBidding> {
             const SizedBox(height: 30),
             // CAROUSEL SLIDER ----->>>
             CarouselSlider(
-              items: images.map((item) => Image.asset(item)).toList(),
+              items: images
+                  .map((item) => Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(width: 1, color: deepBlue),
+                              boxShadow: const [
+                                BoxShadow(
+                                    color: Colors.grey,
+                                    spreadRadius: 1,
+                                    blurRadius: 2)
+                              ],
+                              borderRadius: BorderRadius.circular(12),
+                              image: DecorationImage(
+                                  image: AssetImage(item), fit: BoxFit.cover)),
+                        ),
+                      ))
+                  .toList(),
               options: CarouselOptions(
                 height: 150,
                 aspectRatio: 16 / 9,

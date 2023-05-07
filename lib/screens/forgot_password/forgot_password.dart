@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:Orea/common_utils/common_utils.dart';
 import 'package:Orea/common_utils/image_paths.dart';
@@ -45,6 +46,7 @@ class ForgotPassword extends StatelessWidget {
                   const SizedBox(height: 26),
                   //EMAIL FIELD ---------->>>
                   TextFormField(
+                    controller: emailController,
                     autofocus: false,
                     keyboardType: TextInputType.name,
                     decoration: InputDecoration(
@@ -82,11 +84,57 @@ class ForgotPassword extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(28),
                     ),
-                    onPressed: () {
+                    onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const UserSignIn()));
+                        String email = emailController.text.trim();
+                        if (email.isNotEmpty) {
+                          try {
+                            // Show loading indicator
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Row(
+                                  children: const [
+                                    CircularProgressIndicator(),
+                                    SizedBox(width: 20),
+                                    Text('Sending password reset link...'),
+                                  ],
+                                ),
+                              ),
+                            );
+
+                            // Send password reset link
+                            await FirebaseAuth.instance
+                                .sendPasswordResetEmail(email: email);
+
+                            // Hide loading indicator and show success message
+                            // ignore: use_build_context_synchronously
+                            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                            // ignore: use_build_context_synchronously
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                    'Password reset link sent successfully.'),
+                              ),
+                            );
+                          } catch (error) {
+                            // Hide loading indicator and show error message
+                            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(error.toString()),
+                              ),
+                            );
+                          }
+                        } else {
+                          // Show error message
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Please enter an email.'),
+                            ),
+                          );
+                        }
                       }
+                      ;
                     },
                     child: BoldText("Send Reset Link", whiteColor, 18),
                   ),

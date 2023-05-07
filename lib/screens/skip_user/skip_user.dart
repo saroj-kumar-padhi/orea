@@ -171,9 +171,26 @@ class _SkipUser extends State<SkipUser> {
             const SizedBox(height: 30),
             // CAROUSEL SLIDER ----->>>
             CarouselSlider(
-              items: images.map((item) => Image.asset(item)).toList(),
+              items: images
+                  .map((item) => Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(width: 1, color: deepBlue),
+                              boxShadow: const [
+                                BoxShadow(
+                                    color: Colors.grey,
+                                    spreadRadius: 1,
+                                    blurRadius: 2)
+                              ],
+                              borderRadius: BorderRadius.circular(12),
+                              image: DecorationImage(
+                                  image: AssetImage(item), fit: BoxFit.cover)),
+                        ),
+                      ))
+                  .toList(),
               options: CarouselOptions(
-                height: 150,
+                height: MediaQuery.of(context).size.height / 5.5,
                 aspectRatio: 16 / 9,
                 viewportFraction: 0.65,
                 initialPage: 0,
@@ -210,7 +227,8 @@ class _SkipUser extends State<SkipUser> {
                         blurRadius: 2,
                         offset: Offset(0, 2))
                   ]),
-                  child: Center(child: BoldText("Quick Links", whiteColor, 15))),
+                  child:
+                      Center(child: BoldText("Quick Links", whiteColor, 15))),
             ),
             const SizedBox(height: 15),
             // QUICK LINK TABS ----->>>
@@ -287,7 +305,7 @@ class _SkipUser extends State<SkipUser> {
                     ImagePath.verify,
                     height: 16,
                   ),
-                  BoldText("Login to use all functionalities of OREA",
+                  BoldText("Login to use all features of OREA",
                       const Color(0xff4852D4), 10),
                 ],
               )),
