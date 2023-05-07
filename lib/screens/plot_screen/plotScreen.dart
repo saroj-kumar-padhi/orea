@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import '../../common_utils/common_utils.dart';
+
 class plotScreen extends StatefulWidget {
   const plotScreen({Key? key}) : super(key: key);
 
@@ -19,6 +21,19 @@ class _plotScreenState extends State<plotScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: BoldText("PLOT", deepGreer, 18),
+        centerTitle: true,
+        elevation: 0.5,
+        backgroundColor: whiteColor,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(Icons.arrow_back, color: black),
+        ),
+      ),
       body: FutureBuilder<QuerySnapshot>(
           future: fetchProperties(),
           builder: (context, snapshot) {
@@ -37,8 +52,22 @@ class _plotScreenState extends State<plotScreen> {
                   Map<String, dynamic>? data =
                       documents[index].data() as Map<String, dynamic>?;
                   return ListTile(
-                    leading: Image.network(data!['imageUrl']),
-                    trailing: Text(data['propertyTitle']),
+                    leading: Expanded(
+                      child: ClipRRect(
+                        child: Container(
+                          height: 100,
+                          width: 150,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            border: Border.all(color: deepBlue, width: 1),
+                            image: DecorationImage(
+                                image: NetworkImage(data!['imageUrl']),
+                                fit: BoxFit.cover),
+                          ),
+                        ),
+                      ),
+                    ),
+                    trailing: BoldText(data['propertyTitle'], deepBlue, 15),
                   );
                 });
           }),

@@ -1,8 +1,7 @@
+import 'package:Orea/common_utils/common_utils.dart';
+import 'package:Orea/screens/orea_real_estate_bidding/searchfunction.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
-import '../../common_utils/common_utils.dart';
-
 
 class SearchBox extends StatefulWidget {
   const SearchBox({Key? key}) : super(key: key);
@@ -13,31 +12,32 @@ class SearchBox extends StatefulWidget {
 
 class _SearchBoxState extends State<SearchBox> {
   bool isLoading = false;
-  // UserInfodata? user;
+  //I call this by searchfunciton
+  UserInfodata? user;
   //  Map<String, dynamic>? usersMap;
   TextEditingController searchController = TextEditingController();
-   
-  // void onSearch() async {
-  //   try {
-  //     FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  //     setState(() {
-  //       isLoading = true;
-  //     });
 
-  //     _firestore
-  //         .collection('profileInfo')
-  //         .where(
-  //           "title",
-  //           isGreaterThanOrEqualTo: searchController.text.trim(),
-  //         )
-  //         .snapshots();
-  //   } catch (e) {
-  //     setState(() {
-  //       isLoading = false;
-  //     });
-  //     const Center(child: Text('item not found'));
-  //   }
-  // }
+  void onSearch() async {
+    try {
+      FirebaseFirestore _firestore = FirebaseFirestore.instance;
+      setState(() {
+        isLoading = true;
+      });
+
+      _firestore
+          .collection('profileInfo')
+          .where(
+            "title",
+            isGreaterThanOrEqualTo: searchController.text.trim(),
+          )
+          .snapshots();
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      const Center(child: Text('item not found'));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,19 +72,19 @@ class _SearchBoxState extends State<SearchBox> {
                             setState(() {});
                           },
                           decoration: InputDecoration(
-                            fillColor: whiteColor,
+                              fillColor: whiteColor,
                               filled: true,
                               suffixIcon: IconButton(
                                   onPressed: () {
-                                    // onSearch();
+                                    onSearch();
                                   },
-                                  icon: const Icon(
-                                    Icons.search, size: 22, color: deepBlue
-                                  )),
+                                  icon: const Icon(Icons.search,
+                                      size: 22, color: deepBlue)),
                               border: InputBorder.none,
-                              prefixIcon: const Icon(Icons.apartment, size: 30, color: deepBlue),
-                              hintText: "Search any property...",
-                          hintStyle: const TextStyle(color: hint)),
+                              prefixIcon: const Icon(Icons.apartment,
+                                  size: 30, color: deepBlue),
+                              hintText: "Search any product...",
+                              hintStyle: const TextStyle(color: hint)),
                         ),
                       ),
                     ),
@@ -109,12 +109,11 @@ class _SearchBoxState extends State<SearchBox> {
                               return ListView.builder(
                                 itemCount: dataSnapshot.docs.length,
                                 itemBuilder: (context, index) {
-                                  // ignore: unused_local_variable
                                   Map<String, dynamic> userMap =
                                       dataSnapshot.docs[index].data()
                                           as Map<String, dynamic>;
-                                  // UserInfodata searchedUser =
-                                  //     UserInfodata.fromJson(userMap);
+                                  UserInfodata searchedUser =
+                                      UserInfodata.fromJson(userMap);
 
                                   return ListTile(
                                     leading: ClipRRect(
@@ -126,7 +125,7 @@ class _SearchBoxState extends State<SearchBox> {
                                             .withAlpha(100),
                                         radius: 25,
                                         child: Image.network(
-                                          "searchedUser.imageurl",
+                                          searchedUser.imageurl,
                                           fit: BoxFit.cover,
                                           errorBuilder:
                                               ((context, error, stackTrace) {
@@ -136,9 +135,9 @@ class _SearchBoxState extends State<SearchBox> {
                                         ),
                                       ),
                                     ),
-                                    // title: Text(searchedUser.title.toString()),
-                                    // subtitle:
-                                        // Text(searchedUser.desc.toString()),
+                                    title: Text(searchedUser.title.toString()),
+                                    subtitle:
+                                        Text(searchedUser.desc.toString()),
                                     trailing: const Icon(
                                         Icons.keyboard_arrow_right_rounded),
                                     onTap: () {},
@@ -150,10 +149,8 @@ class _SearchBoxState extends State<SearchBox> {
                                 padding: EdgeInsets.all(20),
                                 child: Text(
                                   'Oops, No item found ! Check upper and lower cases...',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color:deepBlue
-                                  ),
+                                  style:
+                                      TextStyle(fontSize: 14, color: deepBlue),
                                 ),
                               );
                             }
