@@ -94,6 +94,10 @@ class _AddPropertyState extends State<AddProperty> {
     }
   }
 
+  //--->>Dropdown
+  List<String> options = ['Home', 'Apartment', 'Plot', 'Commercial'];
+  String dropdownValue = 'Home';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -248,31 +252,33 @@ class _AddPropertyState extends State<AddProperty> {
                     },
                   ),
                   const SizedBox(height: 20),
-                  Row(
-                    children: [
-                      BoldText("Type", deepBlue, 15),
-                      BoldText("*", Colors.red, 15),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  TextFormField(
-                    controller: type,
-                    // keyboardType: const TextInputType.numberWithOptions(),
-                    decoration: InputDecoration(
-                      fillColor: whiteColor,
-                      filled: true,
-                      contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                          borderSide: const BorderSide(color: deepBlue)),
+
+                  const SizedBox(height: 20),
+                  //DropDown--->>
+                  DropdownButton<String>(
+                    value: dropdownValue,
+                    icon: const Icon(Icons.arrow_downward),
+                    iconSize: 24,
+                    elevation: 16,
+                    style: const TextStyle(color: Colors.deepPurple),
+                    underline: Container(
+                      height: 2,
+                      color: Colors.deepPurpleAccent,
                     ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your price';
-                      }
-                      return null;
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        dropdownValue = newValue!;
+                      });
                     },
+                    items:
+                        options.map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
                   ),
+
                   const SizedBox(height: 70),
                   MaterialButton(
                       shape: RoundedRectangleBorder(
@@ -289,7 +295,7 @@ class _AddPropertyState extends State<AddProperty> {
                           String amount = addAmount.text;
                           String Type = type.text;
                           await savePropertyToFirestore(imageUrl, propertyTitle,
-                              propertyDescription, amount, Type);
+                              propertyDescription, amount, dropdownValue);
                           // ignore: use_build_context_synchronously
                           Navigator.pushReplacement(
                             context,

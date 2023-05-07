@@ -1,19 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class plotScreen extends StatefulWidget {
-  const plotScreen({Key? key}) : super(key: key);
+class apartmentScreen extends StatefulWidget {
+  const apartmentScreen({Key? key}) : super(key: key);
 
   @override
-  State<plotScreen> createState() => _plotScreenState();
+  State<apartmentScreen> createState() => _apartmentScreen();
 }
 
-class _plotScreenState extends State<plotScreen> {
+class _apartmentScreen extends State<apartmentScreen> {
   CollectionReference propertiesRef =
       FirebaseFirestore.instance.collection('users');
 
   Future<QuerySnapshot> fetchProperties() async {
-    return await propertiesRef.where('type', isEqualTo: 'Plot').get();
+    return await propertiesRef.where('type', isEqualTo: 'Apartment').get();
   }
 
   @override

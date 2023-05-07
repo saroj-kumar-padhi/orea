@@ -1,3 +1,4 @@
+import 'package:Orea/screens/home_screen/home_screen.dart';
 import 'package:Orea/screens/orea_real_estate_bidding/searchBox.dart';
 import 'package:Orea/screens/plot_screen/plotScreen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -12,6 +13,8 @@ import 'package:Orea/screens/property_added_by_you/property_added_by_you.dart';
 import 'package:Orea/screens/user_profile/user_profile.dart';
 import 'package:Orea/screens/view_lists/view_lists.dart';
 import 'package:readmore/readmore.dart';
+import '../apartment_screen/apartment_screen.dart';
+import '../commercial_screen/commercial_screen.dart';
 import '../notifications/notification.dart';
 
 class RealEstateBidding extends StatefulWidget {
@@ -137,15 +140,30 @@ class _RealEstateBiddingState extends State<RealEstateBidding> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                circularTab(Icons.home, () {}, "Home"),
-                circularTab(Icons.apartment, () {}, "Apartment"),
+                circularTab(Icons.home, () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const homeScreen()));
+                }, "Home"),
+                circularTab(Icons.apartment, () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const apartmentScreen()));
+                }, "Apartment"),
                 circularTab(Icons.add_home_work_sharp, () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => const plotScreen()));
                 }, "Plots"),
-                circularTab(Icons.add_home_work_sharp, () {}, "Commercial"),
+                circularTab(Icons.add_home_work_sharp, () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const commercialScreen()));
+                }, "Commercial"),
               ],
             ),
             const SizedBox(height: 10),
