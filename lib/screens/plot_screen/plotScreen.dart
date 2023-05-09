@@ -58,7 +58,7 @@ class _plotScreenState extends State<plotScreen> {
                   return listItem(
                       data!['imageUrl'],
                       data['propertyTitle'],
-                      "PKR ${data['amount']}",
+                      "${data['amount']}",
                       data['propertyDescription'],
                       context);
                 }));

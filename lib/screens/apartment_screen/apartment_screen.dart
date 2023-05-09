@@ -57,7 +57,7 @@ class _ApartmentScreen extends State<ApartmentScreen> {
                   return listItem(
                       data!['imageUrl'],
                       data['propertyTitle'],
-                      "PKR ${data['amount']}",
+                      "${data['amount']}",
                       data['propertyDescription'],
                       context);
                 }));
