@@ -15,7 +15,7 @@ class _commercialScreen extends State<commercialScreen> {
       FirebaseFirestore.instance.collection('users');
 
   Future<QuerySnapshot> fetchProperties() async {
-    return await propertiesRef.where('type', isEqualTo: 'Home').get();
+    return await propertiesRef.where('type', isEqualTo: 'Commercial').get();
   }
 
   @override
@@ -57,7 +57,7 @@ class _commercialScreen extends State<commercialScreen> {
                   return listItem(
                       data!['imageUrl'],
                       data['propertyTitle'],
-                      "PKR ${data['amount']}",
+                      "${data['amount']}",
                       data['propertyDescription'],
                       context);
                 }));
@@ -68,6 +68,11 @@ class _commercialScreen extends State<commercialScreen> {
 
 //Clickable Tabs ---------->>>
 Widget listItem(image, title, rate, description, context) {
+  String trimmedDescription = description.substring(0, 25).trim();
+  if (description.length > 25) {
+    trimmedDescription += "...";
+  }
+// print(trimmedDescription);
   return Column(
     children: [
       const SizedBox(height: 15),
@@ -91,11 +96,16 @@ Widget listItem(image, title, rate, description, context) {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                BoldText(title, deepGreer, 17),
+                BoldText(title, deepBlue, 17),
                 const SizedBox(width: 8),
-                BoldText(rate, deepBlue, 17),
+                Row(
+                  children: [
+                    BoldText("PKR ", deepGreer, 15),
+                    BoldText(rate, Colors.red, 15),
+                  ],
+                ),
                 const SizedBox(height: 2),
-                BoldText(description, deepBlue, 17),
+                LightText(trimmedDescription, deepGreer, 14),
               ],
             ),
           ],
