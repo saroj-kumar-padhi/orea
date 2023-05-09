@@ -12,13 +12,17 @@ class PlaceYourBid extends StatefulWidget {
   String discription;
   String amount;
   String propertyTitle;
+  String name;
+  String email;
   PlaceYourBid(
       {Key? key,
       required this.id,
       required this.imageUrl,
       required this.amount,
       required this.discription,
-      required this.propertyTitle})
+      required this.propertyTitle,
+      required this.name,
+      required this.email})
       : super(key: key);
 
   @override
@@ -94,7 +98,7 @@ class _PlaceYourBidState extends State<PlaceYourBid> {
                   ],
                 ),
                 const SizedBox(height: 8),
-                LightText("by Asif Raza | ${user!.email}", deepGreer, 12),
+                LightText("by ${widget.name} | ${widget.email}", deepGreer, 12),
                 const SizedBox(height: 8),
                 ParagraphText(
                     widget.discription, deepGreer, 15, TextAlign.left),
@@ -158,38 +162,34 @@ class _PlaceYourBidState extends State<PlaceYourBid> {
                         //       FocusScope.of(context).unfocus(),
                         // ),
                         const SizedBox(height: 20),
-                        Expanded(
-                          child: MaterialButton(
-                            color: deepBlue,
-                            height: 40,
-                            minWidth: MediaQuery.of(context).size.width,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(28)),
-                            onPressed: () async {
-                              if (formKey.currentState!.validate()) {
-                                // get the document reference for the property
-                                final DocumentReference propertyRef =
-                                    propertiesRef.doc(widget.id);
+                        MaterialButton(
+                          color: deepBlue,
+                          height: 40,
+                          minWidth: MediaQuery.of(context).size.width,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(28)),
+                          onPressed: () async {
+                            // get the document reference for the property
+                            final DocumentReference propertyRef =
+                                propertiesRef.doc(widget.id);
 
-                                // update the status of the property to approved
-                                await propertyRef.update({
-                                  'bidAmount': amount.text,
-                                  'bidDescription': description.text
-                                });
+                            // update the status of the property to approved
+                            await propertyRef.update({
+                              'bidAmount': amount.text,
+                              'bidDescription': description.text
+                            });
 
-                                // rebuild the list view to reflect the updated status
-                                setState(() {});
+                            // rebuild the list view to reflect the updated status
+                            setState(() {});
 
-                                // ignore: use_build_context_synchronously
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const RealEstateBidding()));
-                              }
-                            },
-                            child: BoldText("Place Bid", whiteColor, 18),
-                          ),
+                            // ignore: use_build_context_synchronously
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const RealEstateBidding()));
+                          },
+                          child: BoldText("Place Bid", whiteColor, 18),
                         ),
                         const SizedBox(height: 5)
                       ]),

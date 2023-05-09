@@ -75,7 +75,14 @@ class _PendingRequestState extends State<PendingRequest> {
                       setState(() {});
 
                       // ignore: use_build_context_synchronously
-                    }, () {}, context),
+                    }, () {
+                      final DocumentReference propertyRef =
+                          propertiesRef.doc(documents[index].id);
+
+                      propertyRef.delete();
+
+                      setState(() {});
+                    }, context),
                   ],
                 ),
               );
