@@ -28,24 +28,7 @@ class CheckUser extends StatefulWidget {
 }
 
 class _CheckUserState extends State<CheckUser> {
-  FirebaseAuth _auth = FirebaseAuth.instance;
-
-  @override
-  void initState() {
-    super.initState();
-    _auth = FirebaseAuth.instance;
-    _auth.authStateChanges().listen((User? user) {
-      if (user == null) {
-        // User is logged out, navigate to welcome screen
-        Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => const WelcomeScreen()));
-      } else {
-        // User is logged in, navigate to home screen
-        Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => const RealEstateBidding()));
-      }
-    });
-  }
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
