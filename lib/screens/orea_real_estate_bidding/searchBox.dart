@@ -19,12 +19,12 @@ class _SearchBoxState extends State<SearchBox> {
 
   void onSearch() async {
     try {
-      FirebaseFirestore _firestore = FirebaseFirestore.instance;
+      FirebaseFirestore firestore = FirebaseFirestore.instance;
       setState(() {
         isLoading = true;
       });
 
-      _firestore
+      firestore
           .collection('profileInfo')
           .where(
             "title",
@@ -92,7 +92,7 @@ class _SearchBoxState extends State<SearchBox> {
                   Expanded(
                     child: StreamBuilder(
                       stream: FirebaseFirestore.instance
-                          .collection('profileInfo')
+                          .collection('users')
                           .where(
                             'title',
                             isGreaterThanOrEqualTo:
