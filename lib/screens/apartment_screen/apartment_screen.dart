@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 
 import '../../common_utils/common_utils.dart';
 
-class appartmentScreen extends StatefulWidget {
-  const appartmentScreen({Key? key}) : super(key: key);
+class ApartmentScreen extends StatefulWidget {
+  const ApartmentScreen({Key? key}) : super(key: key);
 
   @override
-  State<appartmentScreen> createState() => _appartmentScreen();
+  State<ApartmentScreen> createState() => _ApartmentScreen();
 }
 
-class _appartmentScreen extends State<appartmentScreen> {
+class _ApartmentScreen extends State<ApartmentScreen> {
   CollectionReference propertiesRef =
       FirebaseFirestore.instance.collection('users');
 
@@ -54,8 +54,12 @@ class _appartmentScreen extends State<appartmentScreen> {
                 itemBuilder: ((context, index) {
                   Map<String, dynamic>? data =
                       documents[index].data() as Map<String, dynamic>?;
-                  return listItem(data!['imageUrl'], data['propertyTitle'],
-                      "PKR ${data['amount']}PKR", data['propertyDescription']);
+                  return listItem(
+                      data!['imageUrl'],
+                      data['propertyTitle'],
+                      "PKR ${data['amount']}",
+                      data['propertyDescription'],
+                      context);
                 }));
           }),
     );
@@ -63,35 +67,39 @@ class _appartmentScreen extends State<appartmentScreen> {
 }
 
 //Clickable Tabs ---------->>>
-Widget listItem(image, title, rate, description) {
+Widget listItem(image, title, rate, description, context) {
   return Column(
     children: [
-      const SizedBox(height: 7),
-      Row(
-        children: [
-          Container(
-            height: 70,
-            width: 70,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(7),
-                border: Border.all(color: deepBlue, width: 1),
-                image: DecorationImage(
-                  image: NetworkImage(image),
-                  fit: BoxFit.cover,
-                )),
-          ),
-          const SizedBox(width: 22),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              BoldText(title, deepGreer, 17),
-              const SizedBox(width: 8),
-              BoldText(rate, deepBlue, 17),
-              const SizedBox(height: 2),
-              BoldText(description, deepBlue, 17),
-            ],
-          ),
-        ],
+      const SizedBox(height: 15),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              height: 100,
+              width: 150,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(7),
+                  border: Border.all(color: deepBlue, width: 1),
+                  image: DecorationImage(
+                    image: NetworkImage(image),
+                    fit: BoxFit.cover,
+                  )),
+            ),
+            const SizedBox(width: 22),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                BoldText(title, deepGreer, 17),
+                const SizedBox(width: 8),
+                BoldText(rate, deepBlue, 17),
+                const SizedBox(height: 2),
+                BoldText(description, deepBlue, 17),
+              ],
+            ),
+          ],
+        ),
       ),
       const SizedBox(height: 10),
       const Divider(color: hint),
