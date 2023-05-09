@@ -1,5 +1,6 @@
 import 'package:Orea/common_utils/common_utils.dart';
 import 'package:Orea/screens/orea_real_estate_bidding/searchfunction.dart';
+import 'package:Orea/screens/view_lists/view_lists.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -25,9 +26,9 @@ class _SearchBoxState extends State<SearchBox> {
       });
 
       firestore
-          .collection('profileInfo')
+          .collection('users')
           .where(
-            "title",
+            "type",
             isGreaterThanOrEqualTo: searchController.text.trim(),
           )
           .snapshots();
@@ -94,7 +95,7 @@ class _SearchBoxState extends State<SearchBox> {
                       stream: FirebaseFirestore.instance
                           .collection('users')
                           .where(
-                            'title',
+                            'type',
                             isGreaterThanOrEqualTo:
                                 searchController.text.trim(),
                           )
@@ -125,7 +126,7 @@ class _SearchBoxState extends State<SearchBox> {
                                             .withAlpha(100),
                                         radius: 25,
                                         child: Image.network(
-                                          searchedUser.imageurl,
+                                          searchedUser.imageUrl ?? "",
                                           fit: BoxFit.cover,
                                           errorBuilder:
                                               ((context, error, stackTrace) {
@@ -135,12 +136,20 @@ class _SearchBoxState extends State<SearchBox> {
                                         ),
                                       ),
                                     ),
-                                    title: Text(searchedUser.title.toString()),
-                                    subtitle:
-                                        Text(searchedUser.desc.toString()),
+                                    title: Text(
+                                        searchedUser.propertyTitle.toString()),
+                                    subtitle: Text(searchedUser
+                                        .propertyDescription
+                                        .toString()),
                                     trailing: const Icon(
                                         Icons.keyboard_arrow_right_rounded),
-                                    onTap: () {},
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const ViewListings()));
+                                    },
                                   );
                                 },
                               );
