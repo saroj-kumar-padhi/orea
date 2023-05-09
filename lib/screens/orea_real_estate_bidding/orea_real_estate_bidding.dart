@@ -13,6 +13,7 @@ import 'package:Orea/screens/property_added_by_you/property_added_by_you.dart';
 import 'package:Orea/screens/user_profile/user_profile.dart';
 import 'package:Orea/screens/view_lists/view_lists.dart';
 import 'package:readmore/readmore.dart';
+
 import '../apartment_screen/apartment_screen.dart';
 import '../commercial_screen/commercial_screen.dart';
 import '../notifications/notification.dart';
@@ -168,7 +169,7 @@ class _RealEstateBiddingState extends State<RealEstateBidding> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const appartmentScreen()));
+                          builder: (context) => const ApartmentScreen()));
                 }, "Apartment"),
                 circularTab(Icons.map, () {
                   Navigator.push(
