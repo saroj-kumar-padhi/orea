@@ -1,6 +1,7 @@
 //ignore: file_names
 import 'package:Orea/screens/orea_real_estate_bidding/orea_real_estate_bidding.dart'
     show RealEstateBidding;
+import 'package:Orea/screens/welcome_screen/welcome_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:Orea/common_utils/common_utils.dart';
@@ -82,7 +83,7 @@ class _UserSignInState extends State<UserSignIn> {
         backgroundColor: whiteColor,
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>const WelcomeScreen()));
           },
           icon: const Icon(Icons.arrow_back, color: deepGreer),
         ),
