@@ -111,7 +111,7 @@ class _PlaceYourBidState extends State<PlaceYourBid> {
                       children: [
                         TextFormField(
                           controller: amount,
-                          autofocus: true,
+                          
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             fillColor: whiteColor,
