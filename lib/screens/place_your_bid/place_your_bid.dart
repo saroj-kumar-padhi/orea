@@ -45,7 +45,8 @@ class _PlaceYourBidState extends State<PlaceYourBid> {
     final CollectionReference propertiesRef = firestore.collection('users');
     final TextEditingController amount = TextEditingController();
     final TextEditingController description = TextEditingController();
-    
+    final formKey = GlobalKey<FormState>();
+
     return Scaffold(
       backgroundColor: whiteColor,
       appBar: AppBar(
@@ -64,20 +65,23 @@ class _PlaceYourBidState extends State<PlaceYourBid> {
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25),
-          child: SingleChildScrollView(
+          child: Form(
+            key: formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ClipRRect(
-                  child: Container(
-                    height: MediaQuery.of(context).size.height / 7,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      border: Border.all(color: deepBlue, width: 1),
-                      image: DecorationImage(
-                          image: NetworkImage(widget.imageUrl),
-                          fit: BoxFit.cover),
+                Expanded(
+                  child: ClipRRect(
+                    child: Container(
+                      height: 300,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(color: deepBlue, width: 1),
+                        image: DecorationImage(
+                            image: NetworkImage(widget.imageUrl),
+                            fit: BoxFit.cover),
+                      ),
                     ),
                   ),
                 ),
@@ -123,8 +127,14 @@ class _PlaceYourBidState extends State<PlaceYourBid> {
                                 borderRadius: BorderRadius.circular(30),
                                 borderSide: const BorderSide(color: deepBlue)),
                           ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your amount';
+                            }
+                            return null;
+                          },
                           onEditingComplete: () =>
-                              FocusScope.of(context).nextFocus(),
+                              FocusScope.of(context).unfocus(),
                         ),
                         const SizedBox(height: 25),
                         // TextFormField(
@@ -148,35 +158,40 @@ class _PlaceYourBidState extends State<PlaceYourBid> {
                         //       FocusScope.of(context).unfocus(),
                         // ),
                         const SizedBox(height: 20),
-                        MaterialButton(
-                          color: deepBlue,
-                          height: 40,
-                          minWidth: MediaQuery.of(context).size.width,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(28)),
-                          onPressed: () async {
-                            // get the document reference for the property
-                            final DocumentReference propertyRef =
-                                propertiesRef.doc(widget.id);
-          
-                            // update the status of the property to approved
-                            await propertyRef.update({
-                              'bidAmount': amount.text,
-                              'bidDescription': description.text
-                            });
-          
-                            // rebuild the list view to reflect the updated status
-                            setState(() {});
-          
-                            // ignore: use_build_context_synchronously
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const RealEstateBidding()));
-                          },
-                          child: BoldText("Place Bid", whiteColor, 18),
+                        Expanded(
+                          child: MaterialButton(
+                            color: deepBlue,
+                            height: 40,
+                            minWidth: MediaQuery.of(context).size.width,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(28)),
+                            onPressed: () async {
+                              if (formKey.currentState!.validate()) {
+                                // get the document reference for the property
+                                final DocumentReference propertyRef =
+                                    propertiesRef.doc(widget.id);
+
+                                // update the status of the property to approved
+                                await propertyRef.update({
+                                  'bidAmount': amount.text,
+                                  'bidDescription': description.text
+                                });
+
+                                // rebuild the list view to reflect the updated status
+                                setState(() {});
+
+                                // ignore: use_build_context_synchronously
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const RealEstateBidding()));
+                              }
+                            },
+                            child: BoldText("Place Bid", whiteColor, 18),
+                          ),
                         ),
+                        const SizedBox(height: 5)
                       ]),
                 ),
               ],
