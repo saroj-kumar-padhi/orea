@@ -49,6 +49,7 @@ class _PlaceYourBidState extends State<PlaceYourBid> {
     final CollectionReference propertiesRef = firestore.collection('users');
     final TextEditingController amount = TextEditingController();
     final TextEditingController description = TextEditingController();
+    final formKey = GlobalKey<FormState>();
 
     return Scaffold(
       backgroundColor: whiteColor,
@@ -68,20 +69,23 @@ class _PlaceYourBidState extends State<PlaceYourBid> {
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25),
-          child: SingleChildScrollView(
+          child: Form(
+            key: formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ClipRRect(
-                  child: Container(
-                    height: MediaQuery.of(context).size.height / 7,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      border: Border.all(color: deepBlue, width: 1),
-                      image: DecorationImage(
-                          image: NetworkImage(widget.imageUrl),
-                          fit: BoxFit.cover),
+                Expanded(
+                  child: ClipRRect(
+                    child: Container(
+                      height: 300,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(color: deepBlue, width: 1),
+                        image: DecorationImage(
+                            image: NetworkImage(widget.imageUrl),
+                            fit: BoxFit.cover),
+                      ),
                     ),
                   ),
                 ),
@@ -111,7 +115,7 @@ class _PlaceYourBidState extends State<PlaceYourBid> {
                       children: [
                         TextFormField(
                           controller: amount,
-                          autofocus: true,
+                          
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             fillColor: whiteColor,
@@ -127,8 +131,14 @@ class _PlaceYourBidState extends State<PlaceYourBid> {
                                 borderRadius: BorderRadius.circular(30),
                                 borderSide: const BorderSide(color: deepBlue)),
                           ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your amount';
+                            }
+                            return null;
+                          },
                           onEditingComplete: () =>
-                              FocusScope.of(context).nextFocus(),
+                              FocusScope.of(context).unfocus(),
                         ),
                         const SizedBox(height: 25),
                         // TextFormField(
@@ -181,6 +191,7 @@ class _PlaceYourBidState extends State<PlaceYourBid> {
                           },
                           child: BoldText("Place Bid", whiteColor, 18),
                         ),
+                        const SizedBox(height: 5)
                       ]),
                 ),
               ],

@@ -134,7 +134,7 @@ class _UserProfileState extends State<UserProfile> {
                           children: [
                             BoldText("Address:", deepGreer, 13),
                             const SizedBox(
-                              width: 10,
+                              width: 5,
                             ),
                             BoldText(address, deepGreer, 13),
                           ],

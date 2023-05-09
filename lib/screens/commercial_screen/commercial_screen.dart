@@ -54,8 +54,12 @@ class _commercialScreen extends State<commercialScreen> {
                 itemBuilder: ((context, index) {
                   Map<String, dynamic>? data =
                       documents[index].data() as Map<String, dynamic>?;
-                  return listItem(data!['imageUrl'], data['propertyTitle'],
-                      "PKR ${data['amount']}CR", data['propertyDescription']);
+                  return listItem(
+                      data!['imageUrl'],
+                      data['propertyTitle'],
+                      "PKR ${data['amount']}",
+                      data['propertyDescription'],
+                      context);
                 }));
           }),
     );
@@ -63,35 +67,39 @@ class _commercialScreen extends State<commercialScreen> {
 }
 
 //Clickable Tabs ---------->>>
-Widget listItem(image, title, rate, description) {
+Widget listItem(image, title, rate, description, context) {
   return Column(
     children: [
-      const SizedBox(height: 7),
-      Row(
-        children: [
-          Container(
-            height: 70,
-            width: 70,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(7),
-                border: Border.all(color: deepBlue, width: 1),
-                image: DecorationImage(
-                  image: NetworkImage(image),
-                  fit: BoxFit.cover,
-                )),
-          ),
-          const SizedBox(width: 22),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              BoldText(title, deepGreer, 17),
-              const SizedBox(width: 8),
-              BoldText(rate, deepBlue, 17),
-              const SizedBox(height: 2),
-              BoldText(description, deepBlue, 17),
-            ],
-          ),
-        ],
+      const SizedBox(height: 15),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              height: 100,
+              width: 150,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(7),
+                  border: Border.all(color: deepBlue, width: 1),
+                  image: DecorationImage(
+                    image: NetworkImage(image),
+                    fit: BoxFit.cover,
+                  )),
+            ),
+            const SizedBox(width: 22),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                BoldText(title, deepGreer, 17),
+                const SizedBox(width: 8),
+                BoldText(rate, deepBlue, 17),
+                const SizedBox(height: 2),
+                BoldText(description, deepBlue, 17),
+              ],
+            ),
+          ],
+        ),
       ),
       const SizedBox(height: 10),
       const Divider(color: hint),
