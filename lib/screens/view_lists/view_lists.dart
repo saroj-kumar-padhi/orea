@@ -61,30 +61,29 @@ class _ViewListings extends State<ViewListings> {
               ),
             ),
             body: Center(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(24, 44, 24, 10),
-                child: FutureBuilder<QuerySnapshot>(
-                    future: FirebaseFirestore.instance
-                        .collection('users')
-                        .where('status', isEqualTo: 'approved')
-                        .get(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        // return a loading indicator while the data is being fetched
-                        return const Center(child: CircularProgressIndicator());
-                      } else if (snapshot.hasError) {
-                        // handle any errors that occur while fetching the data
-                        return const Center(child: Text('Error fetching data'));
-                      }
-                      final List<QueryDocumentSnapshot<Map<String, dynamic>>>
-                          documents = snapshot.data?.docs as List<
-                              QueryDocumentSnapshot<Map<String, dynamic>>>;
-                      return ListView.builder(
-                          itemCount: documents.length,
-                          itemBuilder: (context, index) {
-                            Map<String, dynamic>? data =
-                                documents[index].data();
-                            return Column(
+              child: FutureBuilder<QuerySnapshot>(
+                  future: FirebaseFirestore.instance
+                      .collection('users')
+                      .where('status', isEqualTo: 'approved')
+                      .get(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      // return a loading indicator while the data is being fetched
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      // handle any errors that occur while fetching the data
+                      return const Center(child: Text('Error fetching data'));
+                    }
+                    final List<QueryDocumentSnapshot<Map<String, dynamic>>>
+                        documents = snapshot.data?.docs as List<
+                            QueryDocumentSnapshot<Map<String, dynamic>>>;
+                    return ListView.builder(
+                        itemCount: documents.length,
+                        itemBuilder: (context, index) {
+                          Map<String, dynamic>? data = documents[index].data();
+                          return Padding(
+                            padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
+                            child: Column(
                               children: [
                                 listItem(data['imageUrl'], () {
                                   Navigator.push(
@@ -126,10 +125,10 @@ class _ViewListings extends State<ViewListings> {
                                 const Divider(color: hint),
                                 const SizedBox(height: 27),
                               ],
-                            );
-                          });
-                    }),
-              ),
+                            ),
+                          );
+                        });
+                  }),
             ),
           );
         });

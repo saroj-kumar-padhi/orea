@@ -78,7 +78,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               Row(
                 children: [
                   const SizedBox(width: 20),
-                  LightText("Enter your  Address",black, 15),
+                  LightText("Enter your  Address", black, 15),
                 ],
               ),
               const SizedBox(height: 5),

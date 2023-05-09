@@ -227,7 +227,7 @@ class _AddPropertyState extends State<AddProperty> {
 
                   Row(
                     children: [
-                      BoldText("Add your name", deepBlue, 15),
+                      BoldText("Add owner's name", deepBlue, 15),
                       BoldText("*", Colors.red, 15),
                     ],
                   ),
@@ -246,7 +246,7 @@ class _AddPropertyState extends State<AddProperty> {
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter your title';
+                        return 'Please enter owner name';
                       }
                       return null;
                     },
@@ -257,7 +257,7 @@ class _AddPropertyState extends State<AddProperty> {
 
                   Row(
                     children: [
-                      BoldText("Add your email", deepBlue, 15),
+                      BoldText("Add owner's email", deepBlue, 15),
                       BoldText("*", Colors.red, 15),
                     ],
                   ),
@@ -276,7 +276,7 @@ class _AddPropertyState extends State<AddProperty> {
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter your title';
+                        return 'Please enter owner email';
                       }
                       return null;
                     },
@@ -299,6 +299,16 @@ class _AddPropertyState extends State<AddProperty> {
                           borderRadius: BorderRadius.circular(8),
                           borderSide: const BorderSide(color: deepBlue)),
                     ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "Please enter a description";
+                      } else if (value.length < 26) {
+                        return "Description must be at least 26 characters";
+                      } else if (value.length > 100) {
+                        return "Description must be at most 100 characters";
+                      }
+                      return null;
+                    },
                   ),
                   Row(
                     children: [
