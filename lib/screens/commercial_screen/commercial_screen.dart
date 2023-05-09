@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../../common_utils/common_utils.dart';
-import '../../common_utils/image_paths.dart';
 
 class commercialScreen extends StatefulWidget {
   const commercialScreen({Key? key}) : super(key: key);
@@ -36,44 +35,50 @@ class _commercialScreen extends State<commercialScreen> {
           icon: const Icon(Icons.arrow_back, color: black),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            children: [
-              listItem(ImagePath.house, "Property Title", "PKR 2CR",
-                  "by Asif Raza | asif@gmail.com"),
-              listItem(ImagePath.house, "Property Title", "PKR 2CR",
-                  "by Asif Raza | asif@gmail.com"),
-              listItem(ImagePath.house, "Property Title", "PKR 2CR",
-                  "by Asif Raza | asif@gmail.com"),
-            ],
-          ),
-        ),
-      ),
+      body: FutureBuilder<QuerySnapshot>(
+          future: fetchProperties(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            if (!snapshot.hasData) {
+              return const Text("no data available");
+            }
+
+            List<QueryDocumentSnapshot> documents = snapshot.data!.docs;
+
+            return ListView.builder(
+                itemCount: documents.length,
+                itemBuilder: ((context, index) {
+                  Map<String, dynamic>? data =
+                      documents[index].data() as Map<String, dynamic>?;
+                  return listItem(data!['imageUrl'], data['propertyTitle'],
+                      "PKR ${data['amount']}CR", data['propertyDescription']);
+                }));
+          }),
     );
   }
 }
 
 //Clickable Tabs ---------->>>
-Widget listItem(image, title, rate, owner) {
+Widget listItem(image, title, rate, description) {
   return Column(
     children: [
       const SizedBox(height: 7),
       Row(
         children: [
-          Expanded(
-            child: Container(
-              height: 70,
-              width: 110,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(7),
-                  border: Border.all(color: deepBlue, width: 1),
-                  image: DecorationImage(
-                    image: AssetImage(image),
-                    fit: BoxFit.cover,
-                  )),
-            ),
+          Container(
+            height: 70,
+            width: 70,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(7),
+                border: Border.all(color: deepBlue, width: 1),
+                image: DecorationImage(
+                  image: NetworkImage(image),
+                  fit: BoxFit.cover,
+                )),
           ),
           const SizedBox(width: 22),
           Column(
@@ -83,7 +88,7 @@ Widget listItem(image, title, rate, owner) {
               const SizedBox(width: 8),
               BoldText(rate, deepBlue, 17),
               const SizedBox(height: 2),
-              LightText(owner, deepGreer, 13),
+              BoldText(description, deepBlue, 17),
             ],
           ),
         ],

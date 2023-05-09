@@ -159,14 +159,16 @@ class _RealEstateBiddingState extends State<RealEstateBidding> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 circularTab(Icons.home, () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => homeScreen()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const homeScreen()));
                 }, "Home"),
                 circularTab(Icons.apartment, () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const apartmentScreen()));
+                          builder: (context) => const appartmentScreen()));
                 }, "Apartment"),
                 circularTab(Icons.map, () {
                   Navigator.push(
