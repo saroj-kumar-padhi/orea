@@ -57,7 +57,7 @@ class _homeScreen extends State<homeScreen> {
                   return listItem(
                       data!['imageUrl'],
                       data['propertyTitle'],
-                      "PKR ${data['amount']}",
+                      "${data['amount']}",
                       data['propertyDescription'],
                       context);
                 }));
