@@ -1,10 +1,13 @@
+import 'package:Orea/common_utils/image_paths.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:Orea/common_utils/common_utils.dart';
 
-import 'package:Orea/common_utils/image_paths.dart';
-
 class HistoryScreen extends StatefulWidget {
-  const HistoryScreen({super.key});
+  const HistoryScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<HistoryScreen> createState() => _HistoryScreen();
@@ -13,11 +16,34 @@ class HistoryScreen extends StatefulWidget {
 class _HistoryScreen extends State<HistoryScreen> {
   @override
   Widget build(BuildContext context) {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? user = auth.currentUser;
+    if (user != null) {
+      // User is signed in, you can access the email address
+      String? email = user.email;
+      // ignore: avoid_print
+      print('User email: $email');
+    } else {
+      // User is not signed in
+      // ignore: avoid_print
+      print('User is not signed in');
+    }
+
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+    final CollectionReference propertiesRef = firestore.collection('users');
+    // ignore: unused_element
+    Future<QuerySnapshot<Map<String, dynamic>>> fetchAppropedRequest() async {
+      final Query query = propertiesRef.where('status', isEqualTo: 'approved');
+      final QuerySnapshot<Map<String, dynamic>> snapshot =
+          await query.get() as QuerySnapshot<Map<String, dynamic>>;
+
+      return snapshot;
+    }
+
     return Scaffold(
-      backgroundColor: whiteColor,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: BoldText("HISTORY", deepGreer, 18),
+        title: BoldText("BIDS HISTORY", deepGreer, 18),
         centerTitle: true,
         elevation: 0.5,
         backgroundColor: whiteColor,
@@ -28,94 +54,93 @@ class _HistoryScreen extends State<HistoryScreen> {
           icon: const Icon(Icons.arrow_back, color: black),
         ),
       ),
-      body: SingleChildScrollView(
+      body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            children: [
-              const SizedBox(height: 10),
-              BoldText('All Property Purchase Will Appear Here', deepGreer, 12),
-              const SizedBox(height: 20),
-              listItem(
-                ImagePath.house,
-                "Property Title",
-                "PKR 2Cr",
-                "by Asif Raza | asif@gmail.com",
-                "by Asif Raza | asif@gmail.com",
-              ),
-              listItem(
-                ImagePath.house,
-                "Property Title",
-                "PKR 2Cr",
-                "by Asif Raza | asif@gmail.com",
-                "by Asif Raza | asif@gmail.com",
-              ),
-              listItem(
-                ImagePath.house,
-                "Property Title",
-                "PKR 2Cr",
-                "by Asif Raza | asif@gmail.com",
-                "by Asif Raza | asif@gmail.com",
-              ),
-            ],
+          padding: const EdgeInsets.fromLTRB(24, 24, 24, 10),
+          child: FutureBuilder<QuerySnapshot>(
+            future: FirebaseFirestore.instance
+                .collection('users')
+                .where('status', isEqualTo: 'approved')
+                .get(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                // return a loading indicator while the data is being fetched
+                return const Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                // handle any errors that occur while fetching the data
+                return const Center(child: Text('Error fetching data'));
+              }
+              final List<QueryDocumentSnapshot<Map<String, dynamic>>>
+                  documents = snapshot.data?.docs
+                      as List<QueryDocumentSnapshot<Map<String, dynamic>>>;
+              return ListView.builder(
+                itemCount: documents.length,
+                itemBuilder: ((context, index) {
+                  Map<String, dynamic>? data = documents[index].data();
+                  return Column(
+                    children: [
+                      //  Image.network(
+                      //         data['imageUrl'],
+                      //         height: 100,
+                      //         width: 120,
+                      Row(
+                        children: [
+                          Expanded(
+                            child: ClipRRect(
+                              child: Container(
+                                height: 100,
+                                width: 150,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  border: Border.all(color: deepBlue, width: 1),
+                                  image: DecorationImage(
+                                      image: NetworkImage(data['imageUrl'] ??
+                                          AssetImage(ImagePath.house)),
+                                      fit: BoxFit.cover),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 22),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(children: [
+                                BoldText(data['propertyTitle'] ?? 'N/A',
+                                    deepBlue, 15),
+                              ]),
+                              const SizedBox(height: 15),
+                              Row(
+                                children: [
+                                  LightText("placed by 'BidUser' name",
+                                      deepGreer, 11),
+                                ],
+                              ),
+                              LightText("${user!.email}", deepGreer, 11),
+                              const SizedBox(height: 5),
+                              Row(
+                                children: [
+                                  LightText(
+                                      "Amount: ${data['bidAmount'] + " pkr" ?? "9999"}",
+                                      deepGreer,
+                                      11),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      )
+                    ],
+                  );
+                }),
+              );
+            },
           ),
         ),
       ),
     );
   }
-}
-
-//Clickable Tabs ---------->>>
-Widget listItem(image, title, rate, seller, buyer) {
-  return Column(
-    children: [
-      const SizedBox(height: 10),
-      Row(
-        children: [
-          Expanded(
-            child: Container(
-              height: 80,
-              width: 110,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(7),
-                  border: Border.all(color: deepBlue, width: 1),
-                  image: DecorationImage(
-                    image: AssetImage(image),
-                    fit: BoxFit.cover,
-                  )),
-            ),
-          ),
-          const SizedBox(width: 22),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(children: [
-                BoldText(title, deepGreer, 15),
-                const SizedBox(width: 8),
-                BoldText(rate, deepBlue, 15),
-              ]),
-              const SizedBox(height: 15),
-              Row(
-                children: [
-                  BoldText("SELLER: ", deepBlue, 11),
-                  LightText(seller, deepGreer, 11),
-                ],
-              ),
-              const SizedBox(height: 5),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  BoldText("BUYER: ", deepGreer, 11),
-                  LightText(buyer, deepGreer, 11),
-                ],
-              ),
-            ],
-          ),
-        ],
-      ),
-      const SizedBox(height: 20),
-      const Divider(color: hint),
-      const SizedBox(height: 10),
-    ],
-  );
 }

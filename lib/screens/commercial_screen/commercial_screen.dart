@@ -3,19 +3,19 @@ import 'package:flutter/material.dart';
 
 import '../../common_utils/common_utils.dart';
 
-class commercialScreen extends StatefulWidget {
-  const commercialScreen({Key? key}) : super(key: key);
+class CommercialScreen extends StatefulWidget {
+  const CommercialScreen({Key? key}) : super(key: key);
 
   @override
-  State<commercialScreen> createState() => _commercialScreen();
+  State<CommercialScreen> createState() => _CommercialScreen();
 }
 
-class _commercialScreen extends State<commercialScreen> {
+class _CommercialScreen extends State<CommercialScreen> {
   CollectionReference propertiesRef =
       FirebaseFirestore.instance.collection('users');
 
   Future<QuerySnapshot> fetchProperties() async {
-    return await propertiesRef.where('type', isEqualTo: 'Home').get();
+    return await propertiesRef.where('type', isEqualTo: 'Commercial').get();
   }
 
   @override
