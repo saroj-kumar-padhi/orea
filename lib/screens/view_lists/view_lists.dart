@@ -97,6 +97,8 @@ class _ViewListings extends State<ViewListings> {
                                             data['propertyDescription'],
                                         amount: data['amount'],
                                         propertyTitle: data['propertyTitle'],
+                                        name: data['userName'],
+                                        email: data['userEmail'],
                                       ),
                                     ),
                                   );
@@ -111,10 +113,13 @@ class _ViewListings extends State<ViewListings> {
                                             data['propertyDescription'],
                                         amount: data['amount'],
                                         propertyTitle: data['propertyTitle'],
+                                        name: data['userName'],
+                                        email: data['userEmail'],
                                       ),
                                     ),
                                   );
-                                }, data['propertyTitle'] ?? 'N/A', user!.email),
+                                }, data['propertyTitle'] ?? 'N/A',
+                                    data['userName'], data['userEmail']),
                                 const SizedBox(
                                   height: 27,
                                 ),
@@ -131,7 +136,7 @@ class _ViewListings extends State<ViewListings> {
   }
 
   //Clickable Tabs ---------->>>
-  Widget listItem(image, onTap, onTap2, title, email) {
+  Widget listItem(image, onTap, onTap2, title, name, email) {
     return Row(
       children: [
         Expanded(
@@ -153,7 +158,7 @@ class _ViewListings extends State<ViewListings> {
           BoldText(title, deepBlue, 17),
           const SizedBox(height: 2),
           // ignore: unnecessary_brace_in_string_interps
-          LightText("by Asif Raza\n${email}", deepGreer, 13),
+          LightText("by $name\n${email}", deepGreer, 13),
           Row(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

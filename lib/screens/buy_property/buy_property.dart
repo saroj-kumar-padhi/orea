@@ -3,8 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:Orea/common_utils/common_utils.dart';
 
-
-
 import '../payment_screen/payment_screen.dart';
 
 // ignore: must_be_immutable
@@ -14,13 +12,17 @@ class BuyProperty extends StatefulWidget {
   String discription;
   String amount;
   String propertyTitle;
+  String email;
+  String name;
   BuyProperty(
       {Key? key,
       required this.id,
       required this.imageUrl,
       required this.amount,
       required this.discription,
-      required this.propertyTitle})
+      required this.propertyTitle,
+      required this.email,
+      required this.name})
       : super(key: key);
 
   @override
@@ -92,7 +94,7 @@ class _BuyPropertyState extends State<BuyProperty> {
                 ],
               ),
               const SizedBox(height: 10),
-              LightText("by Asif Raza | ${user!.email}", deepGreer, 12),
+              LightText("by ${widget.name} | ${widget.email}", deepGreer, 12),
               const SizedBox(height: 12),
               ParagraphText(widget.discription, deepGreer, 15, TextAlign.left),
               const Spacer(),

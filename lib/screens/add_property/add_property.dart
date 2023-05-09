@@ -24,6 +24,9 @@ class _AddPropertyState extends State<AddProperty> {
   final TextEditingController addDescription = TextEditingController();
   final TextEditingController addAmount = TextEditingController();
   final TextEditingController type = TextEditingController();
+  final TextEditingController name = TextEditingController();
+  final TextEditingController email = TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
 
   late Map data;
@@ -73,8 +76,14 @@ class _AddPropertyState extends State<AddProperty> {
   }
 
   // Function to save download URL to Firestore
-  Future<void> savePropertyToFirestore(String imageUrl, String propertyTitle,
-      String propertyDescription, String amount, String type) async {
+  Future<void> savePropertyToFirestore(
+      String imageUrl,
+      String propertyTitle,
+      String propertyDescription,
+      String amount,
+      String type,
+      String name,
+      String email) async {
     try {
       User? user = FirebaseAuth.instance.currentUser;
       if (user != null) {
@@ -83,6 +92,8 @@ class _AddPropertyState extends State<AddProperty> {
         await propertiesRef.add({
           'type': type,
           'imageUrl': imageUrl,
+          'userName': name,
+          'userEmail': email,
           'propertyTitle': propertyTitle,
           'propertyDescription': propertyDescription,
           'amount': amount,
@@ -212,6 +223,64 @@ class _AddPropertyState extends State<AddProperty> {
                       return null;
                     },
                   ),
+                  const SizedBox(height: 10),
+
+                  Row(
+                    children: [
+                      BoldText("Add your name", deepBlue, 15),
+                      BoldText("*", Colors.red, 15),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  TextFormField(
+                    controller: name,
+                    autofocus: false,
+                    keyboardType: TextInputType.name,
+                    decoration: InputDecoration(
+                      fillColor: whiteColor,
+                      filled: true,
+                      contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: const BorderSide(color: deepBlue)),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your title';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+
+                  Row(
+                    children: [
+                      BoldText("Add your email", deepBlue, 15),
+                      BoldText("*", Colors.red, 15),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  TextFormField(
+                    controller: email,
+                    autofocus: false,
+                    keyboardType: TextInputType.name,
+                    decoration: InputDecoration(
+                      fillColor: whiteColor,
+                      filled: true,
+                      contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: const BorderSide(color: deepBlue)),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your title';
+                      }
+                      return null;
+                    },
+                  ),
                   const SizedBox(height: 30),
                   BoldText("Add property Description", deepBlue, 15),
                   const SizedBox(height: 10),
@@ -315,8 +384,14 @@ class _AddPropertyState extends State<AddProperty> {
                           String propertyDescription = addDescription.text;
                           String amount = addAmount.text;
                           String Type = type.text;
-                          await savePropertyToFirestore(imageUrl, propertyTitle,
-                              propertyDescription, amount, dropdownValue);
+                          await savePropertyToFirestore(
+                              imageUrl,
+                              propertyTitle,
+                              propertyDescription,
+                              amount,
+                              dropdownValue,
+                              name.text,
+                              email.text);
                           // ignore: use_build_context_synchronously
                           Navigator.pushReplacement(
                             context,

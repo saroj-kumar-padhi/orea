@@ -12,13 +12,17 @@ class PlaceYourBid extends StatefulWidget {
   String discription;
   String amount;
   String propertyTitle;
+  String name;
+  String email;
   PlaceYourBid(
       {Key? key,
       required this.id,
       required this.imageUrl,
       required this.amount,
       required this.discription,
-      required this.propertyTitle})
+      required this.propertyTitle,
+      required this.name,
+      required this.email})
       : super(key: key);
 
   @override
@@ -45,7 +49,7 @@ class _PlaceYourBidState extends State<PlaceYourBid> {
     final CollectionReference propertiesRef = firestore.collection('users');
     final TextEditingController amount = TextEditingController();
     final TextEditingController description = TextEditingController();
-    
+
     return Scaffold(
       backgroundColor: whiteColor,
       appBar: AppBar(
@@ -90,7 +94,7 @@ class _PlaceYourBidState extends State<PlaceYourBid> {
                   ],
                 ),
                 const SizedBox(height: 8),
-                LightText("by Asif Raza | ${user!.email}", deepGreer, 12),
+                LightText("by ${widget.name} | ${widget.email}", deepGreer, 12),
                 const SizedBox(height: 8),
                 ParagraphText(
                     widget.discription, deepGreer, 15, TextAlign.left),
@@ -158,16 +162,16 @@ class _PlaceYourBidState extends State<PlaceYourBid> {
                             // get the document reference for the property
                             final DocumentReference propertyRef =
                                 propertiesRef.doc(widget.id);
-          
+
                             // update the status of the property to approved
                             await propertyRef.update({
                               'bidAmount': amount.text,
                               'bidDescription': description.text
                             });
-          
+
                             // rebuild the list view to reflect the updated status
                             setState(() {});
-          
+
                             // ignore: use_build_context_synchronously
                             Navigator.push(
                                 context,
