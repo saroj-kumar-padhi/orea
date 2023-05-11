@@ -156,28 +156,52 @@ class _RealEstateBiddingState extends State<RealEstateBidding> {
                 activeSize: Size.square(11.0),
               ),
             ),
+            const SizedBox(height: 15),
+            // Categories --------->>>>
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Container(
+                  height: 30,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: const BoxDecoration(color: deepGreer, boxShadow: [
+                    BoxShadow(
+                        color: hint,
+                        spreadRadius: 1,
+                        blurRadius: 2,
+                        offset: Offset(0, 2))
+                  ]),
+                  child: Center(
+                      child: BoldText("Browse Categories", whiteColor, 15))),
+            ),
+            const SizedBox(height: 20),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                circularTab(Icons.home, () {
+                categoryTabs(context, Icons.home, () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => const homeScreen()));
                 }, "Home"),
-                circularTab(Icons.apartment, () {
+                categoryTabs(context, Icons.apartment, () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => const ApartmentScreen()));
                 }, "Apartment"),
-                circularTab(Icons.map, () {
+              ],
+            ),
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                categoryTabs(context, Icons.map_rounded, () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => const plotScreen()));
                 }, "Plots"),
-                circularTab(Icons.add_home_work_sharp, () {
+                categoryTabs(context, Icons.add_home_work_sharp, () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -185,7 +209,8 @@ class _RealEstateBiddingState extends State<RealEstateBidding> {
                 }, "Commercial"),
               ],
             ),
-            const SizedBox(height: 10),
+
+            const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Container(
@@ -355,6 +380,40 @@ Widget categories(String image, String text) {
           ),
         ),
       ],
+    ),
+  );
+}
+
+categoryTabs(BuildContext context, icon, clk, txt) {
+  return InkWell(
+    onTap: clk,
+    child: Container(
+      height: 50,
+      width: MediaQuery.of(context).size.width / 2.8,
+      decoration: BoxDecoration(
+        color: whiteColor,
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.black45,
+            blurRadius: 5,
+            spreadRadius: 0.5,
+          )
+        ],
+        // border: Border.all(color: deepGreer, width: 1),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            icon,
+            size: 22,
+            color: Colors.black54,
+          ),
+          const SizedBox(width: 5),
+          BoldText(txt, deepGreer, 15)
+        ],
+      ),
     ),
   );
 }
