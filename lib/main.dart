@@ -1,9 +1,7 @@
-import 'package:Orea/screens/orea_real_estate_bidding/orea_real_estate_bidding.dart';
-import 'package:Orea/screens/welcome_screen/welcome_screen.dart';
+import 'package:Orea/screens/splash_screen/splash_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:Orea/screens/splash_screen/splash_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,12 +36,6 @@ class _CheckUserState extends State<CheckUser> {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      //  initialRoute: '/',
-      // routes: {
-      //   '/': (context) => SplashScreen(),
-      //   '/welcome': (context) => WelcomeScreen(),
-      //   '/home': (context) => HomeScreen(),
-      // },
       home: const SplashScreen(),
     );
   }

@@ -1,8 +1,10 @@
+import 'package:Orea/common_utils/common_utils.dart';
+import 'package:Orea/common_utils/image_paths.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:Orea/common_utils/common_utils.dart';
-import 'package:Orea/common_utils/image_paths.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
 import '../orea_real_estate_bidding/orea_real_estate_bidding.dart';
 import '../user_singIn/user_signIn.dart';
 
@@ -22,6 +24,7 @@ class _UserRegisterState extends State<UserRegister> {
   final TextEditingController passwordController = TextEditingController();
 
   bool _obscureText = true;
+  bool _isLoading = false;
 
   //formkey
   final _formKey = GlobalKey<FormState>();
@@ -170,7 +173,6 @@ class _UserRegisterState extends State<UserRegister> {
                     },
                   ),
                   const SizedBox(height: 50),
-                  //REGISTER BUTTON ---------->>>
                   MaterialButton(
                     height: 40,
                     color: deepBlue,
@@ -180,8 +182,11 @@ class _UserRegisterState extends State<UserRegister> {
                     ),
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
+                        setState(() {
+                          _isLoading = true;
+                        });
+
                         try {
-                          // ignore: unused_local_variable
                           final credential = await FirebaseAuth.instance
                               .createUserWithEmailAndPassword(
                             email: emailController.text,
@@ -200,24 +205,38 @@ class _UserRegisterState extends State<UserRegister> {
                             'phoneNo': "",
                             'Address': "",
                           });
-                          // ignore: use_build_context_synchronously
+
+                          Fluttertoast.showToast(
+                            msg: "Registered successfully!",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM,
+                            backgroundColor: whiteColor,
+                            textColor: deepBlue,
+                          );
+
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => const RealEstateBidding()));
                         } on FirebaseAuthException catch (e) {
                           if (e.code == 'weak-password') {
-                            // ignore: avoid_print
                             print('The password provided is too weak.');
                           } else if (e.code == 'email-already-in-use') {
-                            // ignore: avoid_print
                             print('The account already exists for that email.');
                           }
                         } catch (e) {
-                          // ignore: avoid_print
                           print(e);
+                        } finally {
+                          setState(() {
+                            _isLoading = false;
+                          });
                         }
                       }
                     },
-                    child: BoldText("Register", whiteColor, 18),
+                    child: _isLoading
+                        ? const Padding(
+                            padding: EdgeInsets.all(5.0),
+                            child: CircularProgressIndicator(color: whiteColor),
+                          )
+                        : BoldText("Register", whiteColor, 18),
                   ),
                   const SizedBox(height: 9),
                   GestureDetector(
