@@ -1,10 +1,8 @@
+import 'package:Orea/common_utils/common_utils.dart';
+import 'package:Orea/common_utils/image_paths.dart';
 import 'package:Orea/screens/welcome_screen/welcome_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:Orea/common_utils/common_utils.dart';
-import 'package:Orea/common_utils/image_paths.dart';
-import 'package:Orea/screens/edit_all_listings_delete/edit_all_listings.dart';
-import 'package:Orea/screens/history_screen/history_screen.dart';
 
 import '../pending_request/pending_request.dart';
 
@@ -88,28 +86,28 @@ class _OreaAdmin extends State<OreaAdmin> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              adminTabs("REQUESTS", () {
+              adminTabs("Requests", () {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => const PendingRequest()));
               }, context),
-              adminTabs("EDIT LISTINGS", () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const AllListingsDelete()));
-              }, context),
+              // adminTabs("EDIT LISTINGS", () {
+              //   Navigator.push(
+              //       context,
+              //       MaterialPageRoute(
+              //           builder: (context) => const AllListingsDelete()));
+              // }, context),
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              adminTabs("HISTORY", () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const HistoryScreen()));
-              }, context),
-              adminTabs("LOGOUT", () async {
+              // adminTabs("HISTORY", () {
+              //   Navigator.of(context).push(MaterialPageRoute(
+              //       builder: (context) => const HistoryScreen()));
+              // }, context),
+              adminTabs("Log Out", () async {
                 await FirebaseAuth.instance.signOut();
                 // ignore: use_build_context_synchronously
                 Navigator.pushReplacement(
@@ -119,20 +117,20 @@ class _OreaAdmin extends State<OreaAdmin> {
               }, context),
             ],
           ),
-          const SizedBox(height: 40),
-          Container(
-            height: 40,
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-              begin: Alignment.bottomCenter,
-              end: Alignment.topCenter,
-              colors: [
-                Colors.blue.shade200,
-                Colors.white,
-              ],
-            )),
-          )
+          const SizedBox(height: 80),
+          // Container(
+          //   height: 40,
+          //   width: MediaQuery.of(context).size.width,
+          //   decoration: BoxDecoration(
+          //       gradient: LinearGradient(
+          //     begin: Alignment.bottomCenter,
+          //     end: Alignment.topCenter,
+          //     colors: [
+          //       Colors.blue.shade200,
+          //       Colors.white,
+          //     ],
+          //   )),
+          // )
         ],
       ),
     );
@@ -147,13 +145,13 @@ adminTabs(txt, clk, context) {
       padding: const EdgeInsets.all(10.0),
       child: Container(
         height: 63,
-        width: MediaQuery.of(context).size.width / 2.9,
+        width: MediaQuery.of(context).size.width / 1.5,
         decoration: BoxDecoration(
             color: whiteColor,
             border: Border.all(color: deepBlue, width: 1),
             borderRadius: BorderRadius.circular(12)),
         child: Center(
-          child: BoldText(txt, deepGreer, 12),
+          child: BoldText(txt, deepGreer, 16),
         ),
       ),
     ),

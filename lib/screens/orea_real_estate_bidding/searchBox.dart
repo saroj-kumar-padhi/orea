@@ -36,7 +36,7 @@ class _SearchBoxState extends State<SearchBox> {
       setState(() {
         isLoading = false;
       });
-      const Center(child: Text('item not found'));
+      const Center(child: Text('No property found'));
     }
   }
 
@@ -84,7 +84,7 @@ class _SearchBoxState extends State<SearchBox> {
                               border: InputBorder.none,
                               prefixIcon: const Icon(Icons.apartment,
                                   size: 30, color: deepBlue),
-                              hintText: "Search any product...",
+                              hintText: "Search any property...",
                               hintStyle: const TextStyle(color: hint)),
                         ),
                       ),
@@ -127,7 +127,7 @@ class _SearchBoxState extends State<SearchBox> {
                                         radius: 25,
                                         child: Image.network(
                                           searchedUser.imageUrl ?? "",
-                                          fit: BoxFit.cover,
+                                          fit: BoxFit.contain,
                                           errorBuilder:
                                               ((context, error, stackTrace) {
                                             return const Icon(
